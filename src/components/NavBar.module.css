@@ -1,2 +1,43 @@
 .NavBar {
+  width: 90vw;
+  height: 7rem;
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+
+  background-color: var(--cor-branca-100);
+
+  border: 2px solid var(--cor-preta-900);
+  border-radius: 15px;
+}
+
+/* Imagem */
+
+.logo-quizzy {
+  height: 90%;
+  width: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imagem-quizzy {
+  width: auto;
+  height: 100%;
+}
+
+.perfil-button {
+  height: 90%;
+  width: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ditto {
+  width: auto;
+  height: 100%;
 }

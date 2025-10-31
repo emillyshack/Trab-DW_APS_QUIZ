@@ -6,14 +6,18 @@ import ditto from "../assets/images/Ditto.png";
 function NavBar() {
   return (
     <nav className={styles.NavBar}>
-      <Link className={styles["logo-quizzy"]} to="/Home">
-        <img src={logo} alt="logo do site " />
+      <Link className={styles["logo-quizzy"]} to="/Inicial/Home">
+        <img
+          className={styles["imagem-quizzy"]}
+          src={logo}
+          alt="logo do site "
+        />
       </Link>
 
       <Link
         title="Voltar a tela inical"
         className={styles["inicio-button"]}
-        to="/Inicial/Home"
+        to="/Inicial"
       >
         Início
       </Link>
@@ -21,7 +25,7 @@ function NavBar() {
       <Link
         title="Ir a tela de quizzes"
         className={styles["quizzes-button"]}
-        to="/Inicial/Home"
+        to="/Inicial"
       >
         Quizzes
       </Link>
@@ -36,7 +40,7 @@ function NavBar() {
 
       <Link className={styles["perfil-button"]} to="/Inicial/Perfil">
         <div className={styles["foto-perfil"]}>
-          <img src={ditto} alt="" />
+          <img className={styles["ditto"]} src={ditto} alt="" />
         </div>
       </Link>
     </nav>
