@@ -1,0 +1,46 @@
+:root {
+  /* Cores gerais - Branco e PRETO*/
+  --cor-preta-900: #1e1e1e;
+  --cor-cinza-300: #868e96;
+  --cor-cinza-200: #ced4da;
+  --cor-cinza-100: #e9ecef;
+  --cor-branca-100: #ffffff;
+
+  /* Azuis Claros -> Mais Escuros */
+  --cor-azul-500: #0c8599;
+  --cor-azul-400: #4dabf7;
+  --cor-azul-300: #99e9f2;
+  --cor-azul-200: #a5d8ff;
+  --cor-azul-100: #e3fafc;
+
+  /* Vermelhos Escuros -> Claros */
+  --cor-vermelho-400: #fa5252;
+  --cor-vermelho-300: #ff8787;
+  --cor-vermelho-200: #ffc9c9;
+
+  /* Roxos Escuros -> Claros */
+  --cor-roxo-500: #7950f2;
+  --cor-roxo-400: #9775fa;
+  --cor-roxo-300: #d0bfff;
+
+  /* Amarelos Escuros -> Claros */
+  --cor-laranja-400: #ffa94d;
+  --cor-amarela-300: #ffd43b;
+  --cor-amarela-200: #ffec99;
+  --cor-amarela-100: #fff9db;
+
+  /* Verdes Escuros -> Claros */
+  --cor-verde-500: #2f9e44;
+  --cor-verde-400: #46bb5b;
+  --cor-verde-300: #69db7c;
+  --cor-verde-200: #b2f2bb;
+
+  /* Cores de Fundo */
+  --cor-fundo1: #fff9db;
+  --cor-fundo2: #ffa94d;
+  --cor-fundo3: #a5d8ff;
+  --cor-fundo4: #d0bfff;
+
+  /* Transições */
+  --transicao1: 0.3s;
+}
