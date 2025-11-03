@@ -1,31 +1,98 @@
-p{
-  font-family: "Lilita One", sans-serif;
-  font-size: 1.7rem;
-  color: var(--cor-preta-900);
-}
+/* Botões da NavBar */
 
-.inicio-button {
-  background-color: var(--cor-amarela-200);
-  padding: .2rem .3rem .2rem .3rem;
+/* Botão Inicio */
+
+.linkClass {
+  padding: 0.2rem 0.3rem 0.2rem 0.3rem;
   border-radius: 10px;
   border: solid 3px black;
 }
 
+.amarelo {
+  background-color: var(--cor-amarela-300);
+}
+.verde {
+  background-color: var(--cor-verde-300);
+}
+.azul {
+  background-color: var(--cor-azul-300);
+}
+
+.ativo {
+  opacity: 1;
+}
+.inativo {
+  opacity: 0.6;
+}
+
+.inicio-button1 {
+  background-color: var(--cor-amarela-300);
+  padding: 0.2rem 0.3rem 0.2rem 0.3rem;
+  border-radius: 10px;
+  border: solid 3px black;
+  opacity: 0.6;
+}
+
+.quizzes-button {
+  background-color: var(--cor-verde-300);
+  padding: 0.2rem 0.3rem 0.2rem 0.3rem;
+  border-radius: 10px;
+  border: solid 3px black;
+}
+
+.quizzes-button1 {
+  background-color: var(--cor-verde-300);
+  padding: 0.2rem 0.3rem 0.2rem 0.3rem;
+  border-radius: 10px;
+  border: solid 3px black;
+  opacity: 0.6;
+}
+
+.criacao-button {
+  background-color: var(--cor-azul-300);
+  padding: 0.2rem 0.3rem 0.2rem 0.3rem;
+  border-radius: 10px;
+  border: solid 3px black;
+}
+
+.criacao-button1 {
+  background-color: var(--cor-azul-300);
+  padding: 0.2rem 0.3rem 0.2rem 0.3rem;
+  border-radius: 10px;
+  border: solid 3px black;
+  opacity: 0.6;
+}
+
+.perfil-button {
+  height: 65%;
+  aspect-ratio: 1 / 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid 3px var(--cor-preta-900);
+  background-color: var(--cor-roxo-300);
+  border-radius: 100%;
+}
+
+.ditto {
+  width: auto;
+  height: 3rem;
+}
+
+/* NavBar */
 
 .NavBar {
   width: 90vw;
   height: 6rem;
-  margin: 1rem;
-  padding-left: .7rem;
-  padding-right: .7rem;
-  
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   background-color: var(--cor-branca-100);
-
-  border: 2px solid var(--cor-preta-900);
   border-radius: 15px;
 }
 
@@ -45,17 +112,8 @@ p{
   height: 100%;
 }
 
-.perfil-button {
-  height: 65%;
-  aspect-ratio: 1 / 1;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: solid 3px var(--cor-preta-900);
-  border-radius: 100%;
+p {
+  font-family: "Lilita One", sans-serif;
+  font-size: 1.7rem;
+  color: var(--cor-preta-900);
 }
-
-.ditto {
-  width: auto;
-  height: 3rem;}

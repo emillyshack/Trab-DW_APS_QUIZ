@@ -1,7 +1,7 @@
 import NavBar from "../components/NavBar";
-import styles from "./CriarQuizz.module.css";
+import styles from "./Home.module.css";
 
-function CriarQuizz() {
+function Quizzes() {
   return (
     <div className={`${styles["tela-principal"]}`}>
       <NavBar />
@@ -9,4 +9,4 @@ function CriarQuizz() {
   );
 }
 
-export default CriarQuizz;
+export default Quizzes;

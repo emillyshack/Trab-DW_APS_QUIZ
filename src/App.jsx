@@ -4,6 +4,8 @@ import Perfil from "./pages/Perfil";
 import Cadastro from "./pages/Cadastro";
 import Login from "./pages/Login";
 import CriarQuizz from "./pages/CriarQuizz";
+import Quizzes from "./pages/Quizzes";
+import "wired-elements";
 import "../src/Global.css";
 
 import "./App.css";
@@ -14,9 +16,10 @@ function App() {
       <Router>
         <Routes>
           <Route path="/Inicial">
-            <Route index element={<Home />} />
+            <Route path="" element={<Home />} />
             <Route path="Perfil" element={<Perfil />} />
             <Route path="CriarQuizz" element={<CriarQuizz />} />
+            <Route path="Quizzes" element={<Quizzes />} />
           </Route>
 
           <Route path="/Acessar">
