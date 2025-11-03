@@ -19,7 +19,7 @@ function NavBar() {
         className={styles["inicio-button"]}
         to="/Inicial"
       >
-        Início
+        <p>Início</p>
       </Link>
 
       <Link
@@ -27,7 +27,7 @@ function NavBar() {
         className={styles["quizzes-button"]}
         to="/Inicial"
       >
-        Quizzes
+        <p>Quizzes</p>
       </Link>
 
       <Link
@@ -35,7 +35,7 @@ function NavBar() {
         className={styles["criacao-button"]}
         to="/Inicial/Criar-Quizz"
       >
-        Criar Quizz
+        <p>Criar Quizz</p>
       </Link>
 
       <Link className={styles["perfil-button"]} to="/Inicial/Perfil">
