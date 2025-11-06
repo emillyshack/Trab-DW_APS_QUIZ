@@ -26,12 +26,14 @@
   height: 100%;
   width: 20%;
 
-  background-color: var(--cor-roxo-400);
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.titulo-login {
+  font-size: 2.5rem;
 }
 
 .linha-ou {
@@ -43,7 +45,7 @@
   justify-content: center;
 }
 
-hr {
+.linha {
   height: 2px;
   width: 35%;
   margin: 0 0.5rem 0 0.5rem;
@@ -52,10 +54,11 @@ hr {
   background-color: var(--cor-preta-900);
 }
 
-input {
+.input {
   height: 2rem;
   width: 80%;
   margin: 0.5rem;
+  padding: 1rem;
 
   border: none;
   border-radius: 6px;
@@ -64,4 +67,26 @@ input {
 .texto {
   font-family: "Schoolbell", cursive;
   font-size: 1.2rem;
+}
+
+.botao-entrar {
+  width: 80%;
+  height: 2.3rem;
+  border-radius: 15px;
+
+  background-color: var(--cor-roxo-400);
+  color: var(--cor-branca-100);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imagem-site {
+  height: 90%;
+  width: 70%;
+  margin: 1rem;
+
+  border: solid 5px var(--cor-preta-900);
+  border-radius: 50px;
 }

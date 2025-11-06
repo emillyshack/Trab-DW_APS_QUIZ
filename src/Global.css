@@ -1,6 +1,6 @@
 :root {
   /* Cores gerais - Branco e PRETO*/
-  --cor-preta-900: #1e1e1e;
+  --cor-preta-900: #3c3c3c;
   --cor-cinza-300: #868e96;
   --cor-cinza-200: #ced4da;
   --cor-cinza-100: #e9ecef;
@@ -51,15 +51,20 @@
   padding: 0;
   box-sizing: border-box;
   text-decoration: none;
+  font-family: "Schoolbell", cursive;
 }
 
 p {
-  font-family: "Lilita One";
+  font-family: "Schoolbell", cursive;
   font-size: 1.7rem;
   color: var(--cor-preta-900);
 }
 
 h1 {
+  font-family: "Lilita One";
+}
+
+h2 {
   font-family: "Lilita One";
 }
 

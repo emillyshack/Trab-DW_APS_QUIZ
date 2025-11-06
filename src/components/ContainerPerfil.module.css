@@ -33,6 +33,7 @@
 .foto-perfil {
   border: solid 2px black;
   border-radius: 100%;
+  margin-bottom: 1rem;
 
   width: 20vw;
   height: 40vh;
@@ -41,20 +42,28 @@
 
 /* Nome */
 
-.nome-editavel {
+.nome {
+  display: flex;
   width: 18vw;
   cursor: default;
   height: 5vh;
   border: none;
   background-color: transparent;
+
+  align-items: center;
+  justify-content: center;
+  font-family: "Lilita One", sans-serif;
 }
 
 .display {
   display: flex;
 }
 
-.nome {
+.nome-editavel {
+  display: flex;
+  align-items: center;
   padding: 10px;
   border: none;
-  border-radius: 15px;
+  border-radius: 100%;
+  cursor: pointer;
 }

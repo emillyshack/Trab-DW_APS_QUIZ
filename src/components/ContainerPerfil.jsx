@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import styles from "./ContainerPerfil.module.css";
 
 export default function ContainerPerfil() {
-  const [nomeUsuario, setNomeUsuario] = useState();
+  const [botaoEditar, setBotaoEditar] = useState(false);
+  const [nomeUsuario, setNomeUsuario] = useState("Usuário Show-de-Bola");
 
   return (
     <div className={styles.container}>
@@ -13,8 +14,12 @@ export default function ContainerPerfil() {
         <div className={styles["area-nome-foto"]}>
           <div className={styles["foto-perfil"]}></div>
           <div className={styles.display}>
-            <input type="text" readOnly className={styles["nome-editavel"]} />{" "}
-            <button className={styles.nome}>
+            {botaoEditar ? (
+              <input type="text" className={styles.nome} value={nomeUsuario} />
+            ) : (
+              <span onClick={setBotaoEditar(true)}>{nomeUsuario}</span>
+            )}
+            <button className={styles["nome-editavel"]}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
