@@ -25,7 +25,7 @@ function NavBar() {
         title="Voltar a tela inical"
         className={`${styles.linkClass} ${styles.amarelo} ${
           ehInicio ? styles.ativo : styles.inativo
-        }`}
+        } doodle-border`}
         to="/Inicial"
       >
         <p>Início</p>
@@ -34,7 +34,7 @@ function NavBar() {
         title="Ir a tela de quizzes"
         className={`${styles.linkClass} ${styles.verde} ${
           ehQuizzes ? styles.ativo : styles.inativo
-        }`}
+        } doodle-border`}
         to="/Inicial/Quizzes"
       >
         <p>Quizzes</p>
@@ -43,14 +43,14 @@ function NavBar() {
         title="Ir a tela de criação de quizzes"
         className={`${styles.linkClass} ${styles.azul} ${
           ehCriacao ? styles.ativo : styles.inativo
-        }`}
+        } doodle-border`}
         to="/Inicial/CriarQuizz"
       >
         <p>Criar Quizz</p>
       </Link>
       <Link
         title="Seu perfil"
-        className={styles["perfil-button"]}
+        className={`${styles["perfil-button"]} doodle-border`}
         to="/Inicial/Perfil"
       >
         <div className={styles["foto-perfil"]}>

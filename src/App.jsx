@@ -5,9 +5,7 @@ import Cadastro from "./pages/Cadastro";
 import Login from "./pages/Login";
 import CriarQuizz from "./pages/CriarQuizz";
 import Quizzes from "./pages/Quizzes";
-import "wired-elements";
 import "../src/Global.css";
-
 import "./App.css";
 
 function App() {

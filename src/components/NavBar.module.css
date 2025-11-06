@@ -5,7 +5,6 @@
 .linkClass {
   padding: 0.2rem 0.3rem 0.2rem 0.3rem;
   border-radius: 10px;
-  border: solid 3px black;
 }
 
 .amarelo {
@@ -117,3 +116,4 @@ p {
   font-size: 1.7rem;
   color: var(--cor-preta-900);
 }
+
