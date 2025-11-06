@@ -1,3 +1,17 @@
+@font-face {
+  font-family: "Excalifont";
+  src: url("/fonts/Excalifont-Regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Lilita-One";
+  src: url("/fonts/LilitaOne-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
 :root {
   /* Cores gerais - Branco e PRETO*/
   --cor-preta-900: #1e1e1e;
@@ -51,4 +65,19 @@
   padding: 0;
   box-sizing: border-box;
   text-decoration: none;
+}
+
+p {
+  font-family: "Lilita-One";
+  font-size: 1.7rem;
+  color: var(--cor-preta-900);
+}
+
+h1 {
+  font-family: "Lilita-One", sans-serif;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
 }

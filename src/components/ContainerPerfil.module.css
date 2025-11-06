@@ -1,0 +1,57 @@
+.container {
+  width: 90vw;
+  height: 80vh;
+  margin-top: 1rem;
+
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+
+  background-color: var(--cor-fundo4);
+  border: 3px solid black;
+  border-radius: 15px;
+}
+/* Titulo Perfil */
+.titulo-perfil {
+  margin-top: 1rem;
+  text-align: center;
+  width: 100%;
+}
+
+/* Area do Nome e Foto do Usuário */
+
+/* Foto */
+.area-nome-foto {
+  height: 100%;
+  width: 30vw;
+
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.foto-perfil {
+  border: solid 2px black;
+  border-radius: 100%;
+
+  width: 20vw;
+  height: 40vh;
+  background-color: var(--cor-branca-100);
+}
+
+/* Nome */
+
+.nome-editavel {
+  width: 18vw;
+  cursor: default;
+  height: 5vh;
+  border: none;
+  background-color: transparent;
+}
+
+.display {
+  display: flex;
+}
+
+.nome {
+}

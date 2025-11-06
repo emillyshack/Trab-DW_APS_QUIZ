@@ -20,10 +20,8 @@ function App() {
             <Route path="Quizzes" element={<Quizzes />} />
           </Route>
 
-          <Route path="/Acessar">
-            <Route path="Cadastro" element={<Cadastro />} />
-            <Route path="Login" element={<Login />} />
-          </Route>
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Cadastro" element={<Cadastro />} />
         </Routes>
       </Router>
     </>
