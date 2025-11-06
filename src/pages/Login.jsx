@@ -10,7 +10,7 @@ function Login() {
           <input type="password" name="senha" id="input-senha" />
           <div className={`${styles["linha-ou"]}`}>
             <hr />
-            <p>ou</p>
+            <p className={`${styles["texto"]}`}>ou</p>
             <hr />
           </div>
         </div>

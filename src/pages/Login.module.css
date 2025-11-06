@@ -61,7 +61,7 @@ input {
   border-radius: 6px;
 }
 
-p {
-  font-family: "Excalifont", sans-serif;
-  font-size: 1rem;
+.texto {
+  font-family: "Schoolbell", cursive;
+  font-size: 1.2rem;
 }
