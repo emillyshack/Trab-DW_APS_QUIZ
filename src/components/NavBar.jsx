@@ -28,7 +28,7 @@ function NavBar() {
         } doodle-border`}
         to="/Inicial"
       >
-        <p>Início</p>
+        <h2>Início</h2>
       </Link>
       <Link
         title="Ir a tela de quizzes"
@@ -37,7 +37,7 @@ function NavBar() {
         } doodle-border`}
         to="/Inicial/Quizzes"
       >
-        <p>Quizzes</p>
+        <h2>Quizzes</h2>
       </Link>
       <Link
         title="Ir a tela de criação de quizzes"
@@ -46,11 +46,11 @@ function NavBar() {
         } doodle-border`}
         to="/Inicial/CriarQuizz"
       >
-        <p>Criar Quizz</p>
+        <h2>Criar Quizz</h2>
       </Link>
       <Link
         title="Seu perfil"
-        className={`${styles["perfil-button"]} doodle-border`}
+        className={`${styles["perfil-button"]}`}
         to="/Inicial/Perfil"
       >
         <div className={styles["foto-perfil"]}>

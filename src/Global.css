@@ -1,6 +1,6 @@
 :root {
   /* Cores gerais - Branco e PRETO*/
-  --cor-preta-900: #3c3c3c;
+  --cor-preta-900: #1e1e1e;
   --cor-cinza-300: #868e96;
   --cor-cinza-200: #ced4da;
   --cor-cinza-100: #e9ecef;
@@ -61,14 +61,22 @@ p {
 }
 
 h1 {
+  color: var(--cor-preta-900);
   font-family: "Lilita One";
 }
 
 h2 {
+  color: var(--cor-preta-900);
   font-family: "Lilita One";
 }
 
 .column {
   display: flex;
   flex-direction: column;
+}
+
+.doodle-border {
+  border-style: solid;
+  border-width: 10px 10px 10px 10px;
+  border-image: url(/button.svg) 10 10 10 10 stretch stretch;
 }

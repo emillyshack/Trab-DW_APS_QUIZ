@@ -69,14 +69,23 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
   border: solid 3px var(--cor-preta-900);
   background-color: var(--cor-roxo-300);
   border-radius: 100%;
+
+  transition: 0.3s;
+}
+
+.perfil-button:hover {
+  transform: scale(1.1);
+  transition: 0.3s;
 }
 
 .ditto {
   width: auto;
   height: 3rem;
+  padding: 0.3rem;
 }
 
 /* NavBar */
