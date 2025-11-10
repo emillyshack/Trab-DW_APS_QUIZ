@@ -7,8 +7,14 @@
   padding-right: 0.7rem;
 
   background-color: var(--cor-fundo4);
-  border: 3px solid black;
+
   border-radius: 15px;
+}
+
+.elementos {
+  display: flex;
+  height: 80%;
+  margin-top: 2rem;
 }
 /* Titulo Perfil */
 .titulo-perfil {
@@ -24,19 +30,15 @@
   height: 100%;
   width: 30vw;
 
-  margin-top: 1rem;
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
 .foto-perfil {
-  border: solid 2px black;
-  border-radius: 100%;
-  margin-bottom: 1rem;
-
-  width: 20vw;
-  height: 40vh;
+  width: 60%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
   background-color: var(--cor-branca-100);
 }
 
@@ -66,4 +68,24 @@
   border: none;
   border-radius: 100%;
   cursor: pointer;
+}
+/* Área de Descrição*/
+
+.area-descricao {
+  height: 100%;
+  width: 30vw;
+
+  margin-right: 20px;
+  margin-bottom: 2rem;
+  background-color: var(--cor-roxo-500);
+  border-radius: 15px;
+}
+
+/* Área de Historico*/
+.area-historico {
+  height: 100%;
+  width: 30vw;
+
+  background-color: var(--cor-roxo-500);
+  border-radius: 15px;
 }

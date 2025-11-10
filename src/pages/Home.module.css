@@ -1,9 +1,10 @@
 .tela-principal {
   width: 100vw;
   height: 100vh;
+  padding-top: var(--padding-navbar);
 
   background-color: var(--cor-fundo1);
   display: flex;
-  align-items: start;
+  align-items: center;
   justify-content: center;
 }

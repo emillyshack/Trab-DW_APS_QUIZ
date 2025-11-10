@@ -4,7 +4,7 @@ import styles from "./Home.module.css";
 export default function Home() {
   return (
     <div className={styles["tela-principal"]}>
-      <NavBar />
+      <h1>Pagina Inicial</h1>
     </div>
   );
 }

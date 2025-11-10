@@ -95,11 +95,14 @@
   height: 6rem;
   padding-left: 0.7rem;
   padding-right: 0.7rem;
-  margin-top: 1rem;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translate(-50%);
 
   background-color: var(--cor-branca-100);
   border-radius: 15px;
