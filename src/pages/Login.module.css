@@ -5,8 +5,30 @@
   background-color: var(--cor-amarela-100);
 
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.navbar {
+  width: 90vw;
+  height: 17%;
+  padding: 0 5rem 0 3rem;
+
+  background-color: none;
+
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+}
+
+.logo-site {
+  height: 100%;
+  padding-bottom: 0.5rem;
+}
+
+.pikachu-correndo {
+  height: 80%;
 }
 
 .container-login {
@@ -84,8 +106,7 @@
 
 .imagem-site {
   height: 90%;
-  width: 70%;
-  margin: 1rem;
+  width: auto;
 
   border: solid 5px var(--cor-preta-900);
   border-radius: 50px;

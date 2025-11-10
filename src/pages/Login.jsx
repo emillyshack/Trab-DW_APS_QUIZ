@@ -1,9 +1,23 @@
 import styles from "./Login.module.css";
 import siteImg from "../assets/images/ImagemSite.png";
+import logo from "../assets/images/Quizzy_logo.png";
+import gifPikachu from "../assets/images/pikachuCorrendo.gif";
 
 function Login() {
   return (
     <div className={`${styles["container"]}`}>
+      <div className={`${styles["navbar"]}`}>
+        <img
+          src={logo}
+          alt="Logo do Site"
+          className={`${styles["logo-site"]}`}
+        />
+        <img
+          src={gifPikachu}
+          alt="Pikachu correndo"
+          className={`${styles["pikachu-correndo"]}`}
+        />
+      </div>
       <div className={`${styles["container-login"]}`}>
         <div className={`${styles["login-dados"]}`}>
           <h1 className={`${styles["titulo-login"]}`}>Login</h1>
