@@ -1,5 +1,5 @@
 .container {
-  width: 90vw;
+  width: 95vw;
   height: 80vh;
   margin-top: 1rem;
 
@@ -13,11 +13,13 @@
 
 .elementos {
   display: flex;
+  justify-content: space-between;
   height: 80%;
   margin-top: 2rem;
 }
 /* Titulo Perfil */
 .titulo-perfil {
+  font-size: x-large;
   margin-top: 1rem;
   text-align: center;
   width: 100%;
@@ -39,6 +41,9 @@
   width: 60%;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
+  border: 10px solid var(--cor-preta-900);
+
+  margin-bottom: 15px;
   background-color: var(--cor-branca-100);
 }
 
@@ -52,9 +57,11 @@
   border: none;
   background-color: transparent;
 
+  margin-right: 15px;
   align-items: center;
   justify-content: center;
   font-family: "Lilita One", sans-serif;
+  font-size: 35px;
 }
 
 .display {
@@ -75,17 +82,83 @@
   height: 100%;
   width: 30vw;
 
-  margin-right: 20px;
   margin-bottom: 2rem;
   background-color: var(--cor-roxo-500);
   border-radius: 15px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* Área de Historico*/
 .area-historico {
-  height: 100%;
-  width: 30vw;
+  height: 300px;
+  width: 20vw;
 
+  margin-right: 30px;
   background-color: var(--cor-roxo-500);
   border-radius: 15px;
+}
+
+.dados-especiais {
+  background-color: var(--cor-branca-100);
+  border-radius: 15px;
+}
+
+.editar-celula {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bio-celula {
+  height: 12rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.textarea {
+  height: 100%;
+  border: none;
+
+  padding-top: 10px;
+
+  font-size: large;
+}
+
+.label {
+  font-family: "Lilita One", sans-serif;
+  font-size: x-large;
+}
+
+.input-charger {
+  padding: 0px;
+  border: none;
+  border-bottom: 2px solid;
+  width: 90%;
+  font-size: large;
+}
+
+.redes-sociais {
+  border: none;
+}
+
+.lucide-pencil {
+  color: var(--cor-preta-900);
+}
+
+.tag {
+  padding: 6px 12px;
+  margin: 5px;
+  background-color: var(--cor-cinza-200);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.interesses {
+  gap: 6px;
+  margin-top: 10px;
 }

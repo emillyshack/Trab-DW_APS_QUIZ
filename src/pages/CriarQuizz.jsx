@@ -4,7 +4,7 @@ import styles from "./CriarQuizz.module.css";
 function CriarQuizz() {
   return (
     <div className={`${styles["tela-principal"]}`}>
-      <NavBar />
+      <div></div>
     </div>
   );
 }
