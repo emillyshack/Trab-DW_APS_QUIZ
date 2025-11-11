@@ -127,7 +127,7 @@ export default function ContainerPerfil() {
           {/* INTERESSES */}
           <div className={`${styles["dados-especiais"]} doodle-border`}>
             <label className={styles.label}>Interesses</label>
-            <div className={styles["editar-celula"]}>
+            <div className={styles["editar-celula-interesses"]}>
               <div className={styles.adicionar}>
                 <select
                   value={selected}

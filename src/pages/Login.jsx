@@ -43,6 +43,8 @@ function Login() {
             <p className={`${styles["texto"]}`}>ou</p>
             <hr className={`${styles["linha"]}`} />
           </div>
+
+          
         </div>
         <img
           src={siteImg}

@@ -45,6 +45,8 @@ function App() {
             <Route path="/Login" element={<Login />} />
             <Route path="/Cadastro" element={<Cadastro />} />
           </Route>
+
+          {/*  */}
         </Routes>
       </Router>
     </>
