@@ -70,12 +70,13 @@ function Login() {
           <div className={styles["container-cadastro"]}>
             <p>Não tem uma conta?</p>
             <div className={styles["cadastro"]} title="Faça seu cadastro">
-              <button
+              <Link
                 className={`${styles["botao-cadastro"]} doodle-border`}
                 type="button"
+                to="/Cadastro"
               >
                 Faça o cadastro
-              </button>
+              </Link>
               <img
                 src={pessoaCadastro}
                 alt=""
