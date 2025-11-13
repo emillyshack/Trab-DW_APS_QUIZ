@@ -5,6 +5,7 @@ import googleIcon from "../assets/images/google-icon.png";
 import facebookIcon from "../assets/images/facebook-icon.png";
 import pessoaCadastro from "../assets/images/pessoa-cadastro.png";
 import gifPikachu from "../assets/images/pikachuCorrendo.gif";
+import { Link } from "react-router-dom";
 
 function Login() {
   return (
