@@ -1,11 +1,18 @@
-import { useState } from "react";
+import { use, useState } from "react";
 import styles from "./ContainerPerfil.module.css";
+import { Check, Plus } from "lucide-react";
 
 export default function ContainerPerfil() {
   const [nomeUsuario, setNomeUsuario] = useState("Emanuel"); // nome inicial
   const [editandoNome, setEditandoNome] = useState(false);
+
+  // Célula: Interesses
   const [selected, setSelected] = useState("");
   const [tags, setTags] = useState([]);
+
+  // Botoes para modificar célula
+  const [descricao, setDescricao] = useState("");
+  const [textareaMod, setTextareaMod] = useState(false);
 
   function alternarEdicaoNome() {
     setEditandoNome(!editandoNome);
@@ -47,31 +54,12 @@ export default function ContainerPerfil() {
               </span>
             )}
 
-            <button
-              onClick={alternarEdicaoNome}
-              className={styles["nome-editavel"]}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="26"
-                height="26"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-pencil"
-              >
-                <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
-                <path d="m15 5 4 4" />
-              </svg>
-            </button>
+            
           </div>
         </div>
 
         {/* DESCRIÇÃO */}
-        <div className={`${styles["area-descricao"]} doodle-border`}>
+        <div className={`${styles["area-descricao"]}`}>
           {/* EMAIL */}
           <div className={`${styles["dados-especiais"]} doodle-border`}>
             <label className={styles.label}>E-mail</label>
@@ -130,6 +118,7 @@ export default function ContainerPerfil() {
             <div className={styles["editar-celula-interesses"]}>
               <div className={styles.adicionar}>
                 <select
+                  className={styles["select-interesses"]}
                   value={selected}
                   onChange={(e) => setSelected(e.target.value)}
                 >
@@ -143,7 +132,7 @@ export default function ContainerPerfil() {
                   <option value="Tecnologias">Tecnologias</option>
                   <option value="Mais">Mais</option>
                 </select>
-                <button onClick={addTags}> + </button>
+                <button onClick={addTags} className={styles["adicionar-tag"]}><Plus /></button>
               </div>
 
               <div className={styles.interesses}>
@@ -162,9 +151,25 @@ export default function ContainerPerfil() {
 
           {/* BIO */}
           <div className={`${styles["dados-especiais"]} doodle-border`}>
-            <div className={styles["bio-celula"]}>
-              <label className={styles.label}>Descrição</label>
-              <textarea className={styles.textarea}></textarea>
+            <div
+              className={`${styles["bio-celula"]} ${
+                textareaMod ? styles.mostrando : ""
+              }`}
+            >
+              <label className={styles.label}>
+                Descrição{" "}
+                <button className={styles["button-ok"]}>
+                  <Check />
+                </button>
+              </label>
+              <textarea
+                className={styles.textarea}
+                value={descricao}
+                onChange={(e) => {
+                  setDescricao(e.target.value);
+                  setTextareaMod(true);
+                }}
+              ></textarea>
             </div>
           </div>
         </div>

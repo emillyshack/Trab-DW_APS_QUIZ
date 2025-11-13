@@ -1,6 +1,6 @@
 .container {
   width: 95vw;
-  height: 80vh;
+  height: 83vh;
   margin-top: 1rem;
 
   padding-left: 0.7rem;
@@ -13,8 +13,7 @@
 
 .elementos {
   display: flex;
-  justify-content: space-between;
-  height: 80%;
+  height: 83%;
   margin-top: 1rem;
 }
 /* Titulo Perfil */
@@ -30,11 +29,12 @@
 /* Foto */
 .area-nome-foto {
   height: 100%;
-  width: 30vw;
+  width: 28vw;
 
   display: flex;
   align-items: center;
   flex-direction: column;
+  
 }
 
 .foto-perfil {
@@ -71,25 +71,36 @@
 .nome-editavel {
   display: flex;
   align-items: center;
-  padding: 10px;
+  justify-content: center;
+
+  border-radius: 50%;
   border: none;
-  border-radius: 100%;
+  background-color: var( --cor-cinza-100);
   cursor: pointer;
+  aspect-ratio: 1 / 1;
+  height: 3rem;
+  margin-left: 10px
 }
 /* Área de Descrição*/
 
 .area-descricao {
   height: 100%;
-  width: 30vw;
+  width: 38vw;
 
   margin-bottom: 2rem;
   background-color: var(--cor-roxo-500);
-  border-radius: 15px;
+  border-radius: 3%;
+  border: 4.5px solid;
+  padding: 7px;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow-y: scroll;
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
 }
 
 /* Área de Historico*/
@@ -97,24 +108,39 @@
   height: 300px;
   width: 20vw;
 
-  margin-right: 30px;
+  margin: 0px 30px 0px 30px;
   background-color: var(--cor-roxo-500);
   border-radius: 15px;
 }
 
 .dados-especiais {
+  margin-top: 10px;
   background-color: var(--cor-branca-100);
   border-radius: 15px;
-  margin-top: 1rem;
 }
 
 .editar-celula {
   display: flex;
   justify-content: start;
+  
 }
 
-.adicionar{
-  width: auto;
+.adicionar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 5px;
+  width: 95%;
+   border-bottom: 3.5px solid;
+}
+
+.select-interesses {
+  margin: 5px;
+  font-size: large;
+  border-radius: 20px;
+  border: 3.5px solid;
+  padding: 4px;
 }
 .bio-celula {
   height: 12rem;
@@ -125,8 +151,10 @@
 .textarea {
   height: 100%;
   border: none;
+  border-top: 3.5px solid;
+  margin-top: 5px;
 
-  padding-top: 10px;
+  padding: 10px;
 
   font-size: large;
 }
@@ -134,14 +162,32 @@
 .label {
   font-family: "Lilita One", sans-serif;
   font-size: x-large;
+  width: 98%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.button-ok {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-verde-200);
+  border-radius: 50%;
+  border: none;
+  background-color: var(--cor-verde-300);
+  cursor: pointer;
+  aspect-ratio: 1 / 1;
+  height: 1.5rem;
 }
 
 .input-charger {
-  padding: 0px;
+  padding: 10px;
   border: none;
   border-bottom: 2px solid;
   width: 90%;
-  font-size: large;
+  font-size: x-large;
 }
 
 .redes-sociais {
@@ -161,13 +207,61 @@
   align-items: center;
   gap: 6px;
   cursor: pointer;
-  width: fit-content; 
+  width: fit-content;
+  margin-left: 10px;
+  font-size: large;
+}
+
+.adicionar-tag{
+ display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-verde-200);
+  border-radius: 50%;
+  border: none;
+  background-color: var(--cor-verde-300);
+  cursor: pointer;
+  aspect-ratio: 1 / 1;
+  height: 1.5rem;
 }
 
 .interesses {
-  display: flex;          
-  flex-wrap: wrap;           
+  display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   margin-top: 10px;
-  width: auto;          
+  width: auto;
+}
+
+.editar-celula button,
+.editar-celula-interesses button {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.editar-celula button,
+.editar-celula-interesses button {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.editar-celula:hover button,
+.editar-celula-interesses:hover button,
+.editar-celula:focus-within button,
+.editar-celula-interesses:focus-within button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.bio-celula button {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.bio-celula.mostrando button {
+  opacity: 1;
+  pointer-events: auto;
 }

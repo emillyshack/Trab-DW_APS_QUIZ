@@ -42,7 +42,7 @@ function App() {
           </Route>
           {/* Sem NavBar */}
           <Route element={<SemNavBar />}>
-            <Route path="/Login" element={<Login />} />
+            <Route path="/" element={<Login />} />
             <Route path="/Cadastro" element={<Cadastro />} />
           </Route>
 

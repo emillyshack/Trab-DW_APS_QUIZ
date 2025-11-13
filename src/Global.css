@@ -9,8 +9,8 @@
   /* Azuis Claros -> Mais Escuros */
   --cor-azul-500: #0c8599;
   --cor-azul-400: #4dabf7;
-  --cor-azul-300: #99e9f2;
-  --cor-azul-200: #a5d8ff;
+  --cor-azul-300: #a5d8ff;
+  --cor-azul-200: #99e9f2;
   --cor-azul-100: #e3fafc;
 
   /* Vermelhos Escuros -> Claros */
@@ -66,11 +66,25 @@ p {
 h1 {
   color: var(--cor-preta-900);
   font-family: "Lilita One";
+  font-weight: 300;
 }
 
 h2 {
   color: var(--cor-preta-900);
   font-family: "Lilita One";
+  font-weight: 300;
+}
+
+h3 {
+  color: var(--cor-preta-900);
+  font-family: "Lilita One";
+  font-weight: 300;
+}
+
+h3 {
+  color: var(--cor-preta-900);
+  font-family: "Lilita One";
+  font-weight: 300;
 }
 
 .column {
