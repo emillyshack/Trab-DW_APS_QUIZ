@@ -4,7 +4,7 @@ import styles from "./CriarQuizz.module.css";
 function CriarQuizz() {
   return (
     <div className={`${styles["tela-principal"]}`}>
-      <div></div>
+      <h1>Página de Criar Quizz</h1>
     </div>
   );
 }

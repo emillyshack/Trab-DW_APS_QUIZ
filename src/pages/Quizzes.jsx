@@ -4,7 +4,7 @@ import styles from "./Home.module.css";
 function Quizzes() {
   return (
     <div className={`${styles["tela-principal"]}`}>
-      <NavBar />
+      <h1>Página de Quizzes</h1>
     </div>
   );
 }

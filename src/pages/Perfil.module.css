@@ -8,3 +8,269 @@
   align-items: start;
   justify-content: center;
 }
+
+.container {
+  width: 95vw;
+  height: 83vh;
+  margin-top: 1rem;
+
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+
+  background-color: var(--cor-fundo4);
+
+  border-radius: 15px;
+}
+
+.elementos {
+  display: flex;
+  height: 83%;
+  margin-top: 1rem;
+}
+/* Titulo Perfil */
+.titulo-perfil {
+  font-size: x-large;
+  margin-top: 1rem;
+  text-align: center;
+  width: 100%;
+}
+
+/* Area do Nome e Foto do Usuário */
+
+/* Foto */
+.area-nome-foto {
+  height: 100%;
+  width: 28vw;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.foto-perfil {
+  width: 60%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 10px solid var(--cor-preta-900);
+
+  margin-bottom: 15px;
+  background-color: var(--cor-branca-100);
+}
+
+/* Nome */
+
+.nome {
+  display: flex;
+  width: 18vw;
+  cursor: default;
+  height: 5vh;
+  border: none;
+  background-color: transparent;
+
+  margin-right: 15px;
+  align-items: center;
+  justify-content: center;
+  font-family: "Lilita One", sans-serif;
+  font-size: 35px;
+}
+
+.display {
+  display: flex;
+}
+
+.nome-editavel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  border: none;
+  background-color: var(--cor-cinza-100);
+  cursor: pointer;
+  aspect-ratio: 1 / 1;
+  height: 3rem;
+  margin-left: 10px;
+}
+/* Área de Descrição*/
+
+.area-descricao {
+  height: 100%;
+  width: 38vw;
+
+  margin-bottom: 2rem;
+  background-color: var(--cor-roxo-500);
+  border-radius: 3%;
+  border: 4.5px solid;
+  padding: 7px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Área de Historico*/
+.area-historico {
+  height: 300px;
+  width: 20vw;
+
+  margin: 0px 30px 0px 30px;
+  background-color: var(--cor-roxo-500);
+  border-radius: 15px;
+}
+
+.dados-especiais {
+  margin-top: 10px;
+  background-color: var(--cor-branca-100);
+  border-radius: 15px;
+}
+
+.editar-celula {
+  display: flex;
+  justify-content: start;
+}
+
+.adicionar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 5px;
+  width: 95%;
+  border-bottom: 3.5px solid;
+}
+
+.select-interesses {
+  margin: 5px;
+  font-size: large;
+  border-radius: 20px;
+  border: 3.5px solid;
+  padding: 4px;
+}
+.bio-celula {
+  height: 12rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.textarea {
+  height: 100%;
+  border: none;
+  border-top: 3.5px solid;
+  margin-top: 5px;
+
+  padding: 10px;
+
+  font-size: large;
+}
+
+.label {
+  font-family: "Lilita One", sans-serif;
+  font-size: x-large;
+  width: 98%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.button-ok {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-verde-200);
+  border-radius: 50%;
+  border: none;
+  background-color: var(--cor-verde-300);
+  cursor: pointer;
+  aspect-ratio: 1 / 1;
+  height: 1.5rem;
+}
+
+.input-charger {
+  padding: 10px;
+  border: none;
+  border-bottom: 2px solid;
+  width: 90%;
+  font-size: x-large;
+}
+
+.redes-sociais {
+  border: none;
+}
+
+.lucide-pencil {
+  color: var(--cor-preta-900);
+}
+
+.tag {
+  padding: 6px 12px;
+  margin: 5px;
+  background-color: var(--cor-cinza-200);
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  width: fit-content;
+  margin-left: 10px;
+  font-size: large;
+}
+
+.adicionar-tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-verde-200);
+  border-radius: 50%;
+  border: none;
+  background-color: var(--cor-verde-300);
+  cursor: pointer;
+  aspect-ratio: 1 / 1;
+  height: 1.5rem;
+}
+
+.interesses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+  width: auto;
+}
+
+.editar-celula button,
+.editar-celula-interesses button {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.editar-celula button,
+.editar-celula-interesses button {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.editar-celula:hover button,
+.editar-celula-interesses:hover button,
+.editar-celula:focus-within button,
+.editar-celula-interesses:focus-within button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.bio-celula button {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.bio-celula.mostrando button {
+  opacity: 1;
+  pointer-events: auto;
+}

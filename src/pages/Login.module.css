@@ -1,5 +1,6 @@
 .container {
   height: 100vh;
+  height: 100dvh;
   width: 100vw;
 
   background-color: var(--cor-amarela-100);
@@ -10,41 +11,68 @@
   justify-content: center;
 }
 
-.navbar {
-  width: 90vw;
-  height: 13%;
-  padding: 0 5rem 0 3rem;
-
-  background-color: none;
-
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
+.logo-site {
+  height: calc(100vh - (85vh + 1rem));
+  width: auto;
 }
 
-.logo-site {
-  width: 7rem;
-  position: fixed;
-  top: 3px;
-  left: calc(50% - 3.5rem);
+.container-pikachu {
+  width: 100%;
+  height: 10%;
+  transform: translate(0%, -110%);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.arbusto-1 {
+  height: 2.8rem;
+  width: auto;
+  z-index: 99;
+
+  background-color: var(--cor-amarela-100);
+
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  display: block;
+  transform: translate(40%);
+}
+
+.arbusto-2 {
+  height: 2.8rem;
+  width: auto;
+  z-index: 99;
+
+  background-color: var(--cor-amarela-100);
+
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  display: block;
+  transform: translate(-40%);
 }
 
 .pikachu-correndo {
-  height: 10%;
+  height: 100%;
   width: auto;
+
   position: absolute;
   top: 0;
   left: 0;
 
-  transform: translate(0%, -105%);
-  animation: corrida-pikachu 3s linear infinite;
+  transform: translate(50%, 1%);
+  animation: corrida-pikachu linear infinite;
 }
 
 .container-login {
-  height: 87vh;
+  height: 85vh;
   width: 90vw;
-  padding: 1rem;
-  margin-top: 4rem;
+  padding: 0.5rem;
+  margin: 0.5rem;
 
   background-color: var(--cor-roxo-300);
   border-radius: 60px;
@@ -58,23 +86,21 @@
 
 .login-dados {
   height: 100%;
-  width: 30%;
+  width: 35%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .titulo-login {
   font-size: 3rem;
-  margin-bottom: 1.5rem;
 }
 
 .linha-ou {
   height: 2rem;
   width: 100%;
-  margin: 1.5rem 0 1.5rem 0;
 
   display: flex;
   align-items: center;
@@ -93,7 +119,6 @@
 .input {
   height: 6%;
   width: 80%;
-  margin: 0.5rem;
   padding: 1rem;
 
   border: none;
@@ -107,7 +132,7 @@
 
 .botao-entrar {
   width: 80%;
-  height: 6.5%;
+  height: 10%;
   border-radius: 15px;
 
   background-color: var(--cor-roxo-500);
@@ -122,12 +147,14 @@
   font-family: "Lilita One";
 }
 
+.botao-entrar:hover {
+  transform: scale(1.05);
+  filter: brightness(0.8);
+}
+
 .container-singin-with {
   width: 80%;
   height: auto;
-  padding: 0.5rem 0.5rem 0.5rem 0;
-
-  /* background-color: var(--cor-roxo-400); */
 
   display: flex;
   align-items: start;
@@ -138,20 +165,25 @@
 .singin-with {
   width: 100%;
   height: 3rem;
-  margin-bottom: 1.3rem;
-
-  /* background-color: var(--cor-roxo-300); */
+  font-size: 1rem;
 
   display: flex;
   align-items: center;
   justify-content: flex-start;
 
-  cursor: pointer;
+  cursor: default;
 }
 
 .icon {
-  height: 2.7rem;
+  height: 80%;
   margin-right: 0.7rem;
+
+  cursor: pointer;
+}
+
+.icon:hover {
+  transform: scale(1.05);
+  filter: brightness(0.8);
 }
 
 .google-icon {
@@ -181,10 +213,13 @@
   justify-content: center;
 }
 
+.container-cadastro p {
+  font-size: 1.4rem;
+}
+
 .cadastro {
-  height: 50%;
+  height: 70%;
   width: 90%;
-  margin: 1rem 0 0 0;
 
   display: flex;
   align-items: center;
@@ -206,6 +241,11 @@
 
   font-size: large;
   font-family: "Lilita One";
+}
+
+.botao-cadastro:hover {
+  transform: scale(1.05);
+  filter: brightness(0.8);
 }
 
 .pessoa-cadastro {
@@ -233,12 +273,17 @@
     display: none;
   }
 
+  .arbusto-1 {
+    display: none;
+  }
+
+  .arbusto-2 {
+    display: none;
+  }
+
   .container-login {
     height: 80vh;
   }
-}
-
-@media (min-width: 901px) {
 }
 
 @keyframes corrida-pikachu {
@@ -246,6 +291,6 @@
     left: 0;
   }
   100% {
-    left: 90%;
+    left: 84%;
   }
 }

@@ -3,8 +3,16 @@
 /* Botão Inicio */
 
 .linkClass {
+  width: auto;
+  text-align: center;
   padding: 0.2rem 0.3rem 0.2rem 0.3rem;
   border-radius: 10px;
+}
+
+.linkClass:hover {
+  transform: scale(1.05);
+  filter: brightness(0.8);
+  opacity: 1;
 }
 
 .amarelo {
@@ -78,8 +86,8 @@
 }
 
 .perfil-button:hover {
-  transform: scale(1.1);
-  transition: 0.3s;
+  transform: scale(1.05);
+  filter: brightness(0.8);
 }
 
 .ditto {

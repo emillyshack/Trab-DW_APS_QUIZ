@@ -55,6 +55,12 @@
   box-sizing: border-box;
   text-decoration: none;
   font-family: "Schoolbell", cursive;
+  transition: 0.3s ease;
+}
+
+a {
+  font-family: "Lilita One";
+  color: var(--cor-preta-900);
 }
 
 p {
@@ -85,6 +91,13 @@ h3 {
   color: var(--cor-preta-900);
   font-family: "Lilita One";
   font-weight: 300;
+}
+
+img {
+  user-select: none;
+  cursor: default;
+  -webkit-user-drag: none;
+  /* user-drag: none; */
 }
 
 .column {

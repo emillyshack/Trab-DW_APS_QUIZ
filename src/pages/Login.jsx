@@ -5,18 +5,41 @@ import googleIcon from "../assets/images/google-icon.png";
 import facebookIcon from "../assets/images/facebook-icon.png";
 import pessoaCadastro from "../assets/images/pessoa-cadastro.png";
 import gifPikachu from "../assets/images/pikachuCorrendo.gif";
+import arbusto from "../assets/images/arbusto-8-bit.png";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 function Login() {
+  const [velocidadePikachu, setVelovidadePikachu] = useState(12);
+
+  function diminuirVelPikachu() {
+    setVelovidadePikachu((prev) => prev - 0.25);
+    console.log(velocidadePikachu);
+  }
+
   return (
     <div className={`${styles["container"]}`}>
       <img src={logo} alt="Logo do site" className={styles["logo-site"]} />
       <div className={`${styles["container-login"]}`}>
-        <img
-          src={gifPikachu}
-          alt="Pikachu correndo"
-          className={`${styles["pikachu-correndo"]}`}
-        />
+        <div className={styles["container-pikachu"]}>
+          <img
+            src={arbusto}
+            className={styles["arbusto-1"]}
+            alt="Arbusto do pikachu"
+          />
+          <img
+            src={gifPikachu}
+            alt="Pikachu correndo"
+            className={`${styles["pikachu-correndo"]}`}
+            style={{ animationDuration: `${velocidadePikachu}s` }}
+            onClick={diminuirVelPikachu}
+          />
+          <img
+            src={arbusto}
+            className={styles["arbusto-2"]}
+            alt="Arbusto do pikachu"
+          />
+        </div>
         <div className={`${styles["login-dados"]}`}>
           <h1 className={`${styles["titulo-login"]}`}>Login</h1>
           <input
@@ -34,9 +57,12 @@ function Login() {
             className={`${styles["input"]}`}
           />
 
-          <button className={`${styles["botao-entrar"]} doodle-border`}>
+          <Link
+            to="/Inicial"
+            className={`${styles["botao-entrar"]} doodle-border`}
+          >
             Entrar
-          </button>
+          </Link>
 
           <div className={`${styles["linha-ou"]}`}>
             <hr className={`${styles["linha"]}`} />
