@@ -1,22 +1,71 @@
-import { useState } from "react";
-import { Check, Plus } from "lucide-react";
+import { useState, useRef } from "react";
+import { Check, Plus, X, Pencil } from "lucide-react";
 import styles from "./Perfil.module.css";
 
 function Perfil() {
-  const [nomeUsuario, setNomeUsuario] = useState("Emanuel"); // nome inicial
-  const [editandoNome, setEditandoNome] = useState(false);
+  // --------------------------
+  // Valores e edição de inputs
+  // --------------------------
+  const [valores, setValores] = useState({
+    nome: "",
+    email: "",
+    instagram: ""
+  });
 
-  // Célula: Interesses
-  const [selected, setSelected] = useState("");
-  const [tags, setTags] = useState([]);
+  const [temporarios, setTemporarios] = useState({
+    nome: "",
+    email: "",
+    instagram: ""
+  });
 
-  // Botoes para modificar célula
+  const [editavel, setEditavel] = useState({
+    nome: false,
+    email: false,
+    instagram: false
+  });
+
+  const [confirmar, setConfirmar] = useState({
+    nome: false,
+    email: false,
+    instagram: false
+  });
+
+  // --------------------------
+  // Descrição
+  // --------------------------
   const [descricao, setDescricao] = useState("");
   const [textareaMod, setTextareaMod] = useState(false);
 
-  function alternarEdicaoNome() {
-    setEditandoNome(!editandoNome);
+  // --------------------------
+  // Funções para inputs simples
+  // --------------------------
+  function iniciarEdicao(campo) {
+    setEditavel(prev => ({ ...prev, [campo]: true }));
+    setTemporarios(prev => ({ ...prev, [campo]: valores[campo] }));
+    setConfirmar(prev => ({ ...prev, [campo]: false }));
   }
+
+  function alterarValor(campo, novoValor) {
+    setTemporarios(prev => ({ ...prev, [campo]: novoValor }));
+    setConfirmar(prev => ({ ...prev, [campo]: novoValor !== valores[campo] }));
+  }
+
+  function confirmarMudanca(campo) {
+    setValores(prev => ({ ...prev, [campo]: temporarios[campo] }));
+    setEditavel(prev => ({ ...prev, [campo]: false }));
+    setConfirmar(prev => ({ ...prev, [campo]: false }));
+  }
+
+  function cancelarMudanca(campo) {
+    setEditavel(prev => ({ ...prev, [campo]: false }));
+    setConfirmar(prev => ({ ...prev, [campo]: false }));
+  }
+
+  // --------------------------
+  // Interesses
+  // --------------------------
+  const [selected, setSelected] = useState("");
+  const [tags, setTags] = useState([]);
 
   function addTags() {
     if (!selected || tags.includes(selected)) return;
@@ -25,8 +74,24 @@ function Perfil() {
   }
 
   function removeTag(tag) {
-    setTags(tags.filter((t) => t !== tag));
+    setTags(tags.filter(t => t !== tag));
   }
+
+  // --------------------------
+  // Foto de Perfil
+  // --------------------------
+  const [preview, setPreview] = useState(null);
+  const inputRef = useRef(null);
+
+  const handleFotoClick = () => inputRef.current.click();
+
+  const handleArquivoChange = (e) => {
+    const arquivo = e.target.files[0];
+    if (arquivo) {
+      const url = URL.createObjectURL(arquivo);
+      setPreview(url);
+    }
+  };
 
   return (
     <div className={styles["tela-principal"]}>
@@ -37,78 +102,143 @@ function Perfil() {
 
         <div className={styles.elementos}>
           {/* FOTO + NOME */}
-          <div className={styles["area-nome-foto"]}>
-            <div className={styles["foto-perfil"]}></div>
+          <div className={styles.column}>
+            <div className={styles["area-nome-foto"]}>
+              <div
+                className={`${styles["foto-perfil"]} ${styles.hbz}`}
+                onClick={handleFotoClick}
+              >
+                {preview ? (
+                  <img
+                    src={preview}
+                    alt="Foto de perfil"
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                ) : (
+                  <span>+</span>
+                )}
+              </div>
+              <input
+                type="file"
+                accept="image/*"
+                capture="environment"
+                ref={inputRef}
+                onChange={handleArquivoChange}
+                style={{ display: "none" }}
+              />
+
+              <div className={styles.display}>
+                {editavel.nome ? (
+                  <>
+                    <input
+                      className={styles.nome}
+                      value={temporarios.nome}
+                      onChange={(e) => alterarValor("nome", e.target.value)}
+                    />
+                    {confirmar.nome && (
+                      <>
+                        <button
+                          className={styles["adicionar-tag"]}
+                          onClick={() => confirmarMudanca("nome")}
+                        >
+                          <Check />
+                        </button>
+                        <button
+                          className={styles["remover-tag"]}
+                          onClick={() => cancelarMudanca("nome")}
+                        >
+                          <X />
+                        </button>
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <span
+                    className={styles.nome}
+                    onClick={() => iniciarEdicao("nome")}
+                  >
+                    {valores.nome}
+                  </span>
+                )}
+              </div>
+            </div>
 
             <div className={styles.display}>
-              {editandoNome ? (
-                <input
-                  type="text"
-                  className={styles.nome}
-                  value={nomeUsuario}
-                  onChange={(e) => setNomeUsuario(e.target.value)}
-                  onBlur={alternarEdicaoNome}
-                  autoFocus
-                />
-              ) : (
-                <span className={styles.nome} onClick={alternarEdicaoNome}>
-                  {nomeUsuario}
-                </span>
-              )}
+              <div className={`${styles["mudar-cor"]} doodle-border`}>
+                <button className={styles["cor"]}>
+                  <div className={`${styles["cor-fundo"]} doodle-border`}></div> Mudar: Cor de Fundo
+                </button>
+              </div>
             </div>
           </div>
 
-          {/* DESCRIÇÃO */}
+          {/* DESCRIÇÃO E DADOS */}
           <div className={`${styles["area-descricao"]}`}>
             {/* EMAIL */}
             <div className={`${styles["dados-especiais"]} doodle-border`}>
               <label className={styles.label}>E-mail</label>
               <div className={styles["editar-celula"]}>
-                <input type="text" className={styles["input-charger"]} />
-
-                <button className={styles["nome-editavel"]}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="26"
-                    height="26"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-pencil"
-                  >
-                    <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
-                    <path d="m15 5 4 4" />
-                  </svg>
-                </button>
+                <input
+                  className={styles["input-charger"]}
+                  value={editavel.email ? temporarios.email : valores.email}
+                  readOnly={!editavel.email}
+                  onChange={(e) => alterarValor("email", e.target.value)}
+                />
+                {!editavel.email && (
+                  <button onClick={() => iniciarEdicao("email")} className={styles["editar-tag"]}>
+                    <Pencil />
+                  </button>
+                )}
+                {confirmar.email && (
+                  <>
+                    <button
+                      className={styles["adicionar-tag"]}
+                      onClick={() => confirmarMudanca("email")}
+                    >
+                      <Check />
+                    </button>
+                    <button
+                      className={styles["remover-tag"]}
+                      onClick={() => cancelarMudanca("email")}
+                    >
+                      <X />
+                    </button>
+                  </>
+                )}
               </div>
             </div>
 
-            {/* REDES SOCIAIS */}
+            {/* INSTAGRAM */}
             <div className={`${styles["dados-especiais"]} doodle-border`}>
-              <label className={styles.label}>Intagram</label>
+              <label className={styles.label}>Instagram</label>
               <div className={styles["editar-celula"]}>
-                <input type="text" className={styles["input-charger"]} />
-
-                <button className={styles["nome-editavel"]}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="26"
-                    height="26"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-pencil"
-                  >
-                    <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
-                    <path d="m15 5 4 4" />
-                  </svg>
-                </button>
+                <input
+                  className={styles["input-charger"]}
+                  value={editavel.instagram ? temporarios.instagram : valores.instagram}
+                  readOnly={!editavel.instagram}
+                  onChange={(e) => alterarValor("instagram", e.target.value)}
+                />
+                {!editavel.instagram && (
+                  <button onClick={() => iniciarEdicao("instagram")} className={styles["editar-tag"]}>
+                    <Pencil />
+                  </button>
+                )}
+                {confirmar.instagram && (
+                  <>
+                    <button
+                      className={styles["adicionar-tag"]}
+                      onClick={() => confirmarMudanca("instagram")}
+                    >
+                      <Check />
+                    </button>
+                    <button
+                      className={styles["remover-tag"]}
+                      onClick={() => cancelarMudanca("instagram")}
+                    >
+                      <X />
+                    </button>
+                  </>
+                )}
               </div>
             </div>
 
@@ -136,14 +266,9 @@ function Perfil() {
                     <Plus />
                   </button>
                 </div>
-
                 <div className={styles.interesses}>
                   {tags.map((tag) => (
-                    <div
-                      key={tag}
-                      onClick={() => removeTag(tag)}
-                      className={styles.tag}
-                    >
+                    <div key={tag} onClick={() => removeTag(tag)} className={styles.tag}>
                       {tag} ×
                     </div>
                   ))}
@@ -153,16 +278,14 @@ function Perfil() {
 
             {/* BIO */}
             <div className={`${styles["dados-especiais"]} doodle-border`}>
-              <div
-                className={`${styles["bio-celula"]} ${
-                  textareaMod ? styles.mostrando : ""
-                }`}
-              >
+              <div className={styles["bio-celula"]}>
                 <label className={styles.label}>
                   Descrição{" "}
-                  <button className={styles["button-ok"]}>
-                    <Check />
-                  </button>
+                  {textareaMod && (
+                    <button className={styles["button-ok"]} onClick={() => setTextareaMod(false)}>
+                      <Check />
+                    </button>
+                  )}
                 </label>
                 <textarea
                   className={styles.textarea}
@@ -171,7 +294,7 @@ function Perfil() {
                     setDescricao(e.target.value);
                     setTextareaMod(true);
                   }}
-                ></textarea>
+                />
               </div>
             </div>
           </div>
