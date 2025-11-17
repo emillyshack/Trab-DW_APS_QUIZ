@@ -4,7 +4,7 @@
 
 .tela-principal {
   width: 100vw;
-  height: 113vh;
+  height: 100vh;
   padding-top: var(--padding-navbar);
   background-color: var(--cor-fundo1);
   display: flex;
@@ -24,7 +24,7 @@
   margin-top: 1rem;
   justify-content: center;
   display: flex;
-  height: 85%;
+
 }
 
 .titulo-perfil {
