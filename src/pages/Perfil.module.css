@@ -1,27 +1,22 @@
+/* ================================
+   Layout Principal
+================================ */
+
 .tela-principal {
   width: 100vw;
-  height: 100vh;
-  height: 100dvh;
+  height: 100%;
   padding-top: var(--padding-navbar);
-
   background-color: var(--cor-fundo1);
   display: flex;
-  align-items: start;
+  align-items: center;
   justify-content: center;
 }
 
-
-
 .container {
-  width: 95vw;
-  height: 83vh;
+  width: 95%;
+  height: 100%;
   margin-top: 1rem;
-
-  padding-left: 0.7rem;
-  padding-right: 0.7rem;
-
   background-color: var(--cor-fundo4);
-
   border-radius: 15px;
 }
 
@@ -30,7 +25,7 @@
   height: 83%;
   margin-top: 1rem;
 }
-/* Titulo Perfil */
+
 .titulo-perfil {
   font-size: x-large;
   margin-top: 1rem;
@@ -38,16 +33,16 @@
   width: 100%;
 }
 
-/* Area do Nome e Foto do Usuário */
+/* ================================
+   Área Nome + Foto do Usuário
+================================ */
 
-/* Foto */
 .area-nome-foto {
   height: 100%;
   width: 28vw;
-
   display: flex;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
 }
 
 .foto-perfil {
@@ -55,137 +50,157 @@
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   border: 10px solid var(--cor-preta-900);
-
   margin-bottom: 15px;
   background-color: var(--cor-branca-100);
 }
 
-/* Nome */
-
 .nome {
   display: flex;
   width: 18vw;
-  cursor: default;
   height: 5vh;
-  border: none;
-  background-color: transparent;
-
   margin-right: 15px;
+  background-color: transparent;
+  border: none;
   align-items: center;
   justify-content: center;
   font-family: "Lilita One", sans-serif;
   font-size: 35px;
+  cursor: default;
 }
 
 .display {
   display: flex;
   align-items: center;
 }
-.mudar-cor{
-  border-radius: 15px;
-  background-color: var(--cor-branca-100);
-  padding: 0.5rem;
-  margin: 1rem;
-
-  display: flex;
-  align-items: center;
-}
-
-.cor-fundo{
-  border-radius: 15px;
-  background-color: blue;
-  width: 1vw;
-  height: 2vh;
-  margin-right: 10px;
-  font-size: large;
-}
-
-.mudar-foto{
-  border-radius: 15px;
-  background-color: var(--cor-branca-100);
-  padding: 0.5rem;
-  margin: 1rem;
-}
-.cor{
-  display: flex;
-  align-items: center;
-  border: none;
-  background-color: transparent;
-  font-size: large;
-  cursor: pointer;
-
-    font-family: "Lilita One", sans-serif;
-}
-
-.perfil{
-    display: flex;
-  align-items: center;
-  border: none;
-  background-color: transparent;
-  font-size: large;
-  cursor: pointer;
-
-    font-family: "Lilita One", sans-serif;
-}
-
-.file{
-  display: none;
-}
-
-.hbz{
- width: 60%;
-  aspect-ratio: 1 / 1;
-                  border-radius: 50%;
-                  border: 4px  solid;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                  cursor: pointer;
-                  overflow: hidden;
-                  margin-bottom: 10px;
-}
 
 .nome-editavel {
   display: flex;
   align-items: center;
   justify-content: center;
-
+  height: 3rem;
+  aspect-ratio: 1 / 1;
+  margin-left: 10px;
+  background-color: var(--cor-cinza-100);
   border-radius: 50%;
   border: none;
-  background-color: var(--cor-cinza-100);
   cursor: pointer;
-  aspect-ratio: 1 / 1;
-  height: 3rem;
-  margin-left: 10px;
 }
-/* Área de Descrição*/
+
+/* Botões e opções */
+
+.mudar-cor,
+.mudar-foto {
+  background-color: var(--cor-branca-100);
+  padding: 0.5rem;
+  margin: 1rem;
+  border-radius: 15px;
+}
+
+.cor-fundo {
+  width: 1vw;
+  height: 2vh;
+  margin-right: 10px;
+  background-color: blue;
+  border-radius: 15px;
+  font-size: large;
+}
+
+.cor,
+.perfil {
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: large;
+  font-family: "Lilita One", sans-serif;
+}
+
+.file {
+  display: none;
+}
+
+.hbz {
+  width: 60%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 4px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+/* ================================
+   Área Descrição
+================================ */
 
 .area-descricao {
-  height: 100%;
+  height: 90%;
   width: 38vw;
-
-  margin-bottom: 2rem;
   background-color: var(--cor-roxo-500);
   border-radius: 3%;
   border: 4.5px solid;
   padding: 7px;
-
+  margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   overflow-y: scroll;
   -ms-overflow-style: none;
 }
+
 ::-webkit-scrollbar {
   display: none;
 }
 
-/* Área de Historico*/
+.bio-celula {
+  height: 12rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.textarea {
+  height: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: none;
+  border-top: 3.5px solid;
+  font-size: large;
+}
+
+.label {
+  font-family: "Lilita One", sans-serif;
+  font-size: x-large;
+  width: 98%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.button-ok {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background-color: var(--cor-verde-300);
+  color: var(--cor-verde-200);
+}
+
+/* ================================
+   Área Histórico
+================================ */
+
 .area-historico {
   height: 300px;
   width: 20vw;
-
-  margin: 0px 30px 0px 30px;
+  margin: 0 30px;
   background-color: var(--cor-roxo-500);
   border-radius: 15px;
 }
@@ -196,79 +211,102 @@
   border-radius: 15px;
 }
 
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .editar-celula {
   display: flex;
   justify-content: start;
   align-items: center;
 }
 
-.column{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
+/* ================================
+   Interesses + Tags
+================================ */
+
 .adicionar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-
-  margin-top: 5px;
+  justify-content: space-between;
   width: 95%;
+  margin-top: 5px;
   border-bottom: 3.5px solid;
 }
 
 .select-interesses {
   margin: 5px;
-  font-size: large;
-  border-radius: 20px;
-  border: 3.5px solid;
   padding: 4px;
+  font-size: large;
+  border: 3.5px solid;
+  border-radius: 20px;
 }
-.bio-celula {
-  height: 12rem;
+
+.interesses {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+  width: auto;
 }
 
-.textarea {
-  height: 100%;
-  border: none;
-  border-top: 3.5px solid;
-  margin-top: 5px;
-
-  padding: 10px;
-
+.tag {
+  padding: 6px 12px;
+  margin: 5px 0 5px 10px;
+  background-color: var(--cor-cinza-200);
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  width: fit-content;
   font-size: large;
 }
 
-.label {
-  font-family: "Lilita One", sans-serif;
-  font-size: x-large;
-  width: 98%;
+/* Botões de ações nas tags */
 
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.button-ok {
+.adicionar-tag,
+.remover-tag,
+.editar-tag {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--cor-verde-200);
+  margin-left: 10px;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   border: none;
-  background-color: var(--cor-verde-300);
   cursor: pointer;
-  aspect-ratio: 1 / 1;
-  height: 1.5rem;
+  height: 2.5rem;
 }
+
+.adicionar-tag {
+  background-color: var(--cor-verde-300);
+  color: var(--cor-verde-200);
+}
+
+.remover-tag {
+  background-color: var(--cor-vermelho-300);
+  color: var(--cor-vermelho-400);
+}
+
+.editar-tag {
+  background-color: var(--cor-azul-300);
+}
+
+/* ================================
+   Inputs & Efeitos
+================================ */
 
 .input-charger {
   border: none;
   border-bottom: 2px solid;
+  padding: 10px;
   width: 90%;
   font-size: x-large;
+  border: none;
+  border-bottom: 2px solid;
 }
 
 .redes-sociais {
@@ -279,108 +317,32 @@
   color: var(--cor-preta-900);
 }
 
-.tag {
-  padding: 6px 12px;
-  margin: 5px;
-  background-color: var(--cor-cinza-200);
-  border-radius: 20px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  cursor: pointer;
-  width: fit-content;
-  margin-left: 10px;
-  font-size: large;
-}
-
-.adicionar-tag {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--cor-verde-200);
-  border-radius: 50%;
-  border: none;
-  background-color: var(--cor-verde-300);
-  cursor: pointer;
-  aspect-ratio: 1 / 1;
-  height: 2.5rem;
-  margin-left: 10px;
-}
-
-.remover-tag {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--cor-vermelho-400);
-  border-radius: 50%;
-  border: none;
-  background-color: var(--cor-vermelho-300);
-  cursor: pointer;
-  aspect-ratio: 1 / 1;
-  height: 2.5rem;
-  margin-left: 10px;
-}
-
-.editar-tag {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  border: none;
-  background-color: var(--cor-azul-300);
-  cursor: pointer;
-  aspect-ratio: 1 / 1;
-  height: 2.5rem;
-  margin-left: 10px;
-}
-
-
-
-.interesses {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 10px;
-  width: auto;
-}
+/* Efeito de botões que aparecem ao editar */
 
 .editar-celula button,
-.editar-celula-interesses button {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-}
-
-.editar-celula button,
-.editar-celula-interesses button {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-}
-
-.editar-celula:hover button,
-.editar-celula-interesses:hover button,
-.editar-celula:focus-within button,
-.editar-celula-interesses:focus-within button {
-  opacity: 1;
-  pointer-events: auto;
-}
-
+.editar-celula-interesses button,
 .bio-celula button {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
 }
 
+.editar-celula:hover button,
+.editar-celula:focus-within button,
+.editar-celula-interesses:hover button,
+.editar-celula-interesses:focus-within button,
 .bio-celula.mostrando button {
   opacity: 1;
   pointer-events: auto;
 }
 
+/* Inputs de leitura / edição */
+
 input:read-only {
-  cursor: default;
   background: transparent;
+  cursor: default;
 }
+
 input:not(:read-only) {
   border-color: #00f;
 }

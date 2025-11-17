@@ -13,7 +13,9 @@ function Login() {
   const [velocidadePikachu, setVelovidadePikachu] = useState(12);
 
   function diminuirVelPikachu() {
-    setVelovidadePikachu((prev) => prev - 0.25);
+    velocidadePikachu - 3 <= 1
+      ? setVelovidadePikachu(1)
+      : setVelovidadePikachu((prev) => prev - 3);
     console.log(velocidadePikachu);
   }
 
