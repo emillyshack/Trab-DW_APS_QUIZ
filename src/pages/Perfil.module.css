@@ -4,7 +4,7 @@
 
 .tela-principal {
   width: 100vw;
-  height: 100%;
+  height: 100dvh;
   padding-top: var(--padding-navbar);
   background-color: var(--cor-fundo1);
   display: flex;
@@ -22,8 +22,7 @@
 
 .elementos {
   display: flex;
-  height: 83%;
-  margin-top: 1rem;
+  height: 85%;
 }
 
 .titulo-perfil {
@@ -69,8 +68,10 @@
 }
 
 .display {
+  margin-bottom: 1.1rem;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .nome-editavel {
@@ -136,6 +137,14 @@
 /* ================================
    Área Descrição
 ================================ */
+
+.input-charger {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid;
+
+  font-size: larger;
+}
 
 .area-descricao {
   height: 90%;
