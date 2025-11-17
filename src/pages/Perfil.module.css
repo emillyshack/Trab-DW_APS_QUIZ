@@ -24,7 +24,7 @@
   margin-top: 1rem;
   justify-content: center;
   display: flex;
-
+  max-height: 80%;
 }
 
 .titulo-perfil {
@@ -69,6 +69,12 @@
   cursor: default;
 }
 
+.display1 {
+  margin-bottom: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
 .display {
   margin-bottom: 1.1rem;
   display: flex;
@@ -150,7 +156,7 @@
 }
 
 .area-descricao {
-  height: 90%;
+  max-height: 90%;
   width: 38vw;
   background-color: var(--cor-roxo-500);
   border-radius: 3%;

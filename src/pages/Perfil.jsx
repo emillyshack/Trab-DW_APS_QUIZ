@@ -7,27 +7,27 @@ function Perfil() {
   // Valores e edição de inputs
   // --------------------------
   const [valores, setValores] = useState({
-    nome: "",
+    nome: "Anônimo",
     email: "",
-    instagram: ""
+    instagram: "",
   });
 
   const [temporarios, setTemporarios] = useState({
     nome: "",
     email: "",
-    instagram: ""
+    instagram: "",
   });
 
   const [editavel, setEditavel] = useState({
     nome: false,
     email: false,
-    instagram: false
+    instagram: false,
   });
 
   const [confirmar, setConfirmar] = useState({
     nome: false,
     email: false,
-    instagram: false
+    instagram: false,
   });
 
   // --------------------------
@@ -40,25 +40,28 @@ function Perfil() {
   // Funções para inputs simples
   // --------------------------
   function iniciarEdicao(campo) {
-    setEditavel(prev => ({ ...prev, [campo]: true }));
-    setTemporarios(prev => ({ ...prev, [campo]: valores[campo] }));
-    setConfirmar(prev => ({ ...prev, [campo]: false }));
+    setEditavel((prev) => ({ ...prev, [campo]: true }));
+    setTemporarios((prev) => ({ ...prev, [campo]: valores[campo] }));
+    setConfirmar((prev) => ({ ...prev, [campo]: false }));
   }
 
   function alterarValor(campo, novoValor) {
-    setTemporarios(prev => ({ ...prev, [campo]: novoValor }));
-    setConfirmar(prev => ({ ...prev, [campo]: novoValor !== valores[campo] }));
+    setTemporarios((prev) => ({ ...prev, [campo]: novoValor }));
+    setConfirmar((prev) => ({
+      ...prev,
+      [campo]: novoValor !== valores[campo],
+    }));
   }
 
   function confirmarMudanca(campo) {
-    setValores(prev => ({ ...prev, [campo]: temporarios[campo] }));
-    setEditavel(prev => ({ ...prev, [campo]: false }));
-    setConfirmar(prev => ({ ...prev, [campo]: false }));
+    setValores((prev) => ({ ...prev, [campo]: temporarios[campo] }));
+    setEditavel((prev) => ({ ...prev, [campo]: false }));
+    setConfirmar((prev) => ({ ...prev, [campo]: false }));
   }
 
   function cancelarMudanca(campo) {
-    setEditavel(prev => ({ ...prev, [campo]: false }));
-    setConfirmar(prev => ({ ...prev, [campo]: false }));
+    setEditavel((prev) => ({ ...prev, [campo]: false }));
+    setConfirmar((prev) => ({ ...prev, [campo]: false }));
   }
 
   // --------------------------
@@ -74,7 +77,7 @@ function Perfil() {
   }
 
   function removeTag(tag) {
-    setTags(tags.filter(t => t !== tag));
+    setTags(tags.filter((t) => t !== tag));
   }
 
   // --------------------------
@@ -92,6 +95,12 @@ function Perfil() {
       setPreview(url);
     }
   };
+
+  // --------------------------
+  // Cor de Fundo
+  // --------------------------
+
+  const [corFundo, setCorFundo] = useState("#d0bfff");
 
   return (
     <div className={styles["tela-principal"]}>
@@ -112,7 +121,11 @@ function Perfil() {
                   <img
                     src={preview}
                     alt="Foto de perfil"
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
                   />
                 ) : (
                   <span>+</span>
@@ -127,10 +140,11 @@ function Perfil() {
                 style={{ display: "none" }}
               />
 
-              <div className={styles.display}>
+              <div className={styles.display1}>
                 {editavel.nome ? (
                   <>
                     <input
+                      placeholder="Anônimo"
                       className={styles.nome}
                       value={temporarios.nome}
                       onChange={(e) => alterarValor("nome", e.target.value)}
@@ -162,14 +176,6 @@ function Perfil() {
                 )}
               </div>
             </div>
-
-            <div className={styles.display}>
-              <div className={`${styles["mudar-cor"]} doodle-border`}>
-                <button className={styles["cor"]}>
-                  <div className={`${styles["cor-fundo"]} doodle-border`}></div> Mudar: Cor de Fundo
-                </button>
-              </div>
-            </div>
           </div>
 
           {/* DESCRIÇÃO E DADOS */}
@@ -185,7 +191,10 @@ function Perfil() {
                   onChange={(e) => alterarValor("email", e.target.value)}
                 />
                 {!editavel.email && (
-                  <button onClick={() => iniciarEdicao("email")} className={styles["editar-tag"]}>
+                  <button
+                    onClick={() => iniciarEdicao("email")}
+                    className={styles["editar-tag"]}
+                  >
                     <Pencil />
                   </button>
                 )}
@@ -214,12 +223,19 @@ function Perfil() {
               <div className={styles["editar-celula"]}>
                 <input
                   className={styles["input-charger"]}
-                  value={editavel.instagram ? temporarios.instagram : valores.instagram}
+                  value={
+                    editavel.instagram
+                      ? temporarios.instagram
+                      : valores.instagram
+                  }
                   readOnly={!editavel.instagram}
                   onChange={(e) => alterarValor("instagram", e.target.value)}
                 />
                 {!editavel.instagram && (
-                  <button onClick={() => iniciarEdicao("instagram")} className={styles["editar-tag"]}>
+                  <button
+                    onClick={() => iniciarEdicao("instagram")}
+                    className={styles["editar-tag"]}
+                  >
                     <Pencil />
                   </button>
                 )}
@@ -268,7 +284,11 @@ function Perfil() {
                 </div>
                 <div className={styles.interesses}>
                   {tags.map((tag) => (
-                    <div key={tag} onClick={() => removeTag(tag)} className={styles.tag}>
+                    <div
+                      key={tag}
+                      onClick={() => removeTag(tag)}
+                      className={styles.tag}
+                    >
                       {tag} ×
                     </div>
                   ))}
@@ -282,7 +302,10 @@ function Perfil() {
                 <label className={styles.label}>
                   Descrição{" "}
                   {textareaMod && (
-                    <button className={styles["button-ok"]} onClick={() => setTextareaMod(false)}>
+                    <button
+                      className={styles["button-ok"]}
+                      onClick={() => setTextareaMod(false)}
+                    >
                       <Check />
                     </button>
                   )}
@@ -300,7 +323,18 @@ function Perfil() {
           </div>
 
           {/* HISTÓRICO */}
-          <div className={`${styles["area-historico"]} doodle-border`}></div>
+          <div className={styles.column}>
+            <div className={`${styles["area-historico"]} doodle-border`}></div>
+
+            <div className={styles.display}>
+              <div className={`${styles["mudar-cor"]} doodle-border`}>
+                <button className={styles["cor"]}>
+                  <div className={`${styles["cor-fundo"]} doodle-border`}></div>{" "}
+                  Mudar: Cor de Fundo
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
