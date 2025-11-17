@@ -293,20 +293,18 @@
 
 .editar-tag {
   background-color: var(--cor-azul-300);
+  cursor: pointer;
+  aspect-ratio: 1 / 1;
+  height: 2.5rem;
+  margin-left: 10px;
 }
 
-/* ================================
-   Inputs & Efeitos
-================================ */
-
-.input-charger {
-  border: none;
-  border-bottom: 2px solid;
-  padding: 10px;
-  width: 90%;
-  font-size: x-large;
-  border: none;
-  border-bottom: 2px solid;
+.interesses {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+  width: auto;
 }
 
 .redes-sociais {
