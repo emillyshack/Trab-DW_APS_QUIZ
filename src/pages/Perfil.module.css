@@ -4,17 +4,17 @@
 
 .tela-principal {
   width: 100vw;
-  height: 100vh;
+  height: 113vh;
   padding-top: var(--padding-navbar);
   background-color: var(--cor-fundo1);
   display: flex;
-  align-items: center;
+
   justify-content: center;
 }
 
 .container {
   width: 95%;
-  height: 100%;
+  height: 90%;
   margin-top: 1rem;
   background-color: var(--cor-fundo4);
   border-radius: 15px;
