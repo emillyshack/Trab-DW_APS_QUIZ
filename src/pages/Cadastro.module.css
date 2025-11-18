@@ -1,0 +1,153 @@
+.tela-principal {
+  height: 100vh;
+  height: 100dvh;
+  width: 100vw;
+
+  background-color: var(--cor-fundo1);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  height: 80%;
+  width: 60%;
+  border: solid 5px var(--cor-preta-900);
+  border-radius: 50px;
+
+  background-color: var(--cor-fundo3);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.inputs {
+  width: 80%;
+  height: auto;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.container-input {
+  width: 10000rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  height: 1rem;
+  width: 90%;
+
+  border: none;
+  border-radius: 6px;
+}
+
+.linha-ou {
+  height: 2rem;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.linha {
+  height: 2px;
+  width: 35%;
+  margin: 0 0.5rem 0 0.5rem;
+
+  border: none;
+  background-color: var(--cor-preta-900);
+}
+
+.input {
+  height: 6%;
+  width: 80%;
+  padding: 1rem;
+
+  border: none;
+  border-radius: 6px;
+}
+
+.texto {
+  font-family: "Schoolbell", cursive;
+  font-size: 1.2rem;
+}
+
+.botao-entrar {
+  width: 80%;
+  height: 10%;
+  border-radius: 15px;
+
+  background-color: var(--cor-roxo-500);
+  color: var(--cor-branca-100);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  font-size: large;
+  font-family: "Lilita One";
+}
+
+.botao-entrar:hover {
+  transform: scale(1.05);
+  filter: brightness(0.8);
+}
+
+.container-singin-with {
+  width: 80%;
+  height: auto;
+
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.singin-with {
+  width: 100%;
+  height: 3rem;
+  font-size: 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  cursor: default;
+}
+
+.icon {
+  height: 80%;
+  margin-right: 0.7rem;
+
+  cursor: pointer;
+}
+
+.icon:hover {
+  transform: scale(1.05);
+  filter: brightness(0.8);
+}
+
+.google-icon {
+  padding: 0.3rem;
+
+  background-color: white;
+
+  border: 2px solid var(--cor-preta-900);
+  border-radius: 100%;
+
+  filter: brightness(1.5);
+  filter: contrast(1.5);
+}
+
+.facebook-icon {
+  filter: brightness(1.5);
+  filter: contrast(1.5);
+}

@@ -17,7 +17,8 @@
   height: 90%;
   margin-top: 1rem;
   background-color: var(--cor-fundo4);
-  border-radius: 15px;
+  border-radius: 20px;
+  border: 4.5px solid;
 }
 
 .elementos {

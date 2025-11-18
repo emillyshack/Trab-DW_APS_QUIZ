@@ -100,14 +100,12 @@ function Perfil() {
   // Cor de Fundo
   // --------------------------
 
-  const [corFundo, setCorFundo] = useState("#d0bfff");
-
   return (
     <div className={styles["tela-principal"]}>
-      <div className={`${styles.container} doodle-border`}>
-        <div className={styles["titulo-perfil"]}>
+      <div className={`${styles.container}`}>
+        <nav className={styles["titulo-perfil"]}>
           <h1>Seu Perfil 🫵</h1>
-        </div>
+        </nav>
 
         <div className={styles.elementos}>
           {/* FOTO + NOME */}
