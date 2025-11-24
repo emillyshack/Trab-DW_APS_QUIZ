@@ -22,7 +22,7 @@ function CriarQuizz() {
           {" "}
           <h1>Criar Quiz!</h1>
         </nav>
-        <div className={styles["elmt_1-2"]}>
+        <div className={styles["elmt_1-2-3"]}>
           <div className={styles["elemento-1"]}>
             <div
               className={`${styles["imagem-quizz"]} ${styles.hbz}`}
@@ -52,7 +52,10 @@ function CriarQuizz() {
             />
           </div>
           <div className={styles["elemento-2"]}>
-            <p>pnfvijhevijeovnvrojefoijvoievfmqekvevmnovoi</p>
+            <input type="text" className={`${styles["nome-quizz"]} doodle-border`} />
+          </div>
+          <div  className={styles["elemento-3"]}>
+            <p>pl,mvrlpevpemrvpervrvv</p>
           </div>
         </div>
       </div>

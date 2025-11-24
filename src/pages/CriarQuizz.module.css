@@ -23,13 +23,13 @@
 }
 
 /*========================== 
-Elemento 1 - 2
+Elemento 1 - 2 - 3
 ============================*/
 
 .elemento-1 {
   height: 50%;
 }
-.elmt_1-2 {
+.elmt_1-2-3 {
   display: flex;
   justify-content: center;
   justify-content: space-evenly;
@@ -37,7 +37,7 @@ Elemento 1 - 2
   margin-top: 1rem;
 }
 /*========================== 
-Elemento 1 (Imagem, Título, Privada ou Pública e Senha)
+Elemento 1 (Imagem)
 ============================*/
 .imagem-quizz {
   width: 80vw;
@@ -49,7 +49,7 @@ Elemento 1 (Imagem, Título, Privada ou Pública e Senha)
 }
 
 .hbz {
-  width: 100%;
+  width: 10vw;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   border: 4px solid;
@@ -60,3 +60,34 @@ Elemento 1 (Imagem, Título, Privada ou Pública e Senha)
   cursor: pointer;
   margin-bottom: 10px;
 }
+
+/*========================== 
+Elemento 2 (Título, Privada ou Pública e Senha)
+============================*/
+
+.elemento-2{
+  width: 40vw;
+display: flex;
+align-items: center;
+}
+
+.nome-quizz{
+  width: 100%;
+  height: 1rem;
+  background-color: var(--cor-branca-100);
+  padding: 1rem;
+  border-radius: 10px;
+  font-size: larger;
+}
+
+/*========================== 
+Elemento 3 (Matérias)
+============================*/
+
+.elemento-3{
+display: flex;
+align-items: center;
+}
+
+
+
