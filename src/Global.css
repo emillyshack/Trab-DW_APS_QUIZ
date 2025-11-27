@@ -41,12 +41,18 @@
   --cor-fundo2: #ffa94d;
   --cor-fundo3: #a5d8ff;
   --cor-fundo4: #d0bfff;
+  --cor-fundo5: #ccf8fc;
 
   /* Transições */
   --transicao1: 0.3s;
 
   /* Margens e padding */
   --padding-navbar: 8rem;
+}
+
+label {
+  font-size: 1.5rem;
+  display: block;
 }
 
 * {
@@ -65,7 +71,7 @@ a {
 
 p {
   font-family: "Schoolbell", cursive;
-  font-size: 1.7rem;
+  font-size: 1.2rem;
   color: var(--cor-preta-900);
 }
 
@@ -98,6 +104,15 @@ img {
   cursor: default;
   -webkit-user-drag: none;
   /* user-drag: none; */
+}
+
+input {
+  height: 2.4rem;
+  font-size: 1rem;
+
+  border: none;
+  border-radius: 6px;
+  padding: 1rem;
 }
 
 .column {

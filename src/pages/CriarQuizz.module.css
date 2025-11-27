@@ -10,7 +10,7 @@
   width: 95%;
   height: 90%;
   margin-top: 1rem;
-  background-color: var(--cor-fundo3);
+  background-color: var(--cor-fundo5);
   border-radius: 20px;
   border: 4.5px solid;
 }
@@ -20,6 +20,26 @@
   margin-top: 1rem;
   text-align: center;
   width: 100%;
+}
+
+/*========================== 
+Elementos Padrões
+============================*/
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.padrao1 {
+  display: flex;
+  align-items: center;
+}
+
+.padrao2 {
+  display: flex;
+  align-items: center;
+  margin-left: 2.5rem;
 }
 
 /*========================== 
@@ -40,7 +60,7 @@ Elemento 1 - 2 - 3
 Elemento 1 (Imagem)
 ============================*/
 .imagem-quizz {
-  width: 80vw;
+  width: 90vw;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   border: 10px solid var(--cor-preta-900);
@@ -49,7 +69,7 @@ Elemento 1 (Imagem)
 }
 
 .hbz {
-  width: 10vw;
+  width: 15vw;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   border: 4px solid;
@@ -65,13 +85,13 @@ Elemento 1 (Imagem)
 Elemento 2 (Título, Privada ou Pública e Senha)
 ============================*/
 
-.elemento-2{
-  width: 40vw;
-display: flex;
-align-items: center;
+.elemento-2 {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.nome-quizz{
+.nome-quizz {
   width: 100%;
   height: 1rem;
   background-color: var(--cor-branca-100);
@@ -80,14 +100,130 @@ align-items: center;
   font-size: larger;
 }
 
+.senha-quizz {
+  height: 1rem;
+  width: 15vw;
+  background-color: var(--cor-branca-100);
+  padding: 1rem 1rem 1rem 0;
+  border-radius: 10px;
+  font-size: larger;
+}
+
+.senha-confir {
+  height: 1rem;
+  width: 15vw;
+  background-color: var(--cor-branca-100);
+  padding: 1rem 1rem 1rem 0;
+  border-radius: 10px;
+  font-size: larger;
+}
+
+.priv-trancada {
+  margin-right: 10px;
+
+  border: 3.5px solid var(--cor-preta-900);
+  border-radius: 50%;
+  padding: 0.3rem;
+
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vizualizar-senha {
+  margin-left: 10px;
+
+  border: 3.5px solid var(--cor-preta-900);
+  border-radius: 50%;
+  padding: 0.3rem;
+
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.gerar-senha {
+  margin-left: 10px;
+
+  border: 3.5px solid var(--cor-preta-900);
+  border-radius: 50%;
+  padding: 0.3rem;
+
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /*========================== 
 Elemento 3 (Matérias)
 ============================*/
 
-.elemento-3{
-display: flex;
-align-items: center;
+.elemento-3 {
+  display: flex;
+  align-items: center;
 }
 
+.materias {
+  border-radius: 15px;
+  width: 23vw;
+  background-color: var(--cor-amarela-200);
+}
 
+.select-materias {
+  margin: 5px;
+  padding: 4px;
+  font-size: large;
+  border: 3.5px solid;
+  border-radius: 20px;
+}
 
+.adicionar-tag {
+  margin-left: 10px;
+
+  border: 3.5px solid var(--cor-preta-900);
+  border-radius: 50%;
+  padding: 0.3rem;
+
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.adicionar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+  margin-top: 5px;
+  border-bottom: 3.5px solid;
+}
+
+.tag {
+  padding: 6px 12px;
+  margin: 5px 0 5px 10px;
+  background-color: var(--cor-branca-100);
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  width: fit-content;
+  font-size: large;
+}
+
+.lista-materias {
+  max-height: 15vh;
+  overflow-y: scroll;
+  margin: 0.4rem;
+}
+
+/*========================== 
+Elemento 4 (Adicionar Pergunta)
+============================*/

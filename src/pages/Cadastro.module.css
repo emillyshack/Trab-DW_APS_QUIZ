@@ -6,6 +6,7 @@
   background-color: var(--cor-fundo1);
 
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -15,34 +16,54 @@
   width: 60%;
   border: solid 5px var(--cor-preta-900);
   border-radius: 50px;
+  padding: 2rem 3rem 2rem 3rem;
+  overflow-y: auto;
 
   background-color: var(--cor-fundo3);
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
+  position: relative;
+}
+
+.nav-logo {
+  width: 100%;
+  height: 6rem;
+}
+
+.logo-site {
+  height: 6rem;
+  position: fixed;
+  top: 1rem;
+  left: 3rem;
 }
 
 .inputs {
-  width: 80%;
+  width: 100%;
   height: auto;
 
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-around;
 }
 
 .container-input {
-  width: 10000rem;
+  min-width: 14rem;
+  width: 40%;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+
   display: flex;
   flex-direction: column;
+  align-items: start;
+  justify-content: center;
 }
 
 .input {
-  height: 1rem;
-  width: 90%;
-
+  width: 100%;
+  padding: 1rem;
   border: none;
   border-radius: 6px;
 }
@@ -65,27 +86,20 @@
   background-color: var(--cor-preta-900);
 }
 
-.input {
-  height: 6%;
-  width: 80%;
-  padding: 1rem;
-
-  border: none;
-  border-radius: 6px;
-}
-
 .texto {
   font-family: "Schoolbell", cursive;
   font-size: 1.2rem;
 }
 
-.botao-entrar {
-  width: 80%;
-  height: 10%;
+.botao-criar-conta {
+  width: 100%;
+  max-width: 17rem;
+  max-height: 3rem;
   border-radius: 15px;
 
   background-color: var(--cor-roxo-500);
   color: var(--cor-branca-100);
+  border: none;
 
   display: flex;
   align-items: center;
@@ -96,13 +110,13 @@
   font-family: "Lilita One";
 }
 
-.botao-entrar:hover {
+.botao-criar-conta:hover {
   transform: scale(1.05);
   filter: brightness(0.8);
 }
 
 .container-singin-with {
-  width: 80%;
+  min-width: 35%;
   height: auto;
 
   display: flex;
@@ -112,7 +126,7 @@
 }
 
 .singin-with {
-  width: 100%;
+  width: auto;
   height: 3rem;
   font-size: 1rem;
 
@@ -124,7 +138,7 @@
 }
 
 .icon {
-  height: 80%;
+  height: 94%;
   margin-right: 0.7rem;
 
   cursor: pointer;
@@ -150,4 +164,28 @@
 .facebook-icon {
   filter: brightness(1.5);
   filter: contrast(1.5);
+}
+
+.img-pessoa {
+  height: 10rem;
+  width: auto;
+
+  position: absolute;
+  bottom: 3rem;
+  right: 2rem;
+}
+
+@media screen and (max-width: 900px) {
+  .img-pessoa {
+    display: none;
+  }
+  .container {
+    width: 80%;
+    justify-content: start;
+  }
+  .singin-with {
+    width: auto;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
 }
