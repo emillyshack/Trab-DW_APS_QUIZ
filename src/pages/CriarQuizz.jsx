@@ -1,6 +1,71 @@
 import styles from "./CriarQuizz.module.css";
+
+import { useSprings, animated } from "@react-spring/web";
+import { useDrag } from "react-use-gesture";
+import clamp from "lodash.clamp";
+import swap from "lodash-move";
+
 import { useState, useRef } from "react";
 import { LockKeyhole, Settings, Eye, Plus } from "lucide-react";
+
+const fn = (order, active = false, originalIndex = 0, curIndex = 0, y = 0) => (index) =>
+  active && index === originalIndex
+    ? {
+        y: curIndex * 50 + y,
+        scale: 1.1,
+        zIndex: 1,
+        shadow: 15,
+        immediate: (key) => key === "y" || key === "zIndex",
+      }
+    : {
+        y: order.indexOf(index) * 50,
+        scale: 1,
+        zIndex: 0,
+        shadow: 1,
+        immediate: false,
+      };
+
+function DraggableList({ items }) {
+  const order = useRef(items.map((_, index) => index));
+
+  const [springs, api] = useSprings(items.length, fn(order.current));
+
+  const bind = useDrag(({ args: [originalIndex], active, movement: [, y] }) => {
+    const curIndex = order.current.indexOf(originalIndex);
+    const curRow = clamp(
+      Math.round((curIndex * 100 + y) / 100),
+      0,
+      items.length - 1
+    );
+
+    const newOrder = swap(order.current, curIndex, curRow);
+
+    api.start(fn(newOrder, active, originalIndex, curIndex, y));
+
+    if (!active) order.current = newOrder;
+  });
+
+  // --- RETORNO ADICIONADO: JSX da lista com springs ---
+  return (
+    <div className={styles.content} style={{ height: items.length * 50 }}>
+      {springs.map(({ zIndex, shadow, y, scale }, i) => (
+        <animated.div
+          {...bind(i)}
+          key={i}
+          style={{
+            zIndex,
+            boxShadow: shadow.to(
+              (s) => `rgba(0, 0, 0, 0.15) 0px ${s}px ${2 * s}px 0px`
+            ),
+            y,
+            scale,
+          }}
+          children={items[i]}
+        />
+      ))}
+    </div>
+  );
+}
 
 function CriarQuizz() {
   const [preview, setPreview] = useState(null);
@@ -152,7 +217,11 @@ function CriarQuizz() {
             </div>
           </div>
         </div>
-        <div className={styles["elmt_4-5"]}></div>
+        <div className={styles["elmt_4-5"]}>
+          <h1>Ordem das Matérias</h1>
+
+          <DraggableList items={["a", "b", "c", "d"]} />
+        </div>
       </div>
     </div>
   );
