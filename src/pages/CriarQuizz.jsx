@@ -8,65 +8,91 @@ import swap from "lodash-move";
 import { useState, useRef } from "react";
 import { LockKeyhole, Settings, Eye, Plus } from "lucide-react";
 
-const fn = (order, active = false, originalIndex = 0, curIndex = 0, y = 0) => (index) =>
-  active && index === originalIndex
-    ? {
-        y: curIndex * 50 + y,
-        scale: 1.1,
-        zIndex: 1,
-        shadow: 15,
-        immediate: (key) => key === "y" || key === "zIndex",
-      }
-    : {
-        y: order.indexOf(index) * 50,
-        scale: 1,
-        zIndex: 0,
-        shadow: 1,
-        immediate: false,
-      };
+// Função de animação (apenas reorganizada)
+const fn =
+  (order, active = false, originalIndex = 0, curIndex = 0, x = 0) =>
+  (index) =>
+    active && index === originalIndex
+      ? {
+          x: curIndex * 150 + x,
+          scale: 1.1,
+          zIndex: 1,
+          shadow: 15,
+          immediate: (key) => key === "x" || key === "zIndex",
+        }
+      : {
+          x: order.indexOf(index) * 150,
+          scale: 1,
+          zIndex: 0,
+          shadow: 1,
+          immediate: false,
+        };
 
+// -----------------------------------------------------------------------------
+// LISTA ARRASTÁVEL — HORIZONTAL
+// -----------------------------------------------------------------------------
 function DraggableList({ items }) {
   const order = useRef(items.map((_, index) => index));
-
   const [springs, api] = useSprings(items.length, fn(order.current));
 
-  const bind = useDrag(({ args: [originalIndex], active, movement: [, y] }) => {
+  const bind = useDrag(({ args: [originalIndex], active, movement: [x] }) => {
     const curIndex = order.current.indexOf(originalIndex);
-    const curRow = clamp(
-      Math.round((curIndex * 100 + y) / 100),
+
+    const curCol = clamp(
+      Math.round((curIndex * 150 + x) / 150),
       0,
       items.length - 1
     );
 
-    const newOrder = swap(order.current, curIndex, curRow);
+    const newOrder = swap(order.current, curIndex, curCol);
 
-    api.start(fn(newOrder, active, originalIndex, curIndex, y));
+    api.start(fn(newOrder, active, originalIndex, curIndex, x));
 
     if (!active) order.current = newOrder;
   });
 
-  // --- RETORNO ADICIONADO: JSX da lista com springs ---
   return (
-    <div className={styles.content} style={{ height: items.length * 50 }}>
-      {springs.map(({ zIndex, shadow, y, scale }, i) => (
+    <div
+      className={styles.content}
+      style={{
+        width: items.length * 150,
+        display: "flex",
+        position: "relative",
+        height: 80,
+      }}
+    >
+      {springs.map(({ x, scale, zIndex, shadow }, i) => (
         <animated.div
           {...bind(i)}
           key={i}
           style={{
+            position: "absolute",
+            width: 140,
+            height: 60,
+            background: "#fff",
+            borderRadius: 8,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "grab",
+            x,
+            scale,
             zIndex,
             boxShadow: shadow.to(
-              (s) => `rgba(0, 0, 0, 0.15) 0px ${s}px ${2 * s}px 0px`
+              (s) => `rgba(0,0,0,0.15) 0px ${s}px ${2 * s}px 0px`
             ),
-            y,
-            scale,
           }}
-          children={items[i]}
-        />
+        >
+          {items[i]}
+        </animated.div>
       ))}
     </div>
   );
 }
 
+// -----------------------------------------------------------------------------
+// TELA CRIAR QUIZZ
+// -----------------------------------------------------------------------------
 function CriarQuizz() {
   const [preview, setPreview] = useState(null);
   const inputRef = useRef(null);
@@ -80,8 +106,8 @@ function CriarQuizz() {
       setPreview(url);
     }
   };
-  //Adicionar Matérias que serão abordadas no Quizz
 
+  // TAGS DAS MATÉRIAS
   const [selected, setSelected] = useState("");
   const [tags, setTags] = useState([]);
 
@@ -99,10 +125,11 @@ function CriarQuizz() {
     <div className={`${styles["tela-principal"]}`}>
       <div className={`${styles.container}`}>
         <nav className={styles["titulo-criar"]}>
-          {" "}
           <h1>Criar Quiz!</h1>
         </nav>
+
         <div className={styles["elmt_1-2-3"]}>
+          {/* IMAGEM */}
           <div className={styles["elemento-1"]}>
             <div
               className={`${styles["imagem-quizz"]} ${styles.hbz}`}
@@ -112,11 +139,7 @@ function CriarQuizz() {
                 <img
                   src={preview}
                   alt="Foto de perfil"
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
               ) : (
                 <span>+</span>
@@ -131,6 +154,8 @@ function CriarQuizz() {
               style={{ display: "none" }}
             />
           </div>
+
+          {/* TÍTULO E SENHAS */}
           <div className={styles["elemento-2"]}>
             <label htmlFor="">Título:</label>
             <input
@@ -139,40 +164,48 @@ function CriarQuizz() {
               className={`${styles["nome-quizz"]} doodle-border`}
             />
             <br />
-            <div>
-              <div className={styles.column}>
-                <label htmlFor="">Senha:</label>
-                <div className={styles.padrao1}>
-                  <button className={styles["priv-trancada"]}>
-                    <LockKeyhole />
-                  </button>
+
+            <div className={styles.column}>
+              <label htmlFor="">Senha:</label>
+
+              <div className={styles.padrao1}>
+                <button className={styles["priv-trancada"]}>
+                  <LockKeyhole />
+                </button>
+
+                <input
+                  type="text"
+                  placeholder="Digitar Senha"
+                  className={`${styles["senha-quizz"]} doodle-border`}
+                />
+
+                <div className={styles.padrao2}>
                   <input
                     type="text"
-                    placeholder="Digitar Senha"
-                    className={`${styles["senha-quizz"]} doodle-border`}
+                    placeholder="Confirmar Senha"
+                    className={`${styles["senha-confir"]} doodle-border`}
                   />
-                  <div className={styles.padrao2}>
-                    <input
-                      type="text"
-                      placeholder="Confirmar Senha"
-                      className={`${styles["senha-confir"]} doodle-border`}
-                    />
-                    <button className={styles["vizualizar-senha"]}>
-                      <Eye />
-                    </button>
-                    <button className={styles["gerar-senha"]}>
-                      <Settings />
-                    </button>
-                  </div>
+
+                  <button className={styles["vizualizar-senha"]}>
+                    <Eye />
+                  </button>
+
+                  <button className={styles["gerar-senha"]}>
+                    <Settings />
+                  </button>
                 </div>
               </div>
             </div>
           </div>
+
+          {/* MATÉRIAS */}
           <div className={styles["elemento-3"]}>
             <div className={styles.column}>
               <h1>Matérias</h1>
+
               <div className={`${styles["materias"]} doodle-border`}>
                 <div className={styles.column}>
+                  {/* SELECT + ADD */}
                   <div className={styles.adicionar}>
                     <select
                       className={styles["select-materias"]}
@@ -194,6 +227,7 @@ function CriarQuizz() {
                       <option value="Filosofia">Filosofia</option>
                       <option value="Sociologia">Sociologia</option>
                     </select>
+
                     <button
                       onClick={addTags}
                       className={styles["adicionar-tag"]}
@@ -201,6 +235,8 @@ function CriarQuizz() {
                       <Plus />
                     </button>
                   </div>
+
+                  {/* TAGS */}
                   <div className={styles["lista-materias"]}>
                     {tags.map((tag) => (
                       <div
@@ -218,8 +254,7 @@ function CriarQuizz() {
           </div>
         </div>
         <div className={styles["elmt_4-5"]}>
-          <h1>Ordem das Matérias</h1>
-
+          <h1>Perguntas</h1>
           <DraggableList items={["a", "b", "c", "d"]} />
         </div>
       </div>

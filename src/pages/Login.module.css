@@ -122,7 +122,7 @@
 
 .erro {
   border: 2px solid var(--cor-vermelho-400);
-  animation: shake 0.1s infinite ease;
+  animation: shake 0.1s 3 ease;
 }
 
 .texto {

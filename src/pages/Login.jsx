@@ -27,6 +27,15 @@ function Login() {
     return;
   };
 
+  const verificarSenha = () => {
+    if (inputSenha.length < 6) {
+      setErrorSenha(true);
+      return;
+    }
+    setErrorSenha(true);
+    return;
+  };
+
   function diminuirVelPikachu() {
     velocidadePikachu - 3 <= 1
       ? setVelovidadePikachu(1)
@@ -73,10 +82,14 @@ function Login() {
             placeholder="Senha"
             id="input-senha"
             className={`${styles["input"]} ${errorSenha ? styles.erro : ""}`}
+            onChange={(e) => setInputSenha(e.target.value)}
           />
 
           <button
-            onClick={verificarEmail}
+            onClick={() => {
+              verificarEmail();
+              verificarSenha();
+            }}
             className={`${styles["botao-entrar"]} doodle-border`}
           >
             Entrar
