@@ -12,6 +12,7 @@ import CriarQuizz from "./pages/CriarQuizz";
 import Quizzes from "./pages/Quizzes";
 import "../src/Global.css";
 import NavBar from "./components/NavBar";
+import { LoginProvider } from "./LoginContext";
 
 function ComNavBar() {
   return (
@@ -28,13 +29,13 @@ function SemNavBar() {
 
 function App() {
   return (
-    <>
+    <LoginProvider>
       <Router>
         <Routes>
           {/* Com Navbar */}
           <Route element={<ComNavBar />}>
             <Route path="/Inicial">
-              <Route path="" element={<Home />} />
+              <Route index element={<Home />} />
               <Route path="Perfil" element={<Perfil />} />
               <Route path="CriarQuizz" element={<CriarQuizz />} />
               <Route path="Quizzes" element={<Quizzes />} />
@@ -49,7 +50,7 @@ function App() {
           {/*  */}
         </Routes>
       </Router>
-    </>
+    </LoginProvider>
   );
 }
 

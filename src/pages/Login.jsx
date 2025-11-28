@@ -7,9 +7,11 @@ import pessoaCadastro from "../assets/images/pessoa-cadastro.png";
 import gifPikachu from "../assets/images/pikachuCorrendo.gif";
 import arbusto from "../assets/images/arbusto-8-bit.png";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { LoginContexto } from "../LoginContext";
 
 function Login() {
+  const { usuario, setusuario } = useContext(LoginContexto);
   const [velocidadePikachu, setVelovidadePikachu] = useState(12);
 
   function diminuirVelPikachu() {
@@ -59,12 +61,9 @@ function Login() {
             className={`${styles["input"]}`}
           />
 
-          <Link
-            to="/Inicial"
-            className={`${styles["botao-entrar"]} doodle-border`}
-          >
+          <button className={`${styles["botao-entrar"]} doodle-border`}>
             Entrar
-          </Link>
+          </button>
 
           <div className={`${styles["linha-ou"]}`}>
             <hr className={`${styles["linha"]}`} />
