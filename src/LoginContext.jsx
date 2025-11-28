@@ -20,6 +20,7 @@ export function LoginProvider({ children }) {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         setUsuario(session?.user ?? null);
+        setLoading(false);
       }
     );
 
@@ -47,7 +48,15 @@ export function LoginProvider({ children }) {
 
   return (
     <LoginContexto.Provider
-      value={{ usuario, loading, logar, cadastrar, deslogar }}
+      value={{
+        usuario,
+        setUsuario,
+        loading,
+        setLoading,
+        logar,
+        cadastrar,
+        deslogar,
+      }}
     >
       {children}
     </LoginContexto.Provider>

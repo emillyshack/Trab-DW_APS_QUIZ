@@ -27,6 +27,33 @@ function Login() {
     setMostrarSenha((prev) => !prev);
   };
 
+  const handleLogin = async () => {
+    if (verificarEmail() && verificarSenha()) {
+      try {
+        const logado = await logar(inputEmail, inputSenha);
+        if (logado?.user) {
+          console.log("Logado: ", logado);
+        } else {
+          console.log("Erro no login: ", logado);
+          setErrorEmail(true);
+          setErrorSenha(true);
+          setEmailValido(false);
+          setSenhaValido(false);
+        }
+      } catch (e) {
+        console.log("Erro no login: ", e.message);
+        setErrorEmail(true);
+        setEmailValido(false);
+        setErrorSenha(true);
+        setSenhaValido(false);
+      }
+    } else {
+      verificarEmail();
+      verificarSenha();
+      console.log("Email ou senha inválido! ");
+    }
+  };
+
   const verificarEmail = () => {
     if (inputEmail.includes("@") && inputEmail.includes(".com")) {
       setErrorEmail(false);
@@ -136,16 +163,7 @@ function Login() {
           </div>
 
           <button
-            onClick={() => {
-              if (verificarEmail() && verificarSenha()) {
-                logar(inputEmail, inputSenha);
-                console.log("Logado");
-              } else {
-                verificarEmail();
-                verificarSenha();
-                console.log("Email ou senha inválido! ");
-              }
-            }}
+            onClick={handleLogin}
             className={`${styles["botao-entrar"]} doodle-border`}
           >
             Entrar

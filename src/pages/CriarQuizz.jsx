@@ -188,7 +188,7 @@ function CriarQuizz() {
         <div className={styles["nivel-dificuldade"]}>
           <div>
             <div>
-              <h2>Nível de Dificuldade</h2>
+              <h2>Nível de Dificuldade:</h2>
               <br />
               <button
                 className={`${styles["botao-dificuldade"]}  ${styles["m-facil"]}`}
