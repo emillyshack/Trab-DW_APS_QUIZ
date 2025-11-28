@@ -120,11 +120,6 @@
   width: 80%;
 }
 
-.erro {
-  border: 2px solid var(--cor-vermelho-400);
-  animation: shake 0.1s infinite ease;
-}
-
 .texto {
   font-family: "Schoolbell", cursive;
   font-size: 1.5rem;
@@ -300,26 +295,20 @@
 @keyframes shake {
   0% {
     transform: translateX(0);
-    transform: rotate(0);
   }
   20% {
-    transform: translateX(-40px);
-    transform: rotate(-50deg);
+    transform: translateX(-4px);
   }
   40% {
-    transform: translateX(40px);
-    transform: rotate(50deg);
+    transform: translateX(4px);
   }
   60% {
-    transform: translateX(-40px);
-    transform: rotate(-50deg);
+    transform: translateX(-4px);
   }
   80% {
-    transform: translateX(40px);
-    transform: rotate(180deg);
+    transform: translateX(4px);
   }
   100% {
     transform: translateX(0);
-    transform: rotate(0deg);
   }
 }

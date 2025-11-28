@@ -8,18 +8,22 @@ export function LoginProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setUsuario(data.session?.user ?? null);
-      setLoading(false);
-    });
+    async function carregarSessao() {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      setUsuario(session?.user ?? null);
+    }
 
-    const { data: listener } = supabase.auth.onAuthStateChange(
+    carregarSessao();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
         setUsuario(session?.user ?? null);
       }
     );
 
-    return () => listener.subscription.unsubscribe();
+    return () => authListener.subscription.unsubscribe();
   }, []);
 
   const logar = async (email, password) => {

@@ -171,10 +171,6 @@
   -ms-overflow-style: none;
 }
 
-::-webkit-scrollbar {
-  display: none;
-}
-
 .bio-celula {
   height: 12rem;
   display: flex;
@@ -355,11 +351,11 @@
 
 /* Inputs de leitura / edição */
 
-input:read-only {
+/* input:read-only {
   background: transparent;
   cursor: default;
 }
 
 input:not(:read-only) {
   border-color: #00f;
-}
+} */

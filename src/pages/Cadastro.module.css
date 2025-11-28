@@ -12,7 +12,8 @@
 }
 
 .container {
-  height: 80%;
+  height: auto;
+  min-height: 35rem;
   width: 60%;
   border: solid 5px var(--cor-preta-900);
   border-radius: 50px;
@@ -30,14 +31,15 @@
 
 .nav-logo {
   width: 100%;
-  height: 6rem;
+  height: 7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .logo-site {
   height: 6rem;
-  position: fixed;
-  top: 1rem;
-  left: 3rem;
+  width: auto;
 }
 
 .inputs {
@@ -180,8 +182,10 @@
     display: none;
   }
   .container {
-    width: 80%;
+    width: 85%;
     justify-content: start;
+    align-items: center;
+    padding: 1rem 2rem 1rem 2rem;
   }
   .singin-with {
     width: auto;

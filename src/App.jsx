@@ -13,6 +13,7 @@ import Quizzes from "./pages/Quizzes";
 import "../src/Global.css";
 import NavBar from "./components/NavBar";
 import { LoginProvider } from "./LoginContext";
+import LoadingTeste from "./pages/LoadingTeste";
 
 function ComNavBar() {
   return (
@@ -44,6 +45,7 @@ function App() {
           {/* Sem NavBar */}
           <Route element={<SemNavBar />}>
             <Route path="/" element={<Login />} />
+            <Route path="/Loading" element={<LoadingTeste />} />
             <Route path="/Cadastro" element={<Cadastro />} />
           </Route>
 

@@ -1,4 +1,4 @@
-import styles from "./Login.module.css";
+import styles from "./LoadingTeste.module.css";
 import siteImg from "../assets/images/ImagemSite.png";
 import logo from "../assets/images/Quizzy_logo.png";
 import googleIcon from "../assets/images/google-icon.png";
@@ -9,22 +9,18 @@ import arbusto from "../assets/images/arbusto-8-bit.png";
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { LoginContexto } from "../LoginContext";
+import LoadingLogin from "../components/LoadingLogin";
 
 function Login() {
   const { usuario, setusuario, logar } = useContext(LoginContexto);
   const [velocidadePikachu, setVelovidadePikachu] = useState(12);
   const [inputEmail, setInputEmail] = useState("");
   const [inputSenha, setInputSenha] = useState("");
-  const [errorEmail, setErrorEmail] = useState(false);
-  const [errorSenha, setErrorSenha] = useState(false);
 
   const verificarEmail = () => {
-    if (inputEmail.includes("@") && inputEmail.includes(".com")) {
-      setErrorEmail(false);
+    if (inputEmail) {
       return;
     }
-    setErrorEmail(true);
-    return;
   };
 
   function diminuirVelPikachu() {
@@ -36,6 +32,7 @@ function Login() {
 
   return (
     <div className={`${styles["container"]}`}>
+      <LoadingLogin />
       <img src={logo} alt="Logo do site" className={styles["logo-site"]} />
       <div className={`${styles["container-login"]}`}>
         <div className={styles["container-pikachu"]}>
@@ -64,7 +61,7 @@ function Login() {
             name="email"
             placeholder="Email"
             id="input-email"
-            className={`${styles["input"]} ${errorEmail ? styles.erro : ""}`}
+            className={`${styles["input"]}`}
             onChange={(e) => setInputEmail(e.target.value)}
           />
           <input
@@ -72,13 +69,10 @@ function Login() {
             name="senha"
             placeholder="Senha"
             id="input-senha"
-            className={`${styles["input"]} ${errorSenha ? styles.erro : ""}`}
+            className={`${styles["input"]}`}
           />
 
-          <button
-            onClick={verificarEmail}
-            className={`${styles["botao-entrar"]} doodle-border`}
-          >
+          <button className={`${styles["botao-entrar"]} doodle-border`}>
             Entrar
           </button>
 
