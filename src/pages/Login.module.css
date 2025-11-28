@@ -120,9 +120,49 @@
   width: 80%;
 }
 
+.input-senha {
+  height: 100%;
+  width: 100%;
+}
+
+.container-input-senha {
+  height: 2.4rem;
+  width: 80%;
+  position: relative;
+  display: inline-flex;
+  border: none;
+  border-radius: 6px;
+}
+
+.mostrar-senha {
+  position: absolute;
+  height: 100%;
+  width: 2.4rem;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.pokebola {
+  height: 65%;
+  width: auto;
+  cursor: pointer;
+}
+
 .erro {
   border: 2px solid var(--cor-vermelho-400);
   animation: shake 0.1s 3 ease;
+}
+
+.valido {
+  border: 2px solid var(--cor-verde-400);
 }
 
 .texto {
@@ -299,27 +339,26 @@
 
 @keyframes shake {
   0% {
-    transform: translateX(0);
-    transform: rotate(0);
+    transform: skew(0deg, 0) scale(2);
   }
   20% {
-    transform: translateX(-40px);
-    transform: rotate(-50deg);
+    transform: skew(-20deg, -20deg) scale(2);
   }
   40% {
-    transform: translateX(40px);
-    transform: rotate(50deg);
+    transform: skew(20deg, 20deg) scale(2);
   }
   60% {
-    transform: translateX(-40px);
-    transform: rotate(-50deg);
+    transform: skew(-20deg, -20deg) scale(2);
   }
   80% {
-    transform: translateX(40px);
-    transform: rotate(180deg);
+    transform: skew(20deg, 20deg) scale(2);
   }
   100% {
-    transform: translateX(0);
-    transform: rotate(0deg);
+    transform: skew(0deg, 0) scale(2);
+  }
+}
+
+@keyframes correto {
+  0% {
   }
 }

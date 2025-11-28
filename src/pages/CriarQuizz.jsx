@@ -1,98 +1,11 @@
 import styles from "./CriarQuizz.module.css";
-
 import { useSprings, animated } from "@react-spring/web";
 import { useDrag } from "react-use-gesture";
 import clamp from "lodash.clamp";
 import swap from "lodash-move";
-
 import { useState, useRef } from "react";
 import { LockKeyhole, Settings, Eye, Plus } from "lucide-react";
 
-// Função de animação (apenas reorganizada)
-const fn =
-  (order, active = false, originalIndex = 0, curIndex = 0, x = 0) =>
-  (index) =>
-    active && index === originalIndex
-      ? {
-          x: curIndex * 150 + x,
-          scale: 1.1,
-          zIndex: 1,
-          shadow: 15,
-          immediate: (key) => key === "x" || key === "zIndex",
-        }
-      : {
-          x: order.indexOf(index) * 150,
-          scale: 1,
-          zIndex: 0,
-          shadow: 1,
-          immediate: false,
-        };
-
-// -----------------------------------------------------------------------------
-// LISTA ARRASTÁVEL — HORIZONTAL
-// -----------------------------------------------------------------------------
-function DraggableList({ items }) {
-  const order = useRef(items.map((_, index) => index));
-  const [springs, api] = useSprings(items.length, fn(order.current));
-
-  const bind = useDrag(({ args: [originalIndex], active, movement: [x] }) => {
-    const curIndex = order.current.indexOf(originalIndex);
-
-    const curCol = clamp(
-      Math.round((curIndex * 150 + x) / 150),
-      0,
-      items.length - 1
-    );
-
-    const newOrder = swap(order.current, curIndex, curCol);
-
-    api.start(fn(newOrder, active, originalIndex, curIndex, x));
-
-    if (!active) order.current = newOrder;
-  });
-
-  return (
-    <div
-      className={styles.content}
-      style={{
-        width: items.length * 150,
-        display: "flex",
-        position: "relative",
-        height: 80,
-      }}
-    >
-      {springs.map(({ x, scale, zIndex, shadow }, i) => (
-        <animated.div
-          {...bind(i)}
-          key={i}
-          style={{
-            position: "absolute",
-            width: 140,
-            height: 60,
-            background: "#fff",
-            borderRadius: 8,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "grab",
-            x,
-            scale,
-            zIndex,
-            boxShadow: shadow.to(
-              (s) => `rgba(0,0,0,0.15) 0px ${s}px ${2 * s}px 0px`
-            ),
-          }}
-        >
-          {items[i]}
-        </animated.div>
-      ))}
-    </div>
-  );
-}
-
-// -----------------------------------------------------------------------------
-// TELA CRIAR QUIZZ
-// -----------------------------------------------------------------------------
 function CriarQuizz() {
   const [preview, setPreview] = useState(null);
   const inputRef = useRef(null);
@@ -107,7 +20,6 @@ function CriarQuizz() {
     }
   };
 
-  // TAGS DAS MATÉRIAS
   const [selected, setSelected] = useState("");
   const [tags, setTags] = useState([]);
 
@@ -122,8 +34,8 @@ function CriarQuizz() {
   }
 
   return (
-    <div className={`${styles["tela-principal"]}`}>
-      <div className={`${styles.container}`}>
+    <div className={styles["tela-principal"]}>
+      <div className={styles.container}>
         <nav className={styles["titulo-criar"]}>
           <h1>Criar Quiz!</h1>
         </nav>
@@ -155,19 +67,17 @@ function CriarQuizz() {
             />
           </div>
 
-          {/* TÍTULO E SENHAS */}
+          {/* TÍTULO + SENHA */}
           <div className={styles["elemento-2"]}>
-            <label htmlFor="">Título:</label>
+            <label>Título:</label>
             <input
               type="text"
               placeholder="Este é o Título do seu Quizz"
               className={`${styles["nome-quizz"]} doodle-border`}
             />
-            <br />
 
             <div className={styles.column}>
-              <label htmlFor="">Senha:</label>
-
+              <label>Senha:</label>
               <div className={styles.padrao1}>
                 <button className={styles["priv-trancada"]}>
                   <LockKeyhole />
@@ -205,7 +115,6 @@ function CriarQuizz() {
 
               <div className={`${styles["materias"]} doodle-border`}>
                 <div className={styles.column}>
-                  {/* SELECT + ADD */}
                   <div className={styles.adicionar}>
                     <select
                       className={styles["select-materias"]}
@@ -236,7 +145,6 @@ function CriarQuizz() {
                     </button>
                   </div>
 
-                  {/* TAGS */}
                   <div className={styles["lista-materias"]}>
                     {tags.map((tag) => (
                       <div
@@ -253,9 +161,62 @@ function CriarQuizz() {
             </div>
           </div>
         </div>
-        <div className={styles["elmt_4-5"]}>
-          <h1>Perguntas</h1>
-          <DraggableList items={["a", "b", "c", "d"]} />
+
+        {/* PERGUNTAS */}
+
+        <nav className={styles["titulo-perguntas"]}>
+          <h2>Adicionar Perguntas:</h2>
+        </nav>
+        <div className={styles["secao-perguntas"]}>
+          <div className={styles["elmt_4-5"]}>
+            <div className={styles["elemento-4"]}>
+              <button className={styles["adicionar-pergunta"]}>
+                <Plus />
+              </button>
+            </div>
+            <div className={styles.column}>
+              <button className={`${styles["salvar-mudancas"]} doodle-border`}>
+                Criar Quizz
+              </button>
+              <br />
+              <button className={`${styles["cancelar-quizz"]} doodle-border`}>
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className={styles["nivel-dificuldade"]}>
+          <div>
+            <div>
+              <h2>Nível de Dificuldade</h2>
+              <br />
+              <button
+                className={`${styles["botao-dificuldade"]}  ${styles["m-facil"]}`}
+              >
+                Muito Fácil
+              </button>
+              <button
+                className={`${styles["botao-dificuldade"]}  ${styles["facil"]}`}
+              >
+                Fácil
+              </button>
+              <button
+                className={`${styles["botao-dificuldade"]}  ${styles["normal"]}`}
+              >
+                Normal
+              </button>
+              <button
+                className={`${styles["botao-dificuldade"]}  ${styles["dificil"]}`}
+              >
+                Difícil
+              </button>
+              <button
+                className={`${styles["botao-dificuldade"]}  ${styles["e-dificil"]}`}
+              >
+                Extremamente Difícil
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

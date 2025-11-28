@@ -6,6 +6,8 @@ import facebookIcon from "../assets/images/facebook-icon.png";
 import pessoaCadastro from "../assets/images/pessoa-cadastro.png";
 import gifPikachu from "../assets/images/pikachuCorrendo.gif";
 import arbusto from "../assets/images/arbusto-8-bit.png";
+import passbolaAberta from "../assets/images/passbola-aberta.png";
+import passbolaFechada from "../assets/images/passbola-fechada.png";
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { LoginContexto } from "../LoginContext";
@@ -17,23 +19,42 @@ function Login() {
   const [inputSenha, setInputSenha] = useState("");
   const [errorEmail, setErrorEmail] = useState(false);
   const [errorSenha, setErrorSenha] = useState(false);
+  const [emailValido, setEmailValido] = useState(false);
+  const [senhaValido, setSenhaValido] = useState(false);
+  const [mostrarSenha, setMostrarSenha] = useState(false);
+
+  const toggleSenha = () => {
+    setMostrarSenha((prev) => !prev);
+  };
 
   const verificarEmail = () => {
     if (inputEmail.includes("@") && inputEmail.includes(".com")) {
       setErrorEmail(false);
-      return;
+      setEmailValido(true);
+      return true;
     }
-    setErrorEmail(true);
-    return;
+    setErrorEmail(false);
+    setEmailValido(false);
+
+    setTimeout(() => {
+      setErrorEmail(true);
+    }, 100);
+    return false;
   };
 
   const verificarSenha = () => {
-    if (inputSenha.length < 6) {
-      setErrorSenha(true);
-      return;
+    if (inputSenha.length > 7) {
+      setErrorSenha(false);
+      setSenhaValido(true);
+      return true;
     }
-    setErrorSenha(true);
-    return;
+    setErrorSenha(false);
+    setSenhaValido(false);
+
+    setTimeout(() => {
+      setErrorSenha(true);
+    }, 100);
+    return false;
   };
 
   function diminuirVelPikachu() {
@@ -73,22 +94,57 @@ function Login() {
             name="email"
             placeholder="Email"
             id="input-email"
-            className={`${styles["input"]} ${errorEmail ? styles.erro : ""}`}
+            className={`${styles["input"]} ${errorEmail ? styles.erro : ""} ${
+              emailValido ? styles.valido : ""
+            }`}
             onChange={(e) => setInputEmail(e.target.value)}
           />
-          <input
-            type="password"
-            name="senha"
-            placeholder="Senha"
-            id="input-senha"
-            className={`${styles["input"]} ${errorSenha ? styles.erro : ""}`}
-            onChange={(e) => setInputSenha(e.target.value)}
-          />
+          <div
+            className={`${styles["container-input-senha"]} ${
+              errorSenha ? styles.erro : ""
+            }`}
+          >
+            <input
+              type={mostrarSenha ? "text" : "password"}
+              name="senha"
+              placeholder="Senha"
+              id="input-senha"
+              className={`${styles["input"]} ${styles["input-senha"]} ${
+                senhaValido ? styles.valido : ""
+              }`}
+              onChange={(e) => setInputSenha(e.target.value)}
+            />
+            <button
+              title="Ver senha"
+              className={styles["mostrar-senha"]}
+              onClick={toggleSenha}
+            >
+              {mostrarSenha ? (
+                <img
+                  className={styles["pokebola"]}
+                  src={passbolaAberta}
+                  alt="Mostrar senha"
+                />
+              ) : (
+                <img
+                  className={styles["pokebola"]}
+                  src={passbolaFechada}
+                  alt="Não mostrar senha"
+                />
+              )}{" "}
+            </button>
+          </div>
 
           <button
             onClick={() => {
-              verificarEmail();
-              verificarSenha();
+              if (verificarEmail() && verificarSenha()) {
+                logar(inputEmail, inputSenha);
+                console.log("Logado");
+              } else {
+                verificarEmail();
+                verificarSenha();
+                console.log("Email ou senha inválido! ");
+              }
             }}
             className={`${styles["botao-entrar"]} doodle-border`}
           >

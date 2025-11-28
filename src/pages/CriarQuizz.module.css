@@ -223,11 +223,139 @@ Elemento 3 (Matérias)
   overflow-y: scroll;
   margin: 0.4rem;
 }
+.lista-materias::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
 
 /*========================== 
 Elemento 4-5 (Adicionar Pergunta e Salvar/Cancelar Quizz)
 ============================*/
 
+.elmt_4-5 {
+  display: flex;
+  align-items: center;
+  margin-left: 3rem;
+  height: 100%;
+  width: 100%;
+  scrollbar-width: auto;
+}
+
+.secao-perguntas {
+  display: flex;
+}
+
+.titulo-perguntas {
+  font-size: x-large;
+  margin-bottom: 1rem;
+  text-align: center;
+  width: 100%;
+}
+
 /*========================== 
-Elemento 4-5 (Adicionar Pergunta)
+Elemento 4 (Adicionar Pergunta)
 ============================*/
+
+.elemento-4 {
+  display: flex;
+  align-items: center;
+
+  margin-left: 3rem;
+  height: 100%;
+  width: 75%;
+  scrollbar-width: auto;
+}
+
+.adicionar-pergunta {
+  height: 10rem;
+  width: 10rem;
+
+  border-radius: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.adicionar-pergunta:hover {
+  transform: scale(1.1);
+}
+
+/*========================== 
+Elemento 4 (Adicionar Pergunta)
+============================*/
+
+.salvar-mudancas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--cor-verde-200);
+  padding: 0.5rem;
+  border-radius: 10px;
+  font-size: xx-large;
+  cursor: pointer;
+}
+
+.salvar-mudancas:hover {
+  transform: scale(1.1);
+}
+
+.cancelar-quizz {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--cor-vermelho-200);
+  padding: 0.5rem;
+  border-radius: 10px;
+  font-size: xx-large;
+  cursor: pointer;
+}
+.cancelar-quizz:hover {
+  transform: scale(1.1);
+}
+
+/*========================== 
+Elemento Extra (Nivel de Dificuldade)
+============================*/
+
+.nivel-dificuldade {
+  margin-top: 2rem;
+  margin-left: 3rem;
+  width: 100%;
+}
+.botao-dificuldade {
+  border-radius: 15px;
+  border: solid 3px;
+  font-size: large;
+  padding: 0.4rem;
+  width: 15vw;
+  margin-right: 1rem;
+
+  cursor: pointer;
+}
+
+.botao-dificuldade:hover {
+  transform: scale(1.1);
+}
+
+.m-facil {
+  background-color: var(--cor-verde-300);
+}
+
+.facil {
+  background-color: var(--cor-verde-200);
+}
+
+.normal {
+  background-color: var(--cor-amarela-200);
+}
+
+.dificil {
+  background-color: var(--cor-vermelho-200);
+}
+
+.e-dificil {
+  background-color: var(--cor-vermelho-300);
+}
