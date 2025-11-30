@@ -1,4 +1,5 @@
 import styles from "./Login.module.css";
+import LoadingLogin from "../components/LoadingLogin";
 import siteImg from "../assets/images/ImagemSite.png";
 import logo from "../assets/images/Quizzy_logo.png";
 import googleIcon from "../assets/images/google-icon.png";
@@ -8,12 +9,13 @@ import gifPikachu from "../assets/images/pikachuCorrendo.gif";
 import arbusto from "../assets/images/arbusto-8-bit.png";
 import passbolaAberta from "../assets/images/passbola-aberta.png";
 import passbolaFechada from "../assets/images/passbola-fechada.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { LoginContexto } from "../LoginContext";
 
 function Login() {
-  const { usuario, setusuario, logar } = useContext(LoginContexto);
+  const navigate = useNavigate();
+  const { usuario, setusuario, logar, loading } = useContext(LoginContexto);
   const [velocidadePikachu, setVelovidadePikachu] = useState(12);
   const [inputEmail, setInputEmail] = useState("");
   const [inputSenha, setInputSenha] = useState("");
@@ -22,6 +24,7 @@ function Login() {
   const [emailValido, setEmailValido] = useState(false);
   const [senhaValido, setSenhaValido] = useState(false);
   const [mostrarSenha, setMostrarSenha] = useState(false);
+  const [carregando, setCarregando] = useState(false);
 
   const toggleSenha = () => {
     setMostrarSenha((prev) => !prev);
@@ -33,6 +36,7 @@ function Login() {
         const logado = await logar(inputEmail, inputSenha);
         if (logado?.user) {
           console.log("Logado: ", logado);
+          navigate("/Inicial");
         } else {
           console.log("Erro no login: ", logado);
           setErrorEmail(true);
@@ -57,7 +61,11 @@ function Login() {
   const verificarEmail = () => {
     if (inputEmail.includes("@") && inputEmail.includes(".com")) {
       setErrorEmail(false);
-      setEmailValido(true);
+      setEmailValido(false);
+
+      setTimeout(() => {
+        setEmailValido(true);
+      }, 100);
       return true;
     }
     setErrorEmail(false);
@@ -72,7 +80,11 @@ function Login() {
   const verificarSenha = () => {
     if (inputSenha.length > 7) {
       setErrorSenha(false);
-      setSenhaValido(true);
+      setSenhaValido(false);
+
+      setTimeout(() => {
+        setSenhaValido(true);
+      }, 100);
       return true;
     }
     setErrorSenha(false);
@@ -93,6 +105,7 @@ function Login() {
 
   return (
     <div className={`${styles["container"]}`}>
+      {loading ? <LoadingLogin /> : ""}
       <img src={logo} alt="Logo do site" className={styles["logo-site"]} />
       <div className={`${styles["container-login"]}`}>
         <div className={styles["container-pikachu"]}>
@@ -141,25 +154,29 @@ function Login() {
               }`}
               onChange={(e) => setInputSenha(e.target.value)}
             />
-            <button
-              title="Ver senha"
-              className={styles["mostrar-senha"]}
-              onClick={toggleSenha}
-            >
-              {mostrarSenha ? (
-                <img
-                  className={styles["pokebola"]}
-                  src={passbolaAberta}
-                  alt="Mostrar senha"
-                />
-              ) : (
-                <img
-                  className={styles["pokebola"]}
-                  src={passbolaFechada}
-                  alt="Não mostrar senha"
-                />
-              )}{" "}
-            </button>
+            {inputSenha ? (
+              <button
+                title="Ver senha"
+                className={styles["mostrar-senha"]}
+                onClick={toggleSenha}
+              >
+                {mostrarSenha ? (
+                  <img
+                    className={styles["pokebola"]}
+                    src={passbolaAberta}
+                    alt="Mostrar senha"
+                  />
+                ) : (
+                  <img
+                    className={styles["pokebola"]}
+                    src={passbolaFechada}
+                    alt="Não mostrar senha"
+                  />
+                )}{" "}
+              </button>
+            ) : (
+              ""
+            )}
           </div>
 
           <button

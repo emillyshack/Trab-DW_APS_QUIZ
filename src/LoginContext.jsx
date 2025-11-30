@@ -5,7 +5,7 @@ export const LoginContexto = createContext();
 
 export function LoginProvider({ children }) {
   const [usuario, setUsuario] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function carregarSessao() {
@@ -13,6 +13,7 @@ export function LoginProvider({ children }) {
         data: { session },
       } = await supabase.auth.getSession();
       setUsuario(session?.user ?? null);
+      setLoading(true);
     }
 
     carregarSessao();
@@ -28,22 +29,36 @@ export function LoginProvider({ children }) {
   }, []);
 
   const logar = async (email, password) => {
+    setLoading(true);
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
-    if (error) throw error;
-    return data;
+    if (error) {
+      setLoading(false);
+      throw error;
+    } else {
+      setLoading(false);
+      return data;
+    }
   };
 
   const cadastrar = async (email, password) => {
+    setLoading(true);
     const { data, error } = await supabase.auth.signUp({ email, password });
-    if (error) throw error;
-    return data;
+    if (error) {
+      setLoading(false);
+      throw error;
+    } else {
+      setLoading(false);
+      return data;
+    }
   };
 
   const deslogar = async () => {
+    setLoading(true);
     await supabase.auth.signOut();
+    setLoading(false);
   };
 
   return (

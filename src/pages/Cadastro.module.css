@@ -65,9 +65,51 @@
 
 .input {
   width: 100%;
-  padding: 1rem;
+}
+
+.input-senha {
+  height: 100%;
+  width: 100%;
+}
+
+.container-input-senha {
+  height: 2.4rem;
+  width: 100%;
+  position: relative;
+  display: inline-flex;
   border: none;
   border-radius: 6px;
+}
+
+.mostrar-senha {
+  position: absolute;
+  height: 100%;
+  width: 2.4rem;
+  right: 0;
+  bottom: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.pokebola {
+  height: 65%;
+  width: auto;
+  cursor: pointer;
+}
+
+.erro {
+  border: 2px solid var(--cor-vermelho-400);
+  animation: shake 0.1s 3 ease;
+}
+
+.valido {
+  border: 2px solid var(--cor-verde-400);
 }
 
 .linha-ou {
