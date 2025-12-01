@@ -22,6 +22,7 @@ export function LoginProvider({ children }) {
       (_event, session) => {
         setUsuario(session?.user ?? null);
         setLoading(false);
+        console.log(loading);
       }
     );
 

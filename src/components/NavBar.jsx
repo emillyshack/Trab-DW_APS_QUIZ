@@ -1,4 +1,4 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styles from "./NavBar.module.css";
 import logo from "../assets/images/Quizzy_logo.png";
 import ditto from "../assets/images/Ditto.png";

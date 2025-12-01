@@ -1,5 +1,7 @@
 import styles from "./CriarQuizz.module.css";
+import BotaoAdd from "../components/BotaoAdicionarPerg";
 import { useState, useRef } from "react";
+
 import { LockKeyhole, Settings, Eye, Plus } from "lucide-react";
 
 function CriarQuizz() {
@@ -166,13 +168,12 @@ function CriarQuizz() {
         <div className={styles["secao-perguntas"]}>
           <div className={styles["elmt_4-5"]}>
             <div className={styles["elemento-4"]}>
-              <button
-                className={`${styles["adicionar-pergunta"]} doodle-border`}
-              >
-                <Plus />
-              </button>
+              <BotaoAdd />
             </div>
             <div className={styles.column}>
+              <button className={`${styles["salvar-mudancas"]} doodle-border`}>
+                Criar Quizz
+              </button>
               <br />
               <button className={`${styles["cancelar-quizz"]} doodle-border`}>
                 Cancelar

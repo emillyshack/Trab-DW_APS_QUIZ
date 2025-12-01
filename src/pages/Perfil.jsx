@@ -1,14 +1,18 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { Check, Plus, X, Pencil } from "lucide-react";
 import styles from "./Perfil.module.css";
+import { GeralContexto } from "../GeralContext";
+import { LoginContexto } from "../LoginContext";
 
 function Perfil() {
+  const { pessoa } = useContext(GeralContexto);
+  const { usuario } = useContext(LoginContexto);
   // --------------------------
   // Valores e edição de inputs
   // --------------------------
   const [valores, setValores] = useState({
-    nome: "Anônimo",
-    email: "",
+    nome: pessoa.nome,
+    email: usuario.email,
     instagram: "",
   });
 
@@ -33,7 +37,7 @@ function Perfil() {
   // --------------------------
   // Descrição
   // --------------------------
-  const [descricao, setDescricao] = useState("");
+  const [descricao, setDescricao] = useState(pessoa.biografia);
   const [textareaMod, setTextareaMod] = useState(false);
 
   // --------------------------

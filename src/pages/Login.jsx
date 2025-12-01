@@ -12,12 +12,10 @@ import passbolaFechada from "../assets/images/passbola-fechada.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { LoginContexto } from "../LoginContext";
-import { GeralContexto } from "../GeralContext";
 
 function Login() {
   const navigate = useNavigate();
-  const { usuario, setusuario, logar, loading } = useContext(LoginContexto);
-  const { getUser } = useContext(GeralContexto);
+  const { logar } = useContext(LoginContexto);
   const [velocidadePikachu, setVelovidadePikachu] = useState(12);
   const [inputEmail, setInputEmail] = useState("");
   const [inputSenha, setInputSenha] = useState("");
@@ -26,7 +24,6 @@ function Login() {
   const [emailValido, setEmailValido] = useState(false);
   const [senhaValido, setSenhaValido] = useState(false);
   const [mostrarSenha, setMostrarSenha] = useState(false);
-  const [carregando, setCarregando] = useState(false);
 
   const toggleSenha = () => {
     setMostrarSenha((prev) => !prev);
@@ -37,9 +34,7 @@ function Login() {
       try {
         const logado = await logar(inputEmail, inputSenha);
         if (logado?.user) {
-          const user = await getUser(logado.user["id"]);
           console.log("Logado: ", logado);
-          console.log(user);
           navigate("/Inicial");
         } else {
           console.log("Erro no login: ", logado);
@@ -109,7 +104,6 @@ function Login() {
 
   return (
     <div className={`${styles["container"]}`}>
-      {loading ? <LoadingLogin /> : ""}
       <img src={logo} alt="Logo do site" className={styles["logo-site"]} />
       <div className={`${styles["container-login"]}`}>
         <div className={styles["container-pikachu"]}>

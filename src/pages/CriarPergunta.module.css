@@ -1,0 +1,138 @@
+.tela-principal {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  padding-top: var(--padding-navbar);
+  background-color: var(--cor-fundo1);
+  display: flex;
+
+  justify-content: center;
+}
+
+.container {
+  width: 97%;
+  height: 97%;
+}
+
+.titulo-criar {
+  font-size: x-large;
+  margin-top: 1rem;
+  text-align: center;
+  width: 100%;
+}
+
+/*========================== 
+Padrões 1 - 2
+============================*/
+
+.padrao1 {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.padrao2 {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+/*========================== 
+Elemento 1 - 2 - 3
+============================*/
+
+.elmt-1-2-3 {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+/*========================== 
+Elemento 1 ( Seleção de Imagem )
+============================*/
+
+.selecionar-imagem {
+  height: 45vh;
+  height: 45dvh;
+  width: 45vw;
+
+  display: flex;
+  justify-content: end;
+  align-items: end;
+
+  border: 2px solid var(--cor-preta-900);
+  border-radius: 30px;
+}
+
+.file-imagem {
+  width: 3vw;
+
+  border-radius: 50%;
+  border: 2px solid var(--cor-preta-900);
+
+  aspect-ratio: 1 / 1;
+
+  margin: 1rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+}
+
+.file-imagem:hover {
+  background-color: var(--cor-verde-200);
+}
+/*========================== 
+Elemento 2 ( Tempo e Cyndaquil )
+============================*/
+
+.selecionar-tempo {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.cronometro {
+  width: 10vw;
+
+  margin-top: 1rem;
+
+  cursor: pointer;
+
+  font-size: xx-large;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50%;
+  border: 2px solid var(--cor-preta-900);
+
+  aspect-ratio: 1 / 1;
+  background-color: var(--cor-branca-100);
+}
+
+.cronometro:hover {
+  transform: rotate(20deg);
+}
+
+.cyndaquill-imagem {
+  height: 15vh;
+}
+
+/*========================== 
+Elemento 3 ( Pergunta )
+============================*/
+
+.fazer-pergunta {
+  height: 45vh;
+  height: 45dvh;
+  width: 20vw;
+
+  border: 2px solid var(--cor-preta-900);
+  border-radius: 30px;
+
+  background-color: aliceblue;
+}
