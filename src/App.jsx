@@ -14,6 +14,7 @@ import "../src/Global.css";
 import NavBar from "./components/NavBar";
 import { LoginProvider } from "./LoginContext";
 import { GeralProvider } from "./GeralContext";
+import TelaPergunta from "./pages/TelaPergunta";
 
 function ComNavBar() {
   return (
