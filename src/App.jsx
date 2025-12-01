@@ -48,6 +48,7 @@ function App() {
             <Route element={<SemNavBar />}>
               <Route path="/" element={<Login />} />
               <Route path="/Cadastro" element={<Cadastro />} />
+              <Route path="Perguntax" element={<TelaPergunta />} />
             </Route>
             {/*  */}
           </Routes>
