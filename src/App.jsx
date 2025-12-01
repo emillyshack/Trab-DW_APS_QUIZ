@@ -13,6 +13,7 @@ import Quizzes from "./pages/Quizzes";
 import "../src/Global.css";
 import NavBar from "./components/NavBar";
 import { LoginProvider } from "./LoginContext";
+import TelaPergunta from "./pages/TelaPergunta";
 
 function ComNavBar() {
   return (
@@ -39,6 +40,7 @@ function App() {
               <Route path="Perfil" element={<Perfil />} />
               <Route path="CriarQuizz" element={<CriarQuizz />} />
               <Route path="Quizzes" element={<Quizzes />} />
+              <Route path="Perguntax" element={<TelaPergunta />} />
             </Route>
           </Route>
           {/* Sem NavBar */}

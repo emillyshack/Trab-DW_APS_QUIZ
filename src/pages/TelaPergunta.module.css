@@ -1,0 +1,173 @@
+/* ===== ESTILO GLOBAL ===== */
+.container {
+    width: 100%;
+    min-height: 100vh;
+    background: #d9eaff;
+    /* azul clarinho do fundo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 0;
+    font-family: "Poppins", sans-serif;
+}
+
+/* ===== CAIXA GERAL ===== */
+.card {
+    width: 90%;
+    background: #1a92a8;
+    border-radius: 30px;
+    padding: 25px;
+    box-shadow: 0px 0px 0px 5px #000;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ===== PERGUNTA ===== */
+.header {
+    background: white;
+    width: 100%;
+    padding: 18px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 0px 4px #000;
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* ===== ESTRUTURA DO MEIO ===== */
+.middleArea {
+    display: grid;
+    grid-template-columns: 150px 1fr 130px;
+    align-items: center;
+    gap: 20px;
+}
+
+/* FROAKIE */
+.frog {
+    width: 120px;
+    filter: drop-shadow(0px 0px 0px #000);
+}
+
+/* ===== QUADRO DA IMAGEM ===== */
+.imageBox {
+    background: white;
+    height: 200px;
+    border-radius: 30px;
+    box-shadow: 0px 0px 0px 4px #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.imageBox:hover {
+    background: #f3f3f3;
+}
+
+.imgPreview {
+    width: 100%;
+    height: 100%;
+    border-radius: 30px;
+    object-fit: cover;
+}
+
+.imageIcon {
+    font-size: 40px;
+    opacity: 0.4;
+}
+
+/* ===== TIMER ===== */
+.timerBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.counterCircle {
+    width: 90px;
+    height: 90px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0px 0px 0px 4px #000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 24px;
+    font-weight: 700;
+}
+
+/* CONTADOR DE X QUESTÕES */
+.questionCount {
+    width: 50px;
+    height: 40px;
+    background: #ffe78a;
+    border-radius: 10px;
+    box-shadow: 0px 0px 0px 4px #000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* ===== RESPOSTAS ===== */
+.answersGrid {
+    margin-top: 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.answerBtn {
+    padding: 16px;
+    border-radius: 16px;
+    font-size: 17px;
+    font-weight: 600;
+    text-align: center;
+
+    box-shadow: 0px 0px 0px 4px #000;
+    border: none;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+.answerBtn:hover {
+    transform: translateY(-3px);
+}
+
+/* CORES DAS RESPOSTAS */
+.resA {
+    background: #ff8a8a;
+}
+
+/* rosa */
+.resB {
+    background: #7ab8ff;
+}
+
+/* azul */
+.resC {
+    background: #8df7c2;
+}
+
+/* verde */
+.resD {
+    background: #ffe58a;
+}
+
+/* amarelo */
+
+/* CORRETA / ERRADA */
+.correta {
+    background: #8df7c2 !important;
+}
+
+.errada {
+    background: #ff8a8a !important;
+}
