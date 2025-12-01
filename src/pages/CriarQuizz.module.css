@@ -1,6 +1,5 @@
 .tela-principal {
   width: 100vw;
-  height: 100vh;
   padding-top: var(--padding-navbar);
   background-color: var(--cor-fundo1);
   display: flex;
@@ -263,22 +262,6 @@ Elemento 4 (Adicionar Pergunta)
   height: 100%;
   width: 75%;
   scrollbar-width: auto;
-}
-
-.adicionar-pergunta {
-  height: 10rem;
-  width: 10rem;
-
-  border-radius: 20px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-
-.adicionar-pergunta:hover {
-  transform: scale(1.1);
 }
 
 /*========================== 

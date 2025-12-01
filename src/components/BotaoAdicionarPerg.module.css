@@ -1,0 +1,16 @@
+.adicionar-pergunta {
+  height: 6rem;
+  width: 6rem;
+
+  border-radius: 20px;
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.adicionar-pergunta:hover {
+  transform: scale(1.1);
+}

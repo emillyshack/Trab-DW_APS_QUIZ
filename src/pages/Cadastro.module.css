@@ -159,57 +159,6 @@
   filter: brightness(0.8);
 }
 
-.container-singin-with {
-  min-width: 35%;
-  height: auto;
-
-  display: flex;
-  align-items: start;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.singin-with {
-  width: auto;
-  height: 3rem;
-  font-size: 1rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
-  cursor: default;
-}
-
-.icon {
-  height: 94%;
-  margin-right: 0.7rem;
-
-  cursor: pointer;
-}
-
-.icon:hover {
-  transform: scale(1.05);
-  filter: brightness(0.8);
-}
-
-.google-icon {
-  padding: 0.3rem;
-
-  background-color: white;
-
-  border: 2px solid var(--cor-preta-900);
-  border-radius: 100%;
-
-  filter: brightness(1.5);
-  filter: contrast(1.5);
-}
-
-.facebook-icon {
-  filter: brightness(1.5);
-  filter: contrast(1.5);
-}
-
 .img-pessoa {
   height: 10rem;
   width: auto;

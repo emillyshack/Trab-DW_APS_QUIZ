@@ -1,11 +1,10 @@
-import facebookIcon from "../assets/images/facebook-icon.png";
-import googleIcon from "../assets/images/google-icon.png";
 import logo from "../assets/images/Quizzy_logo.png";
 import pessoaCadastro from "../assets/images/pessoa-cadastro2.png";
 import passbolaAberta from "../assets/images/passbola-aberta.png";
 import passbolaFechada from "../assets/images/passbola-fechada.png";
 import styles from "./Cadastro.module.css";
 import { useState } from "react";
+import SinginWith from "../components/SigninWith";
 
 function Cadastro() {
   //Variáveis da pokebola
@@ -196,30 +195,7 @@ function Cadastro() {
           <hr className={`${styles["linha"]}`} />
         </div>
 
-        <div className={`${styles["container-singin-with"]}`}>
-          <div
-            className={`${styles["singin-with"]}`}
-            title="Cadastro com o Google"
-          >
-            <img
-              src={googleIcon}
-              alt="Google Icon"
-              className={`${styles["icon"]} ${styles["google-icon"]}`}
-            />
-            <h2>Criar conta com o Google</h2>
-          </div>
-          <div
-            className={`${styles["singin-with"]}`}
-            title="Cadastro com o Facebook"
-          >
-            <img
-              src={facebookIcon}
-              alt="Facebook Icon"
-              className={`${styles["icon"]} ${styles["facebook-icon"]}`}
-            />
-            <h2>Criar conta com o Facebook</h2>
-          </div>
-        </div>
+        <SinginWith />
         <img
           src={pessoaCadastro}
           alt="Pessoa Cadastro"

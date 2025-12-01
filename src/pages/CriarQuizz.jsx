@@ -1,8 +1,4 @@
 import styles from "./CriarQuizz.module.css";
-import { useSprings, animated } from "@react-spring/web";
-import { useDrag } from "react-use-gesture";
-import clamp from "lodash.clamp";
-import swap from "lodash-move";
 import { useState, useRef } from "react";
 import { LockKeyhole, Settings, Eye, Plus } from "lucide-react";
 
@@ -170,14 +166,13 @@ function CriarQuizz() {
         <div className={styles["secao-perguntas"]}>
           <div className={styles["elmt_4-5"]}>
             <div className={styles["elemento-4"]}>
-              <button className={styles["adicionar-pergunta"]}>
+              <button
+                className={`${styles["adicionar-pergunta"]} doodle-border`}
+              >
                 <Plus />
               </button>
             </div>
             <div className={styles.column}>
-              <button className={`${styles["salvar-mudancas"]} doodle-border`}>
-                Criar Quizz
-              </button>
               <br />
               <button className={`${styles["cancelar-quizz"]} doodle-border`}>
                 Cancelar

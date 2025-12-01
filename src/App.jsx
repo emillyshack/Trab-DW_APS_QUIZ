@@ -13,6 +13,7 @@ import Quizzes from "./pages/Quizzes";
 import "../src/Global.css";
 import NavBar from "./components/NavBar";
 import { LoginProvider } from "./LoginContext";
+import { GeralProvider } from "./GeralContext";
 
 function ComNavBar() {
   return (
@@ -30,26 +31,27 @@ function SemNavBar() {
 function App() {
   return (
     <LoginProvider>
-      <Router>
-        <Routes>
-          {/* Com Navbar */}
-          <Route element={<ComNavBar />}>
-            <Route path="/Inicial">
-              <Route index element={<Home />} />
-              <Route path="Perfil" element={<Perfil />} />
-              <Route path="CriarQuizz" element={<CriarQuizz />} />
-              <Route path="Quizzes" element={<Quizzes />} />
+      <GeralProvider>
+        <Router>
+          <Routes>
+            {/* Com Navbar */}
+            <Route element={<ComNavBar />}>
+              <Route path="/Inicial">
+                <Route index element={<Home />} />
+                <Route path="Perfil" element={<Perfil />} />
+                <Route path="CriarQuizz" element={<CriarQuizz />} />
+                <Route path="Quizzes" element={<Quizzes />} />
+              </Route>
             </Route>
-          </Route>
-          {/* Sem NavBar */}
-          <Route element={<SemNavBar />}>
-            <Route path="/" element={<Login />} />
-            <Route path="/Cadastro" element={<Cadastro />} />
-          </Route>
-
-          {/*  */}
-        </Routes>
-      </Router>
+            {/* Sem NavBar */}
+            <Route element={<SemNavBar />}>
+              <Route path="/" element={<Login />} />
+              <Route path="/Cadastro" element={<Cadastro />} />
+            </Route>
+            {/*  */}
+          </Routes>
+        </Router>
+      </GeralProvider>
     </LoginProvider>
   );
 }

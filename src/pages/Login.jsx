@@ -12,10 +12,12 @@ import passbolaFechada from "../assets/images/passbola-fechada.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { LoginContexto } from "../LoginContext";
+import { GeralContexto } from "../GeralContext";
 
 function Login() {
   const navigate = useNavigate();
   const { usuario, setusuario, logar, loading } = useContext(LoginContexto);
+  const { getUser } = useContext(GeralContexto);
   const [velocidadePikachu, setVelovidadePikachu] = useState(12);
   const [inputEmail, setInputEmail] = useState("");
   const [inputSenha, setInputSenha] = useState("");
@@ -35,7 +37,9 @@ function Login() {
       try {
         const logado = await logar(inputEmail, inputSenha);
         if (logado?.user) {
+          const user = await getUser(logado.user["id"]);
           console.log("Logado: ", logado);
+          console.log(user);
           navigate("/Inicial");
         } else {
           console.log("Erro no login: ", logado);
@@ -192,7 +196,7 @@ function Login() {
             <hr className={`${styles["linha"]}`} />
           </div>
 
-          <div className={`${styles["container-singin-with"]}`}>
+          <div className={`${styles["container-siginin-with"]}`}>
             <div
               className={`${styles["login-google"]} ${styles["singin-with"]}`}
               title="Login com o Google"
