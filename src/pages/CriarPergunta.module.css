@@ -10,8 +10,9 @@
 }
 
 .container {
-  width: 97%;
-  height: 97%;
+  width: 95%;
+  height: 93%;
+  margin-top: 1rem;
 }
 
 .titulo-criar {
@@ -19,6 +20,10 @@
   margin-top: 1rem;
   text-align: center;
   width: 100%;
+}
+.column {
+  display: flex;
+  flex-direction: column;
 }
 
 /*========================== 
@@ -54,14 +59,17 @@ Elemento 1 ( Seleção de Imagem )
 .selecionar-imagem {
   height: 45vh;
   height: 45dvh;
-  width: 45vw;
+  width: 47vw;
 
   display: flex;
-  justify-content: end;
-  align-items: end;
+  align-items: center;
+  justify-content: center;
 
+  background-color: var(--cor-branca-100);
   border: 2px solid var(--cor-preta-900);
   border-radius: 30px;
+
+  position: relative;
 }
 
 .file-imagem {
@@ -78,11 +86,29 @@ Elemento 1 ( Seleção de Imagem )
   justify-content: center;
   align-items: center;
 
-  position: fixed;
+  cursor: pointer;
 }
 
 .file-imagem:hover {
   background-color: var(--cor-verde-200);
+}
+
+.area-botoes-imagem {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+
+  height: 100%;
+  width: 100%;
+}
+
+.imagem-central {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  height: 2rem;
 }
 /*========================== 
 Elemento 2 ( Tempo e Cyndaquil )
@@ -127,12 +153,140 @@ Elemento 3 ( Pergunta )
 ============================*/
 
 .fazer-pergunta {
-  height: 45vh;
   height: 45dvh;
   width: 20vw;
 
   border: 2px solid var(--cor-preta-900);
   border-radius: 30px;
 
-  background-color: aliceblue;
+  background-color: var(--cor-branca-100);
+
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-ia {
+  position: absolute;
+  bottom: 1rem;
+  width: 95%;
+}
+
+.pergunta {
+  border: 2px solid;
+  border-radius: 15px;
+  width: 100%;
+  max-height: 10vh;
+
+  font-size: larger;
+  padding-top: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+/*========================== 
+Elemento 4 - 5
+============================*/
+
+.elmt-4-5 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 3rem;
+  height: 35%;
+  width: 93%;
+}
+
+/*========================== 
+Elemento 4  ( alternativas )
+============================*/
+
+.alternativas {
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  display: grid;
+
+  width: 75%;
+  scrollbar-width: auto;
+  margin-right: 3rem;
+}
+
+.botao-alt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0.5rem 0.8rem;
+  background: white;
+  border: 2px solid black;
+  border-radius: 10px;
+
+  width: 100%;
+
+  font-size: larger;
+}
+
+.certa {
+  margin-left: 10px;
+  background-color: var(--cor-verde-200);
+  border: 3.5px solid var(--cor-preta-900);
+  border-radius: 50%;
+  padding: 0.3rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.errada {
+  margin-left: 10px;
+  background-color: var(--cor-vermelho-300);
+  border: 3.5px solid var(--cor-preta-900);
+  border-radius: 50%;
+  padding: 0.3rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.resposta {
+  border: 2px solid;
+  width: 20vw;
+  font-size: larger;
+}
+
+/*========================== 
+Elemento 5  ( slavar e passar para a próxima pergunta )
+============================*/
+
+.salvar-mudancas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--cor-verde-200);
+  padding: 0.5rem;
+  border-radius: 10px;
+  font-size: xx-large;
+  cursor: pointer;
+}
+
+.salvar-mudancas:hover {
+  transform: scale(1.1);
+}
+
+.cancelar-quizz {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--cor-azul-400);
+  padding: 0.5rem;
+  border-radius: 10px;
+  font-size: xx-large;
+  cursor: pointer;
+}
+.cancelar-quizz:hover {
+  transform: scale(1.1);
 }

@@ -17,38 +17,41 @@ function Login() {
   const navigate = useNavigate();
   const { logar } = useContext(LoginContexto);
   const [velocidadePikachu, setVelovidadePikachu] = useState(12);
-  const [inputEmail, setInputEmail] = useState("");
-  const [inputSenha, setInputSenha] = useState("");
-  const [errorEmail, setErrorEmail] = useState(false);
-  const [errorSenha, setErrorSenha] = useState(false);
-  const [emailValido, setEmailValido] = useState(false);
-  const [senhaValido, setSenhaValido] = useState(false);
-  const [mostrarSenha, setMostrarSenha] = useState(false);
+
+  const [state, setState] = useState({
+    inputEmail: "",
+    inputSenha: "",
+    errorEmail: false,
+    errorSenha: false,
+    emailValido: false,
+    senhaValido: false,
+    mostrarSenha: false,
+  });
 
   const toggleSenha = () => {
-    setMostrarSenha((prev) => !prev);
+    setState((prev) => ({ ...prev, mostrarSenha: !prev.mostrarSenha }));
   };
 
   const handleLogin = async () => {
     if (verificarEmail() && verificarSenha()) {
       try {
-        const logado = await logar(inputEmail, inputSenha);
+        const logado = await logar(state.inputEmail, state.inputSenha);
         if (logado?.user) {
           console.log("Logado: ", logado);
           navigate("/Inicial");
         } else {
           console.log("Erro no login: ", logado);
-          setErrorEmail(true);
-          setErrorSenha(true);
-          setEmailValido(false);
-          setSenhaValido(false);
+          setState((prev) => ({ ...prev, errorEmail: true }));
+          setState((prev) => ({ ...prev, emailValido: true }));
+          setState((prev) => ({ ...prev, errorSenha: false }));
+          setState((prev) => ({ ...prev, senhaValido: false }));
         }
       } catch (e) {
         console.log("Erro no login: ", e.message);
-        setErrorEmail(true);
-        setEmailValido(false);
-        setErrorSenha(true);
-        setSenhaValido(false);
+        setState((prev) => ({ ...prev, errorEmail: true }));
+        setState((prev) => ({ ...prev, emailValido: false }));
+        setState((prev) => ({ ...prev, errorSenha: true }));
+        setState((prev) => ({ ...prev, senhaValido: false }));
       }
     } else {
       verificarEmail();
@@ -58,39 +61,40 @@ function Login() {
   };
 
   const verificarEmail = () => {
-    if (inputEmail.includes("@") && inputEmail.includes(".com")) {
-      setErrorEmail(false);
-      setEmailValido(false);
+    if (state.inputEmail.includes("@") && state.inputEmail.includes(".com")) {
+      setState((prev) => ({ ...prev, errorEmail: false }));
+      setState((prev) => ({ ...prev, emailValido: false }));
 
       setTimeout(() => {
-        setEmailValido(true);
+        setState((prev) => ({ ...prev, emailValido: true }));
       }, 100);
       return true;
     }
-    setErrorEmail(false);
-    setEmailValido(false);
+    setState((prev) => ({ ...prev, errorEmail: false }));
+    setState((prev) => ({ ...prev, emailValido: false }));
 
     setTimeout(() => {
-      setErrorEmail(true);
+      setState((prev) => ({ ...prev, errorEmail: true }));
     }, 100);
     return false;
   };
 
   const verificarSenha = () => {
-    if (inputSenha.length > 7) {
-      setErrorSenha(false);
-      setSenhaValido(false);
+    if (state.inputSenha.length > 7) {
+      setState((prev) => ({ ...prev, errorSenha: false }));
+      setState((prev) => ({ ...prev, senhaValido: false }));
 
       setTimeout(() => {
-        setSenhaValido(true);
+        setState((prev) => ({ ...prev, senhaValido: true }));
       }, 100);
       return true;
     }
-    setErrorSenha(false);
-    setSenhaValido(false);
+    setState((prev) => ({ ...prev, errorSenha: false }));
+    setState((prev) => ({ ...prev, senhaValido: false }));
 
     setTimeout(() => {
-      setErrorSenha(true);
+      setState((prev) => ({ ...prev, errorSenha: true }));
+      setState((prev) => ({ ...prev, errorSenha: true }));
     }, 100);
     return false;
   };
@@ -132,33 +136,37 @@ function Login() {
             name="email"
             placeholder="Email"
             id="input-email"
-            className={`${styles["input"]} ${errorEmail ? styles.erro : ""} ${
-              emailValido ? styles.valido : ""
-            }`}
-            onChange={(e) => setInputEmail(e.target.value)}
+            className={`${styles["input"]} ${
+              state.errorEmail ? styles.erro : ""
+            } ${state.emailValido ? styles.valido : ""}`}
+            onChange={(e) =>
+              setState((prev) => ({ ...prev, inputEmail: e.target.value }))
+            }
           />
           <div
             className={`${styles["container-input-senha"]} ${
-              errorSenha ? styles.erro : ""
+              state.errorSenha ? styles.erro : ""
             }`}
           >
             <input
-              type={mostrarSenha ? "text" : "password"}
+              type={state.mostrarSenha ? "text" : "password"}
               name="senha"
               placeholder="Senha"
               id="input-senha"
               className={`${styles["input"]} ${styles["input-senha"]} ${
-                senhaValido ? styles.valido : ""
+                state.senhaValido ? styles.valido : ""
               }`}
-              onChange={(e) => setInputSenha(e.target.value)}
+              onChange={(e) =>
+                setState((prev) => ({ ...prev, inputSenha: e.target.value }))
+              }
             />
-            {inputSenha ? (
+            {state.inputSenha ? (
               <button
                 title="Ver senha"
                 className={styles["mostrar-senha"]}
                 onClick={toggleSenha}
               >
-                {mostrarSenha ? (
+                {state.mostrarSenha ? (
                   <img
                     className={styles["pokebola"]}
                     src={passbolaAberta}

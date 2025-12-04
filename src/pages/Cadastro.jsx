@@ -1,5 +1,6 @@
 import logo from "../assets/images/Quizzy_logo.png";
 import pessoaCadastro from "../assets/images/pessoa-cadastro2.png";
+import pessoaOlhoFechado from "../assets/images/pessoa-olho-fechado.png";
 import passbolaAberta from "../assets/images/passbola-aberta.png";
 import passbolaFechada from "../assets/images/passbola-fechada.png";
 import styles from "./Cadastro.module.css";
@@ -7,38 +8,70 @@ import { useState } from "react";
 import SinginWith from "../components/SigninWith";
 
 function Cadastro() {
-  //Variáveis da pokebola
-  const [mostrarSenha, setMostrarSenha] = useState(false);
-  const [mostrarSenha2, setMostrarSenha2] = useState(false);
-  //Variáveis dos inputs
-  const [inputNome, setInputNome] = useState("");
-  const [inputUsuario, setInputUsuario] = useState("");
-  const [inputEmail, setInputEmail] = useState("");
-  const [inputEmailConfirmar, setInputEmailConfirmar] = useState("");
-  const [inputSenha, setInputSenha] = useState("");
-  const [inputSenhaConfirmar, setInputSenhaConfirmar] = useState("");
-  //Variáveis de input inválido (vermelho)
-  const [errorNome, setErrorNome] = useState(false);
-  const [errorUsuario, setErrorUsuario] = useState(false);
-  const [errorSenha, setErrorSenha] = useState(false);
-  const [errorSenhaConfirmar, setErrorSenhaConfirmar] = useState(false);
-  const [errorEmail, setErrorEmail] = useState(false);
-  const [errorEmailConfirmar, setErrorEmailConfirmar] = useState(false);
-  //Variáveis de input válido (verde)
-  const [validoNome, setValidoNome] = useState(false);
-  const [validoUsuario, setValidoUsuario] = useState(false);
-  const [validoSenha, setValidoSenha] = useState(false);
-  const [validoSenhaConfirmar, setValidoSenhaConfirmar] = useState(false);
-  const [validoEmail, setValidoEmail] = useState(false);
-  const [validoEmailConfirmar, setValidoEmailConfirmar] = useState(false);
+  const [state, setState] = useState({
+    //Variáveis da pokebola
+    mostrarSenha: false,
+    mostrarSenha2: false,
+    //Variáveis dos inputs
+    inputNome: "",
+    inputUsuario: "",
+    inputEmail: "",
+    inputEmailConfirmar: "",
+    inputSenha: "",
+    inputSenhaConfirmar: "",
+    //Variáveis de input inválido (vermelho)
+    errorNome: false,
+    errorUsuario: false,
+    errorEmail: false,
+    errorEmailConfirmar: false,
+    errorSenha: false,
+    errorSenhaConfirmar: false,
+    //Variáveis de input válido (verde)
+    validoNome: false,
+    validoUsuario: false,
+    validoEmail: false,
+    validoEmailConfirmar: false,
+    validoSenha: false,
+    validoSenhaConfirmar: false,
+  });
+
+  const animacaoErro = (input) => {
+    setState((prev) => ({ ...prev, [`error${input}`]: false }));
+    setState((prev) => ({ ...prev, [`valido${input}`]: false }));
+    setTimeout(() => {
+      setState((prev) => ({ ...prev, [`error${input}`]: true }));
+    }, 100);
+  };
+
+  const animacaoValido = (input) => {
+    setState((prev) => ({ ...prev, [`valido${input}`]: false }));
+    setState((prev) => ({ ...prev, [`error${input}`]: false }));
+    setTimeout(() => {
+      setState((prev) => ({ ...prev, [`valido${input}`]: true }));
+    }, 100);
+  };
+
+  const verificarEmail = () => {
+    if (state.inputEmail != state.validoEmail) {
+      animacaoErro("Email");
+      return false;
+    }
+    animacaoValido("Email");
+    return true;
+  };
 
   const toggleSenha = () => {
-    setMostrarSenha((prev) => !prev);
+    setState((prev) => ({ ...prev, mostrarSenha: !prev.mostrarSenha }));
   };
 
   const toggleSenha2 = () => {
-    setMostrarSenha2((prev) => !prev);
+    setState((prev) => ({ ...prev, mostrarSenha2: !prev.mostrarSenha2 }));
   };
+
+  async function cadastrar(params) {
+    console.log(state);
+    verificarEmail();
+  }
 
   return (
     <div className={styles["tela-principal"]}>
@@ -60,8 +93,12 @@ function Cadastro() {
               name="nome"
               placeholder="Nome Super Legal da Silva"
               id="input-nome"
-              className={`${styles["input"]} ${errorNome ? styles.erro : ""}`}
-              onChange={(e) => setInputNome(e.target.value)}
+              className={`${styles["input"]} ${
+                state.errorNome ? styles.erro : ""
+              } ${state.validoNome ? styles.valido : ""}`} // Adicionado 'valido'
+              onChange={(e) =>
+                setState((prev) => ({ ...prev, inputNome: e.target.value }))
+              }
             />
           </div>
 
@@ -73,9 +110,11 @@ function Cadastro() {
               placeholder="NomeSuperLegal"
               id="input-usuario"
               className={`${styles["input"]} ${
-                errorUsuario ? styles.erro : ""
-              }`}
-              onChange={(e) => setInputUsuario(e.target.value)}
+                state.errorUsuario ? styles.erro : ""
+              } ${state.validoUsuario ? styles.valido : ""}`} // Adicionado 'valido'
+              onChange={(e) =>
+                setState((prev) => ({ ...prev, inputUsuario: e.target.value }))
+              }
             />
           </div>
 
@@ -86,8 +125,12 @@ function Cadastro() {
               name="email"
               placeholder="email_super_legal@email.com"
               id="input-email"
-              className={`${styles["input"]} ${errorEmail ? styles.erro : ""}`}
-              onChange={(e) => setInputEmail(e.target.value)}
+              className={`${styles["input"]} ${
+                state.errorEmail ? styles.erro : ""
+              } ${state.validoEmail ? styles.valido : ""}`} // Adicionado 'valido'
+              onChange={(e) =>
+                setState((prev) => ({ ...prev, inputEmail: e.target.value }))
+              }
             />
           </div>
 
@@ -99,9 +142,14 @@ function Cadastro() {
               placeholder="email_super_legal@email.com"
               id="input-confirmar-email"
               className={`${styles["input"]} ${
-                errorEmailConfirmar ? styles.erro : ""
-              }`}
-              onChange={(e) => setInputEmailConfirmar(e.target.value)}
+                state.errorEmailConfirmar ? styles.erro : ""
+              } ${state.validoEmailConfirmar ? styles.valido : ""}`} // Adicionado 'valido'
+              onChange={(e) =>
+                setState((prev) => ({
+                  ...prev,
+                  inputEmailConfirmar: e.target.value,
+                }))
+              }
             />
           </div>
 
@@ -109,22 +157,24 @@ function Cadastro() {
             <label htmlFor="input-senha">Senha:</label>
             <div className={styles["container-input-senha"]}>
               <input
-                type={mostrarSenha ? "text" : "password"}
+                type={state.mostrarSenha ? "text" : "password"}
                 name="senha"
                 placeholder="1234..."
                 id="input-senha"
-                className={`${styles["input"]} ${styles["input-senha"]}`}
+                className={`${styles["input"]} ${styles["input-senha"]} ${
+                  state.errorSenha ? styles.erro : ""
+                } ${state.validoSenha ? styles.valido : ""}`} // Adicionado 'erro' e 'valido'
                 onChange={(e) => {
-                  setInputSenha(e.target.value);
+                  setState((prev) => ({ ...prev, inputSenha: e.target.value }));
                 }}
               />
-              {inputSenha ? (
+              {state.inputSenha ? (
                 <button
                   title="Ver senha"
                   className={styles["mostrar-senha"]}
                   onClick={toggleSenha}
                 >
-                  {mostrarSenha ? (
+                  {state.mostrarSenha ? (
                     <img
                       src={passbolaAberta}
                       alt="Mostrar senha"
@@ -148,20 +198,27 @@ function Cadastro() {
             <label htmlFor="input-confirmar-senha">Confirmar senha:</label>
             <div className={styles["container-input-senha"]}>
               <input
-                type={mostrarSenha2 ? "text" : "password"}
+                type={state.mostrarSenha2 ? "text" : "password"}
                 name="senha-confirmar"
                 placeholder="1234..."
                 id="input-confirmar-senha"
-                className={`${styles["input"]} ${styles["input-senha"]}`}
-                onChange={(e) => setInputSenhaConfirmar(e.target.value)}
+                className={`${styles["input"]} ${styles["input-senha"]} ${
+                  state.errorSenhaConfirmar ? styles.erro : ""
+                } ${state.validoSenhaConfirmar ? styles.valido : ""}`} // Adicionado 'erro' e 'valido'
+                onChange={(e) =>
+                  setState((prev) => ({
+                    ...prev,
+                    inputSenhaConfirmar: e.target.value,
+                  }))
+                }
               />
-              {inputSenhaConfirmar ? (
+              {state.inputSenhaConfirmar ? (
                 <button
                   title="Ver senha"
                   className={styles["mostrar-senha"]}
                   onClick={toggleSenha2}
                 >
-                  {mostrarSenha2 ? (
+                  {state.mostrarSenha2 ? (
                     <img
                       src={passbolaAberta}
                       alt="Mostrar senha"
@@ -185,6 +242,7 @@ function Cadastro() {
         <button
           title="Está pronto para sua nova jornada?"
           className={`${styles["botao-criar-conta"]} doodle-border`}
+          onClick={cadastrar}
         >
           Criar Conta
         </button>
@@ -196,12 +254,21 @@ function Cadastro() {
         </div>
 
         <SinginWith />
-        <img
-          src={pessoaCadastro}
-          alt="Pessoa Cadastro"
-          className={styles["img-pessoa"]}
-          title="Já fez o cadastro?"
-        />
+        {state.mostrarSenha || state.mostrarSenha2 ? (
+          <img
+            src={pessoaOlhoFechado}
+            alt="Pessoa Cadastro"
+            className={styles["img-pessoa"]}
+            title="To vendo nadinha"
+          />
+        ) : (
+          <img
+            src={pessoaCadastro}
+            alt="Pessoa Cadastro"
+            className={styles["img-pessoa"]}
+            title="Já fez o cadastro?"
+          />
+        )}
       </div>
     </div>
   );
