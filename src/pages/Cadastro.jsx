@@ -4,7 +4,7 @@ import pessoaOlhoFechado from "../assets/images/pessoa-olho-fechado.png";
 import passbolaAberta from "../assets/images/passbola-aberta.png";
 import passbolaFechada from "../assets/images/passbola-fechada.png";
 import styles from "./Cadastro.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SinginWith from "../components/SigninWith";
 
 function Cadastro() {
@@ -35,12 +35,30 @@ function Cadastro() {
     validoSenhaConfirmar: false,
   });
 
+  useEffect(() => {
+    verificarEscritaEmail(state.inputEmail);
+    console.log(state.validoEmail);
+  }, [state.inputEmail]);
+
+  useEffect(() => {
+    verificarEscritaEmail(state.inputEmailConfirmar);
+  }, [state.inputEmailConfirmar]);
+
+  useEffect(() => {
+    verificarNome();
+  }, [state.inputNome]);
+
+  useEffect(() => {
+    verificarUsuario();
+  }, [state.inputUsuario]);
+
   const animacaoErro = (input) => {
     setState((prev) => ({ ...prev, [`error${input}`]: false }));
     setState((prev) => ({ ...prev, [`valido${input}`]: false }));
     setTimeout(() => {
       setState((prev) => ({ ...prev, [`error${input}`]: true }));
     }, 100);
+    return true;
   };
 
   const animacaoValido = (input) => {
@@ -49,15 +67,72 @@ function Cadastro() {
     setTimeout(() => {
       setState((prev) => ({ ...prev, [`valido${input}`]: true }));
     }, 100);
+    return false;
   };
 
-  const verificarEmail = () => {
-    if (state.inputEmail != state.validoEmail) {
-      animacaoErro("Email");
-      return false;
+  const verificarEscritaEmail = (email) => {
+    if (!email) return;
+
+    // Regex com os caracteres inválidos
+    const regexInvalidos = /[\s,;!#()´`~^ç\/]/;
+
+    const campo = email === state.inputEmail ? "Email" : "EmailConfirmar";
+
+    if (regexInvalidos.test(email)) {
+      return animacaoErro(campo);
     }
-    animacaoValido("Email");
-    return true;
+
+    return animacaoValido(campo);
+  };
+
+  const verificarConfirmarSenha = () => {
+    if (!state.inputSenha) {
+      return animacaoErro("Senha");
+    } else if (!state.inputSenhaConfirmar) {
+      return animacaoErro("SenhaConfirmar");
+    } else if (state.inputSenha.includes(" ")) {
+      return animacaoErro("Senha");
+    } else if (state.inputSenha != state.inputSenhaConfirmar) {
+      return animacaoErro("Senha");
+    }
+    animacaoValido("SenhaConfirmar");
+    return animacaoValido("Senha");
+  };
+
+  const verificarConfirmarEmail = () => {
+    if (!state.inputEmail || !state.inputEmailConfirmar) {
+      return animacaoErro("Email");
+    } else if (state.inputEmail != state.inputEmailConfirmar) {
+      animacaoErro("EmailConfirmar");
+      return animacaoErro("Email");
+    } else if (!state.inputEmail.includes("@")) {
+      return animacaoErro("Email");
+    }
+    animacaoValido("EmailConfirmar");
+    return animacaoValido("Email");
+  };
+
+  const verificarNome = () => {
+    if (!state.inputNome) {
+      return;
+    }
+    const regexNome = /^[A-Za-zÀ-ÖØ-öø-ÿ'’\-\. ]+$/;
+    if (!regexNome.test(state.inputNome)) {
+      return animacaoErro("Nome");
+    }
+    return animacaoValido("Nome");
+  };
+
+  const verificarUsuario = () => {
+    if (!state.inputUsuario) {
+      return;
+    }
+    const regexUsuario = /^[A-Za-z0-9._-]+$/;
+
+    if (!regexUsuario.test(state.inputUsuario)) {
+      return animacaoErro("Usuario");
+    }
+    return animacaoValido("Usuario");
   };
 
   const toggleSenha = () => {
@@ -68,9 +143,16 @@ function Cadastro() {
     setState((prev) => ({ ...prev, mostrarSenha2: !prev.mostrarSenha2 }));
   };
 
-  async function cadastrar(params) {
+  async function cadastrar() {
+    if (
+      verificarConfirmarEmail() ||
+      verificarConfirmarSenha() ||
+      verificarNome() ||
+      verificarUsuario()
+    ) {
+      return;
+    }
     console.log(state);
-    verificarEmail();
   }
 
   return (
@@ -128,9 +210,9 @@ function Cadastro() {
               className={`${styles["input"]} ${
                 state.errorEmail ? styles.erro : ""
               } ${state.validoEmail ? styles.valido : ""}`} // Adicionado 'valido'
-              onChange={(e) =>
-                setState((prev) => ({ ...prev, inputEmail: e.target.value }))
-              }
+              onChange={(e) => {
+                setState((prev) => ({ ...prev, inputEmail: e.target.value }));
+              }}
             />
           </div>
 
