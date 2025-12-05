@@ -7,7 +7,7 @@ import styles from "./Cadastro.module.css";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SinginWith from "../components/SigninWith";
-import { LoginContexto } from "../LoginContext";
+import { LoginContexto } from "../context/LoginContext";
 
 function Cadastro() {
   const navigate = useNavigate();

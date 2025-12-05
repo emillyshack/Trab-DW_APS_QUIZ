@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { supabase } from "./supabase.js";
+import { supabase } from "../supabase.js";
 
 export const GeralContexto = createContext();
 

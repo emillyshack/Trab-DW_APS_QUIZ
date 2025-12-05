@@ -1,19 +1,20 @@
 import { createContext, useState, useEffect } from "react";
-import { supabase } from "./supabase.js";
+import { supabase } from "../supabase.js";
 
 export const LoginContexto = createContext();
 
 export function LoginProvider({ children }) {
   const [usuario, setUsuario] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     async function carregarSessao() {
       const {
         data: { session },
       } = await supabase.auth.getSession();
       setUsuario(session?.user ?? null);
-      setLoading(true);
+      setLoading(false);
     }
 
     carregarSessao();
@@ -22,7 +23,6 @@ export function LoginProvider({ children }) {
       (_event, session) => {
         setUsuario(session?.user ?? null);
         setLoading(false);
-        console.log(loading);
       }
     );
 

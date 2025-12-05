@@ -1,8 +1,8 @@
 import { useState, useRef, useContext } from "react";
 import { Check, Plus, X, Pencil } from "lucide-react";
 import styles from "./Perfil.module.css";
-import { GeralContexto } from "../GeralContext";
-import { LoginContexto } from "../LoginContext";
+import { GeralContexto } from "../context/GeralContext";
+import { LoginContexto } from "../context/LoginContext";
 
 function Perfil() {
   const { pessoa } = useContext(GeralContexto);

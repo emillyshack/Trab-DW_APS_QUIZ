@@ -1,0 +1,53 @@
+.alternativas {
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  display: grid;
+
+  width: 75%;
+  scrollbar-width: auto;
+  margin-right: 3rem;
+}
+
+.botao-alt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0.5rem 0.8rem;
+  background: white;
+  border: 2px solid black;
+  border-radius: 10px;
+
+  width: 100%;
+
+  font-size: larger;
+}
+
+.certa {
+  margin-left: 10px;
+  background-color: var(--cor-verde-200);
+  border: 3.5px solid var(--cor-preta-900);
+  border-radius: 50%;
+  padding: 0.3rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.errada {
+  margin-right: 10px;
+  background-color: var(--cor-vermelho-300);
+  border: 3.5px solid var(--cor-preta-900);
+  border-radius: 50%;
+  padding: 0.3rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.resposta {
+  border: 2px solid;
+  width: 20vw;
+  font-size: larger;
+}

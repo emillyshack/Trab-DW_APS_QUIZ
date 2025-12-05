@@ -1,8 +1,8 @@
 import NavBar from "../components/NavBar";
 import { Link } from "react-router-dom";
 import styles from "./Home.module.css";
-import { LoginContexto } from "../LoginContext";
-import { GeralContexto } from "../GeralContext";
+import { LoginContexto } from "../context/LoginContext";
+import { GeralContexto } from "../context/GeralContext";
 import { useContext, useState, useEffect } from "react";
 import { supabase } from "../supabase.js";
 

@@ -1,7 +1,7 @@
 .tela-principal {
   width: 100vw;
-  height: 100vh;
-  height: 100dvh;
+  min-height: 100vh;
+
   padding-top: var(--padding-navbar);
   background-color: var(--cor-fundo1);
   display: flex;
@@ -11,8 +11,8 @@
 
 .container {
   width: 95%;
-  height: 93%;
-  margin-top: 1rem;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
 }
 
 .titulo-criar {
@@ -77,6 +77,7 @@ Elemento 1 ( Seleção de Imagem )
 
   border-radius: 50%;
   border: 2px solid var(--cor-preta-900);
+  background-color: var(--cor-branca-100);
 
   aspect-ratio: 1 / 1;
 
@@ -87,8 +88,8 @@ Elemento 1 ( Seleção de Imagem )
   align-items: center;
 
   cursor: pointer;
+  position: absolute;
 }
-
 .file-imagem:hover {
   background-color: var(--cor-verde-200);
 }
@@ -109,6 +110,23 @@ Elemento 1 ( Seleção de Imagem )
 
   position: absolute;
   height: 2rem;
+}
+
+.imagem-ilustrativa {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preview {
+  position: absolute;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 30px;
 }
 /*========================== 
 Elemento 2 ( Tempo e Cyndaquil )
@@ -170,7 +188,7 @@ Elemento 3 ( Pergunta )
 
 .input-ia {
   position: absolute;
-  bottom: 1rem;
+  bottom: 0.3rem;
   width: 95%;
 }
 
@@ -185,6 +203,11 @@ Elemento 3 ( Pergunta )
   padding-left: 1.5rem;
 }
 
+.preview-pergunta {
+  margin: 1rem;
+  text-align: center;
+}
+
 /*========================== 
 Elemento 4 - 5
 ============================*/
@@ -194,7 +217,8 @@ Elemento 4 - 5
   align-items: center;
   justify-content: space-between;
   margin-left: 3rem;
-  height: 35%;
+
+  margin-top: 2rem;
   width: 93%;
 }
 
@@ -240,7 +264,7 @@ Elemento 4  ( alternativas )
 }
 
 .errada {
-  margin-left: 10px;
+  margin-right: 10px;
   background-color: var(--cor-vermelho-300);
   border: 3.5px solid var(--cor-preta-900);
   border-radius: 50%;
@@ -268,7 +292,7 @@ Elemento 5  ( slavar e passar para a próxima pergunta )
   background-color: var(--cor-verde-200);
   padding: 0.5rem;
   border-radius: 10px;
-  font-size: xx-large;
+  font-size: x-large;
   cursor: pointer;
 }
 
@@ -284,7 +308,7 @@ Elemento 5  ( slavar e passar para a próxima pergunta )
   background-color: var(--cor-azul-400);
   padding: 0.5rem;
   border-radius: 10px;
-  font-size: xx-large;
+  font-size: x-large;
   cursor: pointer;
 }
 .cancelar-quizz:hover {

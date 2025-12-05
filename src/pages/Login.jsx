@@ -11,7 +11,7 @@ import passbolaAberta from "../assets/images/passbola-aberta.png";
 import passbolaFechada from "../assets/images/passbola-fechada.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
-import { LoginContexto } from "../LoginContext";
+import { LoginContexto } from "../context/LoginContext";
 
 function Login() {
   const navigate = useNavigate();
