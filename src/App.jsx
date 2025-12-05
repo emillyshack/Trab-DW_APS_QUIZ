@@ -14,7 +14,10 @@ import CriarQuizz from "./pages/CriarQuizz";
 import Quizzes from "./pages/Quizzes";
 import TelaPergunta from "./pages/TelaPergunta";
 import CriarPergunta from "./pages/CriarPergunta";
-import TelaRanking from "./pages/TelaRanking";     // <-- import adicionado
+import TelaRanking from "./pages/TelaRanking";
+
+import TelaAviso from "./components/TelaAviso";           // ⬅ novo import 
+import TelaPreparar from "./components/TelaPreparar";    // ⬅ novo import
 
 import "../src/Global.css";
 import NavBar from "./components/NavBar";
@@ -41,9 +44,11 @@ function ConteudoApp() {
   return (
     <>
       {loading ? <LoadingLogin /> : null}
+
       <Router>
         <Routes>
-          {/* Com Navbar */}
+
+          {/* Rotas com Navbar */}
           <Route element={<ComNavBar />}>
             <Route path="/Inicial">
               <Route index element={<Home />} />
@@ -54,20 +59,25 @@ function ConteudoApp() {
             </Route>
           </Route>
 
-          {/* Sem NavBar */}
+          {/* Rotas sem Navbar */}
           <Route element={<SemNavBar />}>
             <Route path="/" element={<Login />} />
             <Route path="/Cadastro" element={<Cadastro />} />
-            <Route path="Perguntax" element={<TelaPergunta />} />
-              <Route path="Ranking" element={<TelaRanking />} /> 
+
+            {/* 🔥 Fluxo do Quiz */}
+            <Route path="/Ranking" element={<TelaRanking />} />
+            <Route path="/Aviso" element={<TelaAviso />} />
+            <Route path="/PrepararQuiz" element={<TelaPreparar />} />
+            <Route path="/Perguntax" element={<TelaPergunta />} />
           </Route>
+
         </Routes>
       </Router>
     </>
   );
 }
 
-function App() {
+export default function App() {
   return (
     <LoginProvider>
       <GeralProvider>
@@ -76,5 +86,3 @@ function App() {
     </LoginProvider>
   );
 }
-
-export default App;
