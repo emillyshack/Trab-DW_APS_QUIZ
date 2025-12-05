@@ -4,10 +4,14 @@ import pessoaOlhoFechado from "../assets/images/pessoa-olho-fechado.png";
 import passbolaAberta from "../assets/images/passbola-aberta.png";
 import passbolaFechada from "../assets/images/passbola-fechada.png";
 import styles from "./Cadastro.module.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import SinginWith from "../components/SigninWith";
+import { LoginContexto } from "../LoginContext";
 
 function Cadastro() {
+  const navigate = useNavigate();
+  const { cadastrar } = useContext(LoginContexto);
   const [state, setState] = useState({
     //Variáveis da pokebola
     mostrarSenha: false,
@@ -37,7 +41,7 @@ function Cadastro() {
 
   useEffect(() => {
     verificarEscritaEmail(state.inputEmail);
-    console.log(state.validoEmail);
+    // console.log(state.validoEmail);
   }, [state.inputEmail]);
 
   useEffect(() => {
@@ -89,6 +93,12 @@ function Cadastro() {
     if (!state.inputSenha) {
       return animacaoErro("Senha");
     } else if (!state.inputSenhaConfirmar) {
+      return animacaoErro("SenhaConfirmar");
+    } else if (
+      state.inputSenha.length < 8 ||
+      state.inputSenhaConfirmar.length < 8
+    ) {
+      animacaoErro("Senha");
       return animacaoErro("SenhaConfirmar");
     } else if (state.inputSenha.includes(" ")) {
       return animacaoErro("Senha");
@@ -143,7 +153,7 @@ function Cadastro() {
     setState((prev) => ({ ...prev, mostrarSenha2: !prev.mostrarSenha2 }));
   };
 
-  async function cadastrar() {
+  async function handleCadastrar() {
     if (
       verificarConfirmarEmail() ||
       verificarConfirmarSenha() ||
@@ -152,7 +162,22 @@ function Cadastro() {
     ) {
       return;
     }
+    try {
+      const novoUser = await cadastrar(
+        state.inputNome,
+        state.inputUsuario,
+        state.inputEmail,
+        state.inputSenha
+      );
+      console.log("Usuário cadastrado com sucesso: ", novoUser);
+    } catch (error) {
+      console.log("Erro ao cadastrar usuário: ", error.mensage);
+    }
     console.log(state);
+    const confirmado = window.confirm("Usuário cadastrado com sucesso!");
+    if (confirmado) {
+      navigate("/");
+    }
   }
 
   return (
@@ -324,7 +349,7 @@ function Cadastro() {
         <button
           title="Está pronto para sua nova jornada?"
           className={`${styles["botao-criar-conta"]} doodle-border`}
-          onClick={cadastrar}
+          onClick={handleCadastrar}
         >
           Criar Conta
         </button>

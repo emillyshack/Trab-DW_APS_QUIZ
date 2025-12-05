@@ -44,15 +44,33 @@ export function LoginProvider({ children }) {
     }
   };
 
-  const cadastrar = async (email, password) => {
+  const cadastrar = async (nome, usuario, email, password) => {
     setLoading(true);
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    if (error) {
+
+    try {
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      if (error) {
+        setLoading(false);
+        throw error;
+      }
+
+      const user = data.user;
+      const { data: novaPessoa, error: insertError } = await supabase
+        .from("pessoas")
+        .insert({
+          id_usuario: user.id,
+          nome: nome,
+          nome_usuario: usuario,
+        })
+        .select()
+        .single();
+
+      if (insertError) throw insertError;
+      setLoading(false);
+      return { user, novaPessoa };
+    } catch (error) {
       setLoading(false);
       throw error;
-    } else {
-      setLoading(false);
-      return data;
     }
   };
 
