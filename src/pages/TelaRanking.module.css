@@ -1,0 +1,39 @@
+.ranking-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+  }
+  
+  .ranking-card {
+    background: #ffb35a;
+    padding: 30px;
+    border-radius: 20px;
+    width: 500px;
+  }
+  
+  .titulo {
+    background: #78dbff;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 24px;
+  }
+  
+  .lista-ranking {
+    margin-top: 20px;
+  }
+  
+  .linha-ranking {
+    display: flex;
+    justify-content: space-between;
+    background: #ffefc9;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+  }
+  
+  .linha-ranking.eu {
+    background: #ffd700;
+    border: 2px solid #333;
+  }
+  
