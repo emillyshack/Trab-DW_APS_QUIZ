@@ -4,19 +4,22 @@ import {
   Routes,
   Outlet,
 } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext } from "react";
+
 import Home from "./pages/Home";
 import Perfil from "./pages/Perfil";
 import Cadastro from "./pages/Cadastro";
 import Login from "./pages/Login";
 import CriarQuizz from "./pages/CriarQuizz";
 import Quizzes from "./pages/Quizzes";
+import TelaPergunta from "./pages/TelaPergunta";
+import CriarPergunta from "./pages/CriarPergunta";
+import TelaRanking from "./pages/TelaRanking";     // <-- import adicionado
+
 import "../src/Global.css";
 import NavBar from "./components/NavBar";
 import { LoginProvider, LoginContexto } from "./LoginContext";
 import { GeralProvider } from "./GeralContext";
-import TelaPergunta from "./pages/TelaPergunta";
-import CriarPergunta from "./pages/CriarPergunta";
 import LoadingLogin from "./components/LoadingLogin";
 
 function ComNavBar() {
@@ -34,9 +37,10 @@ function SemNavBar() {
 
 function ConteudoApp() {
   const { loading } = useContext(LoginContexto);
+
   return (
     <>
-      {loading ? <LoadingLogin /> : ""}
+      {loading ? <LoadingLogin /> : null}
       <Router>
         <Routes>
           {/* Com Navbar */}
@@ -49,11 +53,13 @@ function ConteudoApp() {
               <Route path="CriarPergunta" element={<CriarPergunta />} />
             </Route>
           </Route>
+
           {/* Sem NavBar */}
           <Route element={<SemNavBar />}>
             <Route path="/" element={<Login />} />
             <Route path="/Cadastro" element={<Cadastro />} />
             <Route path="Perguntax" element={<TelaPergunta />} />
+              <Route path="Ranking" element={<TelaRanking />} /> 
           </Route>
         </Routes>
       </Router>

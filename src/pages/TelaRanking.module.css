@@ -1,10 +1,10 @@
-.ranking-container {
+.rankingContainer {
     display: flex;
     justify-content: center;
     margin-top: 40px;
   }
   
-  .ranking-card {
+  .rankingCard {
     background: #ffb35a;
     padding: 30px;
     border-radius: 20px;
@@ -19,11 +19,11 @@
     font-size: 24px;
   }
   
-  .lista-ranking {
+  .listaRanking {
     margin-top: 20px;
   }
   
-  .linha-ranking {
+  .linhaRanking {
     display: flex;
     justify-content: space-between;
     background: #ffefc9;
@@ -32,8 +32,9 @@
     border-radius: 10px;
   }
   
-  .linha-ranking.eu {
+  .linhaRankingEu {
     background: #ffd700;
     border: 2px solid #333;
   }
+  
   

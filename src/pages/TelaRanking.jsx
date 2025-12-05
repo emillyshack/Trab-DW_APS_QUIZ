@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../services/supabaseClient";
-import "./TelaRanking.css"; // você cria o CSS depois
+import styles from "./TelaRanking.module.css";
 
 export default function TelaRanking() {
   const [ranking, setRanking] = useState([]);
@@ -8,42 +7,43 @@ export default function TelaRanking() {
 
   useEffect(() => {
     buscarRanking();
-    const u = localStorage.getItem("ultimoUsuario"); 
+    const u = localStorage.getItem("ultimoUsuario");
     if (u) setUsuarioAtual(u);
   }, []);
 
   async function buscarRanking() {
-    const { data, error } = await supabase
-      .from("ranking")
-      .select("*")
-      .order("acertos", { ascending: false })
-      .order("erros", { ascending: true });
+    
+    
+    const dataFake = [
+      { id: 1, usuario: "Ana", acertos: 5, erros: 1 },
+      { id: 2, usuario: "Bruno", acertos: 4, erros: 2 },
+      { id: 3, usuario: "Carlos", acertos: 3, erros: 3 },
+    ];
 
-    if (error) console.error(error);
-    else setRanking(data);
+    setRanking(dataFake);
   }
 
   return (
-    <div className="ranking-container">
-      <div className="ranking-card">
-        <h1 className="titulo">Ranking Atual</h1>
+    <div className={styles.rankingContainer}>
+      <div className={styles.rankingCard}>
+        <h1 className={styles.titulo}>Ranking Atual</h1>
 
-        <div className="lista-ranking">
+        <div className={styles.listaRanking}>
           {ranking.map((item, index) => {
             const isUser = item.usuario === usuarioAtual;
 
             return (
-              <div 
+              <div
                 key={item.id}
-                className={`linha-ranking ${isUser ? "eu" : ""}`}
+                className={`${styles.linhaRanking} ${
+                  isUser ? styles.linhaRankingEu : ""
+                }`}
               >
-                <span className="posicao">{index + 1}º</span>
-                <span className="nome">{item.usuario}</span>
-                <span className="pontos">
-                  #{item.acertos * 100 - item.erros * 10}
-                </span>
+                <span>{index + 1}º</span>
+                <span>{item.usuario}</span>
+                <span>#{item.acertos * 100 - item.erros * 10}</span>
               </div>
-            );  
+            );
           })}
         </div>
       </div>
