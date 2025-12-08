@@ -24,6 +24,7 @@ import NavBar from "./components/NavBar";
 import { LoginProvider, LoginContexto } from "./context/LoginContext";
 import { GeralProvider } from "./context/GeralContext";
 import LoadingLogin from "./components/LoadingLogin";
+import NotFound from "./components/NotFound";
 
 function ComNavBar() {
   return (
@@ -57,7 +58,14 @@ function ConteudoApp() {
           >
             <Route path="/Inicial">
               <Route index element={<Home />} />
-              <Route path="Perfil" element={<Perfil />} />
+              <Route
+                path="Perfil"
+                element={
+                  <PrivateRoute>
+                    <Perfil />
+                  </PrivateRoute>
+                }
+              />
               <Route path="CriarQuizz" element={<CriarQuizz />} />
               <Route path="Quizzes" element={<Quizzes />} />
               <Route path="CriarPergunta" element={<CriarPergunta />} />
@@ -73,6 +81,9 @@ function ConteudoApp() {
             <Route path="/PrepararQuiz" element={<TelaPreparar />} />
             <Route path="/Perguntax" element={<TelaPergunta />} />
           </Route>
+
+          {/* Erro 404 */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </>

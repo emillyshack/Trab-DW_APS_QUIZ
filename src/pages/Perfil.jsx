@@ -12,24 +12,28 @@ function Perfil() {
   // --------------------------
   const [valores, setValores] = useState({
     nome: pessoa.nome,
+    usuario: pessoa.nome_usuario,
     email: usuario.email,
     instagram: "",
   });
 
   const [temporarios, setTemporarios] = useState({
     nome: "",
+    usuario: "",
     email: "",
     instagram: "",
   });
 
   const [editavel, setEditavel] = useState({
     nome: false,
+    usuario: false,
     email: false,
     instagram: false,
   });
 
   const [confirmar, setConfirmar] = useState({
     nome: false,
+    usuario: false,
     email: false,
     instagram: false,
   });
@@ -143,25 +147,25 @@ function Perfil() {
               />
 
               <div className={styles.display1}>
-                {editavel.nome ? (
+                {editavel.usuario ? (
                   <>
                     <input
                       placeholder="Anônimo"
-                      className={styles.nome}
-                      value={temporarios.nome}
-                      onChange={(e) => alterarValor("nome", e.target.value)}
+                      className={styles.usuario}
+                      value={temporarios.usuario}
+                      onChange={(e) => alterarValor("usuario", e.target.value)}
                     />
-                    {confirmar.nome && (
+                    {confirmar.usuario && (
                       <>
                         <button
                           className={styles["adicionar-tag"]}
-                          onClick={() => confirmarMudanca("nome")}
+                          onClick={() => confirmarMudanca("usuario")}
                         >
                           <Check />
                         </button>
                         <button
                           className={styles["remover-tag"]}
-                          onClick={() => cancelarMudanca("nome")}
+                          onClick={() => cancelarMudanca("usuario")}
                         >
                           <X />
                         </button>
@@ -171,9 +175,9 @@ function Perfil() {
                 ) : (
                   <span
                     className={styles.nome}
-                    onClick={() => iniciarEdicao("nome")}
+                    onClick={() => iniciarEdicao("usuario")}
                   >
-                    {valores.nome}
+                    {valores.usuario}
                   </span>
                 )}
               </div>
@@ -182,6 +186,42 @@ function Perfil() {
 
           {/* DESCRIÇÃO E DADOS */}
           <div className={`${styles["area-descricao"]}`}>
+            {/* NOME */}
+            <div className={`${styles["dados-especiais"]} doodle-border`}>
+              <label className={styles.label}>Nome completo:</label>
+              <div className={styles["editar-celula"]}>
+                <input
+                  className={styles["input-charger"]}
+                  value={editavel.nome ? temporarios.nome : valores.nome}
+                  readOnly={!editavel.nome}
+                  onChange={(e) => alterarValor("nome", e.target.value)}
+                />
+                {!editavel.nome && (
+                  <button
+                    onClick={() => iniciarEdicao("nome")}
+                    className={styles["editar-tag"]}
+                  >
+                    <Pencil />
+                  </button>
+                )}
+                {confirmar.nome && (
+                  <>
+                    <button
+                      className={styles["adicionar-tag"]}
+                      onClick={() => confirmarMudanca("nome")}
+                    >
+                      <Check />
+                    </button>
+                    <button
+                      className={styles["remover-tag"]}
+                      onClick={() => cancelarMudanca("nome")}
+                    >
+                      <X />
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
             {/* EMAIL */}
             <div className={`${styles["dados-especiais"]} doodle-border`}>
               <label className={styles.label}>E-mail</label>
