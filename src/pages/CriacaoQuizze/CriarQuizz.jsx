@@ -1,11 +1,13 @@
 import styles from "./CriarQuizz.module.css";
-import BotaoAdd from "../components/BotaoAdicionarPerg";
-import { useState, useRef } from "react";
-
+import BotaoAdd from "../../components/BotaoAdicionarPerg";
+import { useState, useRef, use, useContext } from "react";
+import GeralContexto from "../../context/GeralContext";
 import { LockKeyhole, Settings, Eye, Plus } from "lucide-react";
 
 function CriarQuizz() {
   const [preview, setPreview] = useState(null);
+  const { novaPergunta, novaAlternativa, setNovaPergunta, setNovaAlternativa } =
+    useContext(GeralContexto);
   const inputRef = useRef(null);
 
   const handleFotoClick = () => inputRef.current.click();

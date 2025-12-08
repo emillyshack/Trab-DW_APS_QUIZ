@@ -4,8 +4,8 @@ import { supabase } from "../supabase.js";
 export const GeralContexto = createContext();
 
 export function GeralProvider({ children }) {
+  // Verificar usuário ====================
   const [pessoa, setPessoa] = useState(null);
-
   const getUser = async (id) => {
     const { data, error } = await supabase
       .from("pessoas")
@@ -17,11 +17,20 @@ export function GeralProvider({ children }) {
     setPessoa(data);
     return data;
   };
+
+  // Criar um novo quizz ==================
+  const [novaAlternativa, setNovaAlternativa] = useState([{}]);
+  const [novaPergunta, setNovaPergunta] = useState([{}]);
+
   return (
     <GeralContexto.Provider
       value={{
         pessoa,
         getUser,
+        novaAlternativa,
+        setNovaAlternativa,
+        novaPergunta,
+        setNovaPergunta,
       }}
     >
       {children}

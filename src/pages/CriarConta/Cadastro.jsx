@@ -1,13 +1,13 @@
-import logo from "../assets/images/Quizzy_logo.png";
-import pessoaCadastro from "../assets/images/pessoa-cadastro2.png";
-import pessoaOlhoFechado from "../assets/images/pessoa-olho-fechado.png";
-import passbolaAberta from "../assets/images/passbola-aberta.png";
-import passbolaFechada from "../assets/images/passbola-fechada.png";
+import logo from "../../assets/images/Quizzy_logo.png";
+import pessoaCadastro from "../../assets/images/pessoa-cadastro2.png";
+import pessoaOlhoFechado from "../../assets/images/pessoa-olho-fechado.png";
+import passbolaAberta from "../../assets/images/passbola-aberta.png";
+import passbolaFechada from "../../assets/images/passbola-fechada.png";
 import styles from "./Cadastro.module.css";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SinginWith from "../components/SigninWith";
-import { LoginContexto } from "../context/LoginContext";
+import SinginWith from "../../components/SigninWith";
+import { LoginContexto } from "../../context/LoginContext";
 
 function Cadastro() {
   const navigate = useNavigate();

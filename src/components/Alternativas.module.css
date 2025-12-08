@@ -35,6 +35,14 @@
   align-items: center;
 }
 
+.certa:hover {
+  transform: scale(1.1);
+}
+
+.errada:hover {
+  transform: scale(1.1);
+}
+
 .errada {
   margin-right: 10px;
   background-color: var(--cor-vermelho-300);
@@ -50,4 +58,11 @@
   border: 2px solid;
   width: 20vw;
   font-size: larger;
+}
+
+.correta {
+  background-color: var(--cor-verde-400);
+}
+.incorreta {
+  background-color: var(--cor-vermelho-400);
 }

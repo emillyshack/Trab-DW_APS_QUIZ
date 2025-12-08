@@ -1,30 +1,30 @@
 import styles from "./Login.module.css";
-import LoadingLogin from "../components/LoadingLogin";
-import siteImg from "../assets/images/ImagemSite.png";
-import logo from "../assets/images/Quizzy_logo.png";
-import googleIcon from "../assets/images/google-icon.png";
-import facebookIcon from "../assets/images/facebook-icon.png";
-import pessoaCadastro from "../assets/images/pessoa-cadastro.png";
-import gifPikachu from "../assets/images/pikachuCorrendo.gif";
-import arbusto from "../assets/images/arbusto-8-bit.png";
-import passbolaAberta from "../assets/images/passbola-aberta.png";
-import passbolaFechada from "../assets/images/passbola-fechada.png";
+
+import siteImg from "../../assets/images/ImagemSite.png";
+import logo from "../../assets/images/Quizzy_logo.png";
+import googleIcon from "../../assets/images/google-icon.png";
+import facebookIcon from "../../assets/images/facebook-icon.png";
+import pessoaCadastro from "../../assets/images/pessoa-cadastro.png";
+import gifPikachu from "../../assets/images/pikachuCorrendo.gif";
+import arbusto from "../../assets/images/arbusto-8-bit.png";
+import passbolaAberta from "../../assets/images/passbola-aberta.png";
+import passbolaFechada from "../../assets/images/passbola-fechada.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import { LoginContexto } from "../context/LoginContext";
+import { LoginContexto } from "../../context/LoginContext";
 
 function Login() {
   const navigate = useNavigate();
-  const { logar, carregarSessao, loading, usuario } = useContext(LoginContexto);
+  const { logar, carregarSessao, usuario } = useContext(LoginContexto);
   const [velocidadePikachu, setVelovidadePikachu] = useState(12);
 
   useEffect(() => {
     carregarSessao();
 
-    if (!loading && usuario) {
+    if (usuario) {
       navigate("/Inicial");
     }
-  }, [usuario, loading]);
+  }, [usuario]);
 
   const [state, setState] = useState({
     inputEmail: "",

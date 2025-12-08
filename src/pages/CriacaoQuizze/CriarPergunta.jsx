@@ -1,8 +1,8 @@
 import styles from "./CriarPergunta.module.css";
 import React, { useState, useRef } from "react";
-import cyndaquill from "../assets/images/Cyndaquill.png";
+import cyndaquill from "../../assets/images/Cyndaquill.png";
 import { FileUp, Image, Check, X } from "lucide-react";
-import Alternativas from "../components/Alternativas";
+import Alternativas from "../../components/Alternativas";
 
 function CriarPergunta() {
   const [alternativas, setAlternativas] = useState({});

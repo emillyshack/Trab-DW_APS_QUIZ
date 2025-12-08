@@ -1,12 +1,12 @@
 import { useState, useRef, useContext } from "react";
-import { Check, Plus, X, Pencil } from "lucide-react";
+import { Check, Plus, X, Pencil, LogOut } from "lucide-react";
 import styles from "./Perfil.module.css";
 import { GeralContexto } from "../context/GeralContext";
 import { LoginContexto } from "../context/LoginContext";
 
 function Perfil() {
   const { pessoa } = useContext(GeralContexto);
-  const { usuario } = useContext(LoginContexto);
+  const { usuario, deslogar } = useContext(LoginContexto);
   // --------------------------
   // Valores e edição de inputs
   // --------------------------
@@ -374,6 +374,16 @@ function Perfil() {
                   <div className={`${styles["cor-fundo"]} doodle-border`}></div>{" "}
                   Mudar: Cor de Fundo
                 </button>
+              </div>
+
+              <div
+                onClick={() => {
+                  deslogar();
+                }}
+                className={`${styles["deslogar"]} doodle-border`}
+              >
+                <h2 className={styles["deslogar-titulo"]}> Deslogar</h2>
+                <LogOut />
               </div>
             </div>
           </div>
