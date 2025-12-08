@@ -10,13 +10,21 @@ import arbusto from "../assets/images/arbusto-8-bit.png";
 import passbolaAberta from "../assets/images/passbola-aberta.png";
 import passbolaFechada from "../assets/images/passbola-fechada.png";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LoginContexto } from "../context/LoginContext";
 
 function Login() {
   const navigate = useNavigate();
-  const { logar } = useContext(LoginContexto);
+  const { logar, carregarSessao, loading, usuario } = useContext(LoginContexto);
   const [velocidadePikachu, setVelovidadePikachu] = useState(12);
+
+  useEffect(() => {
+    carregarSessao();
+
+    if (!loading && usuario) {
+      navigate("/Inicial");
+    }
+  }, [usuario, loading]);
 
   const [state, setState] = useState({
     inputEmail: "",

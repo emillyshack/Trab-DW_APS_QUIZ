@@ -58,14 +58,7 @@ function ConteudoApp() {
           >
             <Route path="/Inicial">
               <Route index element={<Home />} />
-              <Route
-                path="Perfil"
-                element={
-                  <PrivateRoute>
-                    <Perfil />
-                  </PrivateRoute>
-                }
-              />
+              <Route path="Perfil" element={<Perfil />} />
               <Route path="CriarQuizz" element={<CriarQuizz />} />
               <Route path="Quizzes" element={<Quizzes />} />
               <Route path="CriarPergunta" element={<CriarPergunta />} />

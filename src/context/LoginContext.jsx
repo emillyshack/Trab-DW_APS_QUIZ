@@ -7,16 +7,16 @@ export function LoginProvider({ children }) {
   const [usuario, setUsuario] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  async function carregarSessao() {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+    setUsuario(session?.user ?? null);
+    setLoading(false);
+  }
+
   useEffect(() => {
     setLoading(true);
-    async function carregarSessao() {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      setUsuario(session?.user ?? null);
-      setLoading(false);
-    }
-
     carregarSessao();
 
     const { data: authListener } = supabase.auth.onAuthStateChange(
@@ -90,6 +90,7 @@ export function LoginProvider({ children }) {
         logar,
         cadastrar,
         deslogar,
+        carregarSessao,
       }}
     >
       {children}
