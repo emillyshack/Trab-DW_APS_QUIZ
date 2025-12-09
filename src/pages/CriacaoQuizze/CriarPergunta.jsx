@@ -4,9 +4,6 @@ import cyndaquill from "../../assets/images/Cyndaquill.png";
 import { FileUp, Image, Sparkles } from "lucide-react";
 import Alternativas from "../../components/Alternativas";
 
-// ======== IMPORTANDO GEMINI ========
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
 function CriarPergunta() {
   const [alternativas, setAlternativas] = useState({});
   const [pergunta, setPergunta] = useState("");
@@ -35,28 +32,29 @@ function CriarPergunta() {
     });
   };
 
-  // ================= GEMINI IA ====================
-  const genAI = new GoogleGenerativeAI("SUA_API_KEY_AQUI");
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
+  // ================= GEMINI VIA BACKEND ====================
   const gerarPerguntaComGemini = async () => {
     if (!pergunta.trim()) return alert("Digite algo para a IA gerar!");
 
     try {
       setGerando(true);
 
-      const prompt = `
-        Gere uma pergunta objetiva, clara e curta baseada no pedido:
-        "${pergunta}".  
-        Apenas retorne a pergunta, sem explicações adicionais.
-      `;
+      const resposta = await fetch("http://localhost:3000/gerarPerguntaIA", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ texto: pergunta }),
+      });
 
-      const result = await model.generateContent(prompt);
-      const perguntaGerada = result.response.text();
+      const data = await resposta.json();
 
-      setPergunta(perguntaGerada); // substitui o textarea
+      if (!data?.pergunta) {
+        alert("Erro: IA não retornou pergunta.");
+        return;
+      }
+
+      setPergunta(data.pergunta);
     } catch (erro) {
-      console.error("Erro na IA:", erro);
+      console.error("Erro ao buscar IA:", erro);
       alert("Erro ao gerar pergunta com a IA.");
     } finally {
       setGerando(false);
