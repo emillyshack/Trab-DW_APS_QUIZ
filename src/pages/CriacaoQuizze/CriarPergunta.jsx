@@ -1,12 +1,16 @@
 import styles from "./CriarPergunta.module.css";
 import React, { useState, useRef } from "react";
 import cyndaquill from "../../assets/images/Cyndaquill.png";
-import { FileUp, Image, Check, X } from "lucide-react";
+import { FileUp, Image, Sparkles } from "lucide-react";
 import Alternativas from "../../components/Alternativas";
+
+// ======== IMPORTANDO GEMINI ========
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 function CriarPergunta() {
   const [alternativas, setAlternativas] = useState({});
   const [pergunta, setPergunta] = useState("");
+  const [gerando, setGerando] = useState(false);
 
   const atualizarAlternativa = (alt) => {
     setAlternativas((prev) => ({
@@ -15,12 +19,11 @@ function CriarPergunta() {
     }));
   };
 
+  // ================= SALVAR NO BD ====================
   const salvarQuestao = async () => {
-    const listaAlternativas = Object.values(alternativas);
-
     const payload = {
       pergunta: pergunta,
-      alternativas: listaAlternativas,
+      alternativas: Object.values(alternativas),
     };
 
     console.log("ENVIANDO PARA O BANCO:", payload);
@@ -32,18 +35,35 @@ function CriarPergunta() {
     });
   };
 
-  //dddddddddddddddddddddddddddddddddddddddddddddd
-  const [escolherTempo, setEscolherTempo] = useState(30);
+  // ================= GEMINI IA ====================
+  const genAI = new GoogleGenerativeAI("SUA_API_KEY_AQUI");
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-  const handleMudarTempo = () => {
-    let somar15 = escolherTempo + 15;
-    if (somar15 > 90) {
-      somar15 = 15;
+  const gerarPerguntaComGemini = async () => {
+    if (!pergunta.trim()) return alert("Digite algo para a IA gerar!");
+
+    try {
+      setGerando(true);
+
+      const prompt = `
+        Gere uma pergunta objetiva, clara e curta baseada no pedido:
+        "${pergunta}".  
+        Apenas retorne a pergunta, sem explicações adicionais.
+      `;
+
+      const result = await model.generateContent(prompt);
+      const perguntaGerada = result.response.text();
+
+      setPergunta(perguntaGerada); // substitui o textarea
+    } catch (erro) {
+      console.error("Erro na IA:", erro);
+      alert("Erro ao gerar pergunta com a IA.");
+    } finally {
+      setGerando(false);
     }
-    setEscolherTempo(somar15);
   };
 
-  //================Selecionar Imagem de Pergunta==============
+  //=============== Imagem ===============
   const [preview, setPreview] = useState(null);
   const inputArquivoRef = useRef(null);
   const inputEscondidoRef = useRef(null);
@@ -56,10 +76,18 @@ function CriarPergunta() {
 
     const reader = new FileReader();
     reader.onload = () => {
-      setPreview(reader.result); // mostra a imagem
-      inputEscondidoRef.current.value = reader.result; // salva base64
+      setPreview(reader.result);
+      inputEscondidoRef.current.value = reader.result;
     };
     reader.readAsDataURL(file);
+  };
+
+  //=============== Tempo ===============
+  const [escolherTempo, setEscolherTempo] = useState(30);
+  const handleMudarTempo = () => {
+    let novo = escolherTempo + 15;
+    if (novo > 90) novo = 15;
+    setEscolherTempo(novo);
   };
 
   return (
@@ -70,17 +98,16 @@ function CriarPergunta() {
         </nav>
 
         <div className={styles["elmt-1-2-3"]}>
+          {/* Imagem */}
           <div className={styles.column}>
-            <label htmlFor="">Imagem:</label>
+            <label>Imagem:</label>
             <div className={styles["selecionar-imagem"]}>
-              {/* Se NÃO tiver imagem -> mostra o ícone */}
               {!preview && (
                 <div className={styles["imagem-ilustrativa"]}>
                   <Image size={70} />
                 </div>
               )}
 
-              {/* Se tiver imagem -> ela ocupa o quadrado inteiro */}
               {preview && (
                 <img src={preview} className={styles.preview} alt="preview" />
               )}
@@ -105,45 +132,60 @@ function CriarPergunta() {
               <input type="hidden" ref={inputEscondidoRef} />
             </div>
           </div>
+
+          {/* Tempo */}
           <div className={styles.padrao2}>
             <div className={`${styles["selecionar-tempo"]}`}>
-              <label htmlFor=""> Tempo:</label>
+              <label>Tempo:</label>
               <div className={styles.cronometro} onClick={handleMudarTempo}>
-                <span className={styles["tempo-selecionado"]} id="tempo-valor">
+                <span className={styles["tempo-selecionado"]}>
                   {escolherTempo}s
                 </span>
-
                 <input type="hidden" value={escolherTempo} />
               </div>
             </div>
-            <div>
-              <img src={cyndaquill} className={styles["cyndaquill-imagem"]} />
-            </div>
+
+            <img src={cyndaquill} className={styles["cyndaquill-imagem"]} />
           </div>
+
+          {/* Pergunta */}
           <div className={styles.column}>
-            <label htmlFor="">Pergunta:</label>
+            <label>Pergunta:</label>
+
             <div className={styles["fazer-pergunta"]}>
+              {/* Preview */}
               <div className={styles["span-pergunta"]}>
                 <p className={styles["preview-pergunta"]}>
-                  Sua pergunta irá aparecer aqui!!
+                  {pergunta || "Sua pergunta irá aparecer aqui!!"}
                 </p>
               </div>
 
+              {/* Textarea + Botão IA */}
               <div className={styles["input-ia"]}>
                 <textarea
-                  type="text"
-                  placeholder="Faça sua pergunta"
+                  placeholder="Digite algo para a IA transformar em pergunta"
                   className={styles["pergunta"]}
                   value={pergunta}
                   onChange={(e) => setPergunta(e.target.value)}
                 ></textarea>
+
+                <button
+                  className={styles["botaoIA"]}
+                  onClick={gerarPerguntaComGemini}
+                  disabled={gerando}
+                >
+                  <Sparkles size={18} />
+                  {gerando ? "Gerando..." : "Usar IA"}
+                </button>
               </div>
             </div>
           </div>
         </div>
+
+        {/* Alternativas */}
         <div className={styles["elmt-4-5"]}>
           <div className={styles.column}>
-            <label htmlFor="">Alternativas:</label>
+            <label>Alternativas:</label>
             <div className={styles["alternativas"]}>
               <Alternativas id={1} onChange={atualizarAlternativa} />
               <Alternativas id={2} onChange={atualizarAlternativa} />
@@ -159,7 +201,7 @@ function CriarPergunta() {
             >
               Salvar Pergunta
             </button>
-            <br />
+
             <button className={`${styles["cancelar-quizz"]} doodle-border`}>
               Ir a Uma Nova Pergunta
             </button>
