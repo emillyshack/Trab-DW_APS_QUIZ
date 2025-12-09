@@ -18,6 +18,20 @@ export function GeralProvider({ children }) {
     return data;
   };
 
+  const changeFtPerfil = async (id,newPhoto) =>{
+    const {data,error} = await supabase
+    .from("pessoas")
+    .update({foto_perfil: newPhoto,})
+    .eq("id_usuario", id);
+    
+    if (error) {
+      throw error
+      return(error)
+    }else{
+      console.log("foto atualizada", data)
+    }
+  };
+
   // Criar um novo quizz ==================
   const [novaAlternativa, setNovaAlternativa] = useState([{}]);
   const [novaPergunta, setNovaPergunta] = useState([{}]);
@@ -31,6 +45,7 @@ export function GeralProvider({ children }) {
         setNovaAlternativa,
         novaPergunta,
         setNovaPergunta,
+        changeFtPerfil,
       }}
     >
       {children}

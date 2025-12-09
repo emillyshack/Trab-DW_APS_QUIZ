@@ -5,7 +5,7 @@ import { GeralContexto } from "../context/GeralContext";
 import { LoginContexto } from "../context/LoginContext";
 
 function Perfil() {
-  const { pessoa } = useContext(GeralContexto);
+  const { pessoa, changeFtPerfil } = useContext(GeralContexto);
   const { usuario, deslogar } = useContext(LoginContexto);
   // --------------------------
   // Valores e edição de inputs
@@ -91,18 +91,22 @@ function Perfil() {
   // --------------------------
   // Foto de Perfil
   // --------------------------
-  const [preview, setPreview] = useState(null);
+  const [preview, setPreview] = useState(pessoa.foto_perfil);
   const inputRef = useRef(null);
 
   const handleFotoClick = () => inputRef.current.click();
 
-  const handleArquivoChange = (e) => {
+  const handleArquivoChange = async (e) => {
     const arquivo = e.target.files[0];
     if (arquivo) {
       const url = URL.createObjectURL(arquivo);
-      setPreview(url);
+
+      await changeFtPerfil(pessoa.id_usuario, arquivo)
+      setPreview(pessoa.foto_perfil);
     }
   };
+
+  
 
   // --------------------------
   // Cor de Fundo

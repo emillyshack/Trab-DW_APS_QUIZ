@@ -1,6 +1,6 @@
 .tela-principal {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   padding-top: var(--padding-navbar);
   background-color: var(--cor-fundo1);
   display: flex;
@@ -8,7 +8,6 @@
 }
 .container {
   width: 95%;
-  height: 93%;
   margin-top: 1rem;
   background-color: var(--cor-fundo5);
   border-radius: 20px;
