@@ -1,7 +1,7 @@
 import styles from "./CriarQuizz.module.css";
 import BotaoAdd from "../../components/BotaoAdicionarPerg";
-import { useState, useRef, use, useContext } from "react";
-import GeralContexto from "../../context/GeralContext";
+import { useState, useRef, useContext } from "react";
+import {GeralContexto} from "../../context/GeralContext";
 import { LockKeyhole, Settings, Eye, Plus } from "lucide-react";
 
 function CriarQuizz() {

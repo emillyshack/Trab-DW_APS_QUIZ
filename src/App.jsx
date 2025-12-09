@@ -6,14 +6,14 @@ import {
 } from "react-router-dom";
 import Home from "./pages/Home";
 import Perfil from "./pages/Perfil";
-import Cadastro from "./pages/Cadastro";
-import Login from "./pages/Login";
-import CriarQuizz from "./pages/CriarQuizz";
+import Cadastro from "./pages/CriarConta/Cadastro";
+import Login from "./pages/CriarConta/Login";
+import CriarQuizz from "./pages/CriacaoQuizze/CriarQuizz";
 import Quizzes from "./pages/Quizzes";
 import "../src/Global.css";
 import NavBar from "./components/NavBar";
-import { LoginProvider } from "./LoginContext";
-import TelaPergunta from "./pages/TelaPergunta";
+import { LoginProvider } from "./context/LoginContext";
+import TelaPergunta from "./pages/QuizzJogo/TelaPergunta";
 
 function ComNavBar() {
   return (
