@@ -4,27 +4,16 @@ import {
   Routes,
   Outlet,
 } from "react-router-dom";
-import { useContext } from "react";
-
 import Home from "./pages/Home";
 import Perfil from "./pages/Perfil";
-import Cadastro from "./pages/CriarConta/Cadastro";
-import Login from "./pages/CriarConta/Login";
-import CriarQuizz from "./pages/CriacaoQuizze/CriarQuizz";
+import Cadastro from "./pages/Cadastro";
+import Login from "./pages/Login";
+import CriarQuizz from "./pages/CriarQuizz";
 import Quizzes from "./pages/Quizzes";
-import TelaPergunta from "./pages/QuizzJogo/TelaPergunta";
-import CriarPergunta from "./pages/CriacaoQuizze/CriarPergunta";
-import TelaRanking from "./pages/QuizzJogo/TelaRanking";
-import TelaAviso from "./components/TelaAviso";
-import TelaPreparar from "./components/TelaPreparar";
-import PrivateRoute from "./PrivateRoute";
-
 import "../src/Global.css";
 import NavBar from "./components/NavBar";
-import { LoginProvider, LoginContexto } from "./context/LoginContext";
-import { GeralProvider } from "./context/GeralContext";
-import LoadingLogin from "./components/LoadingLogin";
-import NotFound from "./components/NotFound";
+import { LoginProvider } from "./LoginContext";
+import TelaPergunta from "./pages/TelaPergunta";
 
 function ComNavBar() {
   return (
@@ -39,56 +28,32 @@ function SemNavBar() {
   return <Outlet />;
 }
 
-function ConteudoApp() {
-  const { loading } = useContext(LoginContexto);
-
+function App() {
   return (
-    <>
-      {loading ? <LoadingLogin /> : null}
-
+    <LoginProvider>
       <Router>
         <Routes>
-          {/* Rotas com Navbar */}
-          <Route
-            element={
-              <PrivateRoute>
-                <ComNavBar />
-              </PrivateRoute>
-            }
-          >
+          {/* Com Navbar */}
+          <Route element={<ComNavBar />}>
             <Route path="/Inicial">
               <Route index element={<Home />} />
               <Route path="Perfil" element={<Perfil />} />
               <Route path="CriarQuizz" element={<CriarQuizz />} />
               <Route path="Quizzes" element={<Quizzes />} />
-              <Route path="CriarPergunta" element={<CriarPergunta />} />
+              <Route path="Perguntax" element ={<TelaPergunta />} />
             </Route>
           </Route>
-
-          {/* Rotas sem Navbar */}
+          {/* Sem NavBar */}
           <Route element={<SemNavBar />}>
             <Route path="/" element={<Login />} />
             <Route path="/Cadastro" element={<Cadastro />} />
-            <Route path="/Ranking" element={<TelaRanking />} />
-            <Route path="/Aviso" element={<TelaAviso />} />
-            <Route path="/PrepararQuiz" element={<TelaPreparar />} />
-            <Route path="/Perguntax" element={<TelaPergunta />} />
           </Route>
 
-          {/* Erro 404 */}
-          <Route path="*" element={<NotFound />} />
+          {/*  */}
         </Routes>
       </Router>
-    </>
-  );
-}
-
-export default function App() {
-  return (
-    <LoginProvider>
-      <GeralProvider>
-        <ConteudoApp />
-      </GeralProvider>
     </LoginProvider>
   );
 }
+
+export default App;
