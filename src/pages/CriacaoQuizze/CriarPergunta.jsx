@@ -1,7 +1,7 @@
 import styles from "./CriarPergunta.module.css";
 import React, { useState, useRef } from "react";
 import cyndaquill from "../../assets/images/Cyndaquill.png";
-import { FileUp, Image, Sparkles } from "lucide-react";
+import { FileUp, Image, MessageSquare } from "lucide-react";
 import Alternativas from "../../components/Alternativas";
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
@@ -9,7 +9,59 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 function CriarPergunta() {
   const [alternativas, setAlternativas] = useState({});
   const [pergunta, setPergunta] = useState("");
-  const [gerando, setGerando] = useState(false);
+
+  // ================================================================
+  // CHAT DA IA
+  // ================================================================
+  const [mostrarChat, setMostrarChat] = useState(false);
+  const [mensagemUsuario, setMensagemUsuario] = useState("");
+  const [mensagensChat, setMensagensChat] = useState([]);
+  const [carregandoIA, setCarregandoIA] = useState(false);
+
+  const enviarMensagemIA = async () => {
+    if (!mensagemUsuario.trim()) return;
+
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+    if (!apiKey) return alert("API KEY do Gemini ausente.");
+
+    const msgUser = { autor: "user", texto: mensagemUsuario };
+    setMensagensChat((prev) => [...prev, msgUser]);
+
+    const prompt = mensagemUsuario;
+    setMensagemUsuario("");
+    setCarregandoIA(true);
+
+    try {
+      console.log("🔍 DEBUG — API KEY CARREGADA?:", apiKey ? "SIM" : "NÃO");
+      console.log("Tentando modelo: gemini-2.5-flash");
+
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const model = genAI.getGenerativeModel({
+        model: "gemini-2.5-flash",
+      });
+
+      const result = await model.generateContent(prompt);
+      const respostaTexto = result.response.text();
+
+      console.log("Sucesso com modelo: gemini-2.5-flash");
+      console.log("📌 RESPOSTA DO GEMINI:", respostaTexto);
+
+      const msgIA = { autor: "ia", texto: respostaTexto };
+
+      setMensagensChat((prev) => [...prev, msgIA]);
+    } catch (err) {
+      console.error("Erro ao buscar IA:", err);
+
+      const msgErro = {
+        autor: "ia",
+        texto: "❌ Erro ao responder. Veja o console.",
+      };
+
+      setMensagensChat((prev) => [...prev, msgErro]);
+    } finally {
+      setCarregandoIA(false);
+    }
+  };
 
   const atualizarAlternativa = (alt) => {
     setAlternativas((prev) => ({
@@ -18,97 +70,9 @@ function CriarPergunta() {
     }));
   };
 
-  // ================= GEMINI ====================
-  const gerarPerguntaComGemini = async () => {
-    if (!pergunta.trim()) return alert("Digite algo para a IA gerar!");
-
-    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-    console.log("🔍 DEBUG — API KEY CARREGADA?:", apiKey ? "SIM" : "NÃO");
-
-    if (!apiKey) {
-      alert("Erro: chave da API do Gemini não está carregada.");
-      return;
-    }
-
-    // lista de candidatos de nomes de modelos (tenta um por vez)
-    const candidateModels = [
-      "gemini-2.5-flash",
-      "gemini-2.5-flash-latest",
-      "gemini-2.5-pro",
-      "gemini-1.5-flash-latest",
-      "gemini-1.5-pro",
-      "gemini-1.5-flash",
-      // você pode adicionar outros nomes aqui se souber
-    ];
-
-    try {
-      setGerando(true);
-
-      const genAI = new GoogleGenerativeAI(apiKey);
-
-      const prompt = `
-Transforme o seguinte texto em uma PERGUNTA clara, objetiva e de múltipla escolha:
-"${pergunta}"
-Apenas devolva a PERGUNTA, sem alternativas.
-      `;
-
-      let lastError = null;
-      let respostaTexto = null;
-      let usadoModelo = null;
-
-      for (const modelName of candidateModels) {
-        try {
-          console.log(`Tentando modelo: ${modelName}`);
-          const modelo = genAI.getGenerativeModel({ model: modelName });
-          const resposta = await modelo.generateContent(prompt);
-
-          // resposta.response pode ser função ou objeto — convertemos com segurança
-          const texto = await (async () => {
-            if (!resposta) return null;
-            // alguns SDKs usam resposta.response.text() (async) ou resposta.response?.text()
-            if (resposta?.response?.text) {
-              // se response.text é uma função que retorna string
-              return await resposta.response.text();
-            }
-            // fallback: se resposta.content existe
-            if (typeof resposta === "string") return resposta;
-            if (resposta?.outputText) return resposta.outputText;
-            return null;
-          })();
-
-          if (texto && texto.trim()) {
-            respostaTexto = texto.trim();
-            usadoModelo = modelName;
-            console.log(`Sucesso com modelo: ${modelName}`);
-            break;
-          } else {
-            console.log(`Modelo ${modelName} respondeu vazio. Continuando...`);
-          }
-        } catch (eModel) {
-          lastError = eModel;
-          // Se for 404 model not found, log e continua para o próximo
-          console.warn(`Modelo ${modelName} falhou:`, eModel?.message || eModel);
-          // continue para o próximo modelo
-        }
-      }
-
-      if (!respostaTexto) {
-        console.error("Nenhum modelo retornou resposta válida. Último erro:", lastError);
-        alert("A IA não conseguiu gerar a pergunta (ver console). Tente listar modelos ou checar permissões da chave.");
-        return;
-      }
-
-      console.log("📌 RESPOSTA DO GEMINI (modelo usado:", usadoModelo, "):", respostaTexto);
-      setPergunta(respostaTexto);
-    } catch (erro) {
-      console.error("❌ ERRO GEMINI (fora do loop):", erro);
-      alert("Erro ao gerar pergunta com IA (veja console).");
-    } finally {
-      setGerando(false);
-    }
-  };
-
-  //=============== Imagem ===============
+  // ================================================================
+  // IMAGEM
+  // ================================================================
   const [preview, setPreview] = useState(null);
   const inputArquivoRef = useRef(null);
   const inputEscondidoRef = useRef(null);
@@ -122,12 +86,15 @@ Apenas devolva a PERGUNTA, sem alternativas.
     const reader = new FileReader();
     reader.onload = () => {
       setPreview(reader.result);
-      if (inputEscondidoRef.current) inputEscondidoRef.current.value = reader.result;
+      if (inputEscondidoRef.current) inputEscondidoRef.current.value =
+        reader.result;
     };
     reader.readAsDataURL(file);
   };
 
-  //=============== Tempo ===============
+  // ================================================================
+  // TEMPO
+  // ================================================================
   const [escolherTempo, setEscolherTempo] = useState(30);
   const handleMudarTempo = () => {
     let novo = escolherTempo + 15;
@@ -135,6 +102,9 @@ Apenas devolva a PERGUNTA, sem alternativas.
     setEscolherTempo(novo);
   };
 
+  // ================================================================
+  // RENDER
+  // ================================================================
   return (
     <div className={styles["tela-principal"]}>
       <div className={styles.container}>
@@ -142,6 +112,49 @@ Apenas devolva a PERGUNTA, sem alternativas.
           <h1>Criando sua Pergunta</h1>
         </nav>
 
+        {/* -----------------------------------------------------------
+            JANELINHA DO CHAT IA
+        ----------------------------------------------------------- */}
+        <button
+          className={styles.botaoAbrirChat}
+          onClick={() => setMostrarChat(!mostrarChat)}
+        >
+          <MessageSquare size={18} /> Conversar com a IA
+        </button>
+
+        {mostrarChat && (
+          <div className={styles.chatIA}>
+            <h3>Assistente de Criação de Perguntas</h3>
+
+            <div className={styles.chatArea}>
+              {mensagensChat.map((m, i) => (
+                <div
+                  key={i}
+                  className={
+                    m.autor === "user" ? styles.msgUser : styles.msgIA
+                  }
+                >
+                  <p>{m.texto}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className={styles.chatInput}>
+              <input
+                value={mensagemUsuario}
+                onChange={(e) => setMensagemUsuario(e.target.value)}
+                placeholder="Pergunte algo à IA..."
+              />
+              <button onClick={enviarMensagemIA} disabled={carregandoIA}>
+                {carregandoIA ? "..." : "Enviar"}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* -----------------------------------------------------------
+            TELA PRINCIPAL
+        ----------------------------------------------------------- */}
         <div className={styles["elmt-1-2-3"]}>
           {/* Imagem */}
           <div className={styles.column}>
@@ -180,7 +193,7 @@ Apenas devolva a PERGUNTA, sem alternativas.
 
           {/* Tempo */}
           <div className={styles.padrao2}>
-            <div className={`${styles["selecionar-tempo"]}`}>
+            <div className={styles["selecionar-tempo"]}>
               <label>Tempo:</label>
               <div className={styles.cronometro} onClick={handleMudarTempo}>
                 <span className={styles["tempo-selecionado"]}>
@@ -197,33 +210,12 @@ Apenas devolva a PERGUNTA, sem alternativas.
           <div className={styles.column}>
             <label>Pergunta:</label>
 
-            <div className={styles["fazer-pergunta"]}>
-              {/* Preview */}
-              <div className={styles["span-pergunta"]}>
-                <p className={styles["preview-pergunta"]}>
-                  {pergunta || "Sua pergunta irá aparecer aqui!!"}
-                </p>
-              </div>
-
-              {/* Textarea + Botão IA */}
-              <div className={styles["input-ia"]}>
-                <textarea
-                  placeholder="Digite algo para a IA transformar em pergunta"
-                  className={styles["pergunta"]}
-                  value={pergunta}
-                  onChange={(e) => setPergunta(e.target.value)}
-                ></textarea>
-
-                <button
-                  className={styles["botaoIA"]}
-                  onClick={gerarPerguntaComGemini}
-                  disabled={gerando}
-                >
-                  <Sparkles size={18} />
-                  {gerando ? "Gerando..." : "Usar IA"}
-                </button>
-              </div>
-            </div>
+            <textarea
+              placeholder="Digite sua pergunta manualmente"
+              className={styles["pergunta"]}
+              value={pergunta}
+              onChange={(e) => setPergunta(e.target.value)}
+            ></textarea>
           </div>
         </div>
 
@@ -243,10 +235,7 @@ Apenas devolva a PERGUNTA, sem alternativas.
             <button
               className={`${styles["salvar-mudancas"]} doodle-border`}
               onClick={() =>
-                console.log("Sem backend → payload:", {
-                  pergunta,
-                  alternativas,
-                })
+                console.log("Salvar:", { pergunta, alternativas })
               }
             >
               Salvar Pergunta (console)
