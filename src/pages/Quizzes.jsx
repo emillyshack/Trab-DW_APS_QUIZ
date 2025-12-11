@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-export default Quizzes;
-=======
->>>>>>> 37f6edbaa20431c5dae4985b78cd8f6e603bd570
 import { Plus } from "lucide-react";
 import home from "./Home.module.css";
 import styles from "./Quizzes.module.css";
