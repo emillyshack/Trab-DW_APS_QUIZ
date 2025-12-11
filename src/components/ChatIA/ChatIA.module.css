@@ -1,0 +1,79 @@
+.overlay {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 9999;
+}
+
+.chatBox {
+  width: 340px;
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0px 4px 16px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  animation: aparecer 0.2s ease-out;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.titulo {
+  margin-bottom: 10px;
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.respostaBox {
+  min-height: 120px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #f3f4f5;
+  margin-bottom: 12px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+
+.loading {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.inputArea {
+  display: flex;
+  gap: 8px;
+}
+
+.inputArea input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.inputArea button {
+  padding: 8px 12px;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.inputArea button:hover {
+  background: #0066d5;
+}
