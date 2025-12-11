@@ -1,8 +1,18 @@
 import { Plus } from "lucide-react";
 import home from "./Home.module.css";
 import styles from "./Quizzes.module.css";
+// Importar o hook de navegação
+import { useNavigate } from 'react-router-dom'; 
 
 export default function Quizzes() {
+  // Inicializar o hook
+  const navigate = useNavigate();
+
+  // Função para navegar para a sala específica, passando o ID para a URL
+  const handleCardClick = (id) => {
+    navigate(`/sala/${id}`);
+  };
+
   return (
     <div className={`${home["tela-principal"]} ${styles.telaPrincipal}`}>
       <div className={styles.container}>
@@ -22,13 +32,19 @@ export default function Quizzes() {
           </div>
         </section>
 
-        {/* COLUNA 2 — SALAS CRIADAS */}
+        {/* COLUNA 2 — SALAS CRIADAS (agora clicável) */}
         <section className={styles.salas}>
           <h2 className={styles.titulo}>Salas Criadas</h2>
 
           <div className={styles.lista}>
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className={`${styles.cardSala} doodle-border`}>
+              // Adicione o onClick handler para navegar
+              // Você pode querer adicionar 'cursor: pointer;' no CSS para usabilidade.
+              <div 
+                key={i} 
+                className={`${styles.cardSala} doodle-border`} 
+                onClick={() => handleCardClick(i)} // Chama a função de navegação
+              >
                 <div>
                   <p className={styles.salaTitulo}>Quiz Matemática</p>
                   <p className={styles.salaDono}>Fulano</p>
