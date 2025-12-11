@@ -12,6 +12,7 @@ import passbolaFechada from "../../assets/images/passbola-fechada.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { LoginContexto } from "../../context/LoginContext";
+import ElementoLogin from "../../components/ElementoLogin";
 
 function Login() {
   const navigate = useNavigate();
@@ -248,11 +249,13 @@ function Login() {
             </div>
           </div>
         </div>
-        <img
+        {/* <img
           src={siteImg}
           alt="Imagem do site"
           className={`${styles["imagem-site"]}`}
-        />
+        /> */}
+
+        <ElementoLogin />
       </div>
     </div>
   );

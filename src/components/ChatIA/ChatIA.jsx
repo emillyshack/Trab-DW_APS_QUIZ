@@ -10,49 +10,35 @@ export default function ChatIA({ onClose }) {
   const enviarPergunta = async () => {
     if (!input.trim()) return;
 
+    const pergunta = input.trim();
     setLoading(true);
     setResposta("Gerando resposta...");
 
     try {
-      const response = await fetch(
-        "https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key=AIzaSyDkiLuOfPvMnvEE7G-y1EQVvFEnnP5e32s", // Substitua pela sua chave de API
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            input: {
-              text: input, // O conteúdo da mensagem
-            },
-            model: "chat-bison-001", // Nome do modelo
-            parameters: {
-              temperature: 0.7, // Temperatura (opcional)
-              max_output_tokens: 150, // Limite de tokens
-            },
-          }),
-        }
-      );
+      const response = await fetch("http://localhost:3001/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mensagem: pergunta }),
+      });
 
-      // Verificando se a requisição foi bem-sucedida
       if (!response.ok) {
-        const errorDetails = await response.json(); // Captura mais detalhes do erro
-        console.error("Erro na requisição:", errorDetails);
-        setResposta(`❌ Erro: ${errorDetails.error.message}`);
+        const error = await response.json().catch(() => null);
+        console.error("Erro no servidor:", response.status, error);
+        setResposta("Erro ao se comunicar com o servidor.");
         setLoading(false);
         return;
       }
 
       const data = await response.json();
-      console.log("Resposta completa da API:", data); // Verifique a resposta completa da API
 
-      // Acessando a resposta correta
-      const texto = data?.choices?.[0]?.message?.content || "Sem resposta.";
-      setResposta(texto);
-
+      // Backend retorna { resposta: "texto" }
+      setResposta(data.resposta || "Sem resposta gerada.");
     } catch (err) {
-      console.error("Erro ao chamar a IA:", err);
-      setResposta("❌ Erro ao gerar resposta.");
+      console.error("Erro na requisição:", err);
+      setResposta("Erro de rede ou servidor offline.");
     }
 
+    setInput("");
     setLoading(false);
   };
 
@@ -67,7 +53,7 @@ export default function ChatIA({ onClose }) {
 
         <div className={styles.respostaBox}>
           {loading ? (
-            <p className={styles.loading}>⏳ Pensando...</p>
+            <p className={styles.loading}>Pensando...</p>
           ) : (
             <p>{resposta || "Faça uma pergunta para a IA..."}</p>
           )}
@@ -80,8 +66,11 @@ export default function ChatIA({ onClose }) {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && enviarPergunta()}
+            disabled={loading}
           />
-          <button onClick={enviarPergunta}>Enviar</button>
+          <button onClick={enviarPergunta} disabled={loading}>
+            {loading ? "Enviando..." : "Enviar"}
+          </button>
         </div>
       </div>
     </div>
