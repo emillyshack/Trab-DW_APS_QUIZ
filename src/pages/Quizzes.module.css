@@ -1,10 +1,146 @@
-.tela-principal {
-  width: 100vw;
-  height: 100vh;
-  padding-top: var(--padding-navbar);
+/* Usa o fundo e centralização da Home */
+.telaPrincipal {
+  width: 100%;
+}
 
-  background-color: var(--cor-fundo1);
+/* GRID EXATO DO WIREFRAME */
+.container {
+  width: 95%;
+  height: 90vh;
+  border-radius: 20px;
+
+  display: grid;
+  grid-template-columns: 43% 22% 32%;
+  gap: 1rem;
+
+  padding: 1rem;
+}
+
+/* TÍTULOS PADRÃO */
+.titulo {
+  text-align: center;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+/* ===========================
+   COLUNA 1 — CRIAR QUIZ
+=========================== */
+.criarQuiz {
+  background-color: var(--cor-azul-100);
+  border: 4px solid var(--cor-preta-900);
+  border-radius: 18px;
+  padding: 1rem;
+}
+
+.gridQuizzes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.cardQuiz {
+  height: 130px;
+  background-color: var(--cor-amarela-200);
+  border-radius: 16px;
   display: flex;
-  align-items: start;
+  align-items: center;
   justify-content: center;
+  font-size: 1.1rem;
+}
+
+.cardAdd {
+  height: 130px;
+  background-color: var(--cor-branca-100);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===========================
+   COLUNA 2 — SALAS CRIADAS
+=========================== */
+.salas {
+  background-color: var(--cor-verde-100);
+  border-radius: 18px;
+  border: 4px solid var(--cor-preta-900);
+  padding: 1rem;
+
+  overflow-y: auto;
+}
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cardSala {
+  background-color: var(--cor-branca-100);
+  border-radius: 14px;
+  border: 4px solid var(--cor-preta-900);
+  padding: 0.5rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.salaTitulo {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.salaDono {
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.online {
+  color: green;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+/* ===========================
+   COLUNA 3 — ENTRAR COM CÓDIGO
+=========================== */
+.codigo {
+  background-color: var(--cor-rosa-100);
+  border-radius: 18px;
+  border: 4px solid var(--cor-preta-900);
+  padding: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+
+  /* altura igual às outras colunas */
+  height: 210px;
+}
+
+.input {
+  width: 90%;
+  padding: 0.6rem;
+  background-color: var(--cor-branca-100);
+  border-radius: 14px;
+  font-size: 1rem;
+}
+
+.botao {
+   width: 90%;
+  padding: 0.6rem;
+  background-color: var(--cor-verde-200);
+  border-radius: 14px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.squirtle {
+  margin-top: 0.8rem;
+  width: 80%;
+  height: auto;
+  object-fit: contain;
 }
