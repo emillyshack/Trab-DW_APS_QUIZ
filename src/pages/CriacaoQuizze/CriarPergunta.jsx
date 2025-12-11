@@ -4,6 +4,8 @@ import cyndaquill from "../../assets/images/Cyndaquill.png";
 import { FileUp, Image, Sparkles } from "lucide-react";
 import Alternativas from "../../components/Alternativas";
 
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
 function CriarPergunta() {
   const [alternativas, setAlternativas] = useState({});
   const [pergunta, setPergunta] = useState("");
@@ -16,46 +18,91 @@ function CriarPergunta() {
     }));
   };
 
-  // ================= SALVAR NO BD ====================
-  const salvarQuestao = async () => {
-    const payload = {
-      pergunta: pergunta,
-      alternativas: Object.values(alternativas),
-    };
-
-    console.log("ENVIANDO PARA O BANCO:", payload);
-
-    await fetch("http://localhost:3000/salvarQuestao", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-  };
-
-  // ================= GEMINI VIA BACKEND ====================
+  // ================= GEMINI ====================
   const gerarPerguntaComGemini = async () => {
     if (!pergunta.trim()) return alert("Digite algo para a IA gerar!");
+
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+    console.log("🔍 DEBUG — API KEY CARREGADA?:", apiKey ? "SIM" : "NÃO");
+
+    if (!apiKey) {
+      alert("Erro: chave da API do Gemini não está carregada.");
+      return;
+    }
+
+    // lista de candidatos de nomes de modelos (tenta um por vez)
+    const candidateModels = [
+      "gemini-2.5-flash",
+      "gemini-2.5-flash-latest",
+      "gemini-2.5-pro",
+      "gemini-1.5-flash-latest",
+      "gemini-1.5-pro",
+      "gemini-1.5-flash",
+      // você pode adicionar outros nomes aqui se souber
+    ];
 
     try {
       setGerando(true);
 
-      const resposta = await fetch("http://localhost:3000/gerarPerguntaIA", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ texto: pergunta }),
-      });
+      const genAI = new GoogleGenerativeAI(apiKey);
 
-      const data = await resposta.json();
+      const prompt = `
+Transforme o seguinte texto em uma PERGUNTA clara, objetiva e de múltipla escolha:
+"${pergunta}"
+Apenas devolva a PERGUNTA, sem alternativas.
+      `;
 
-      if (!data?.pergunta) {
-        alert("Erro: IA não retornou pergunta.");
+      let lastError = null;
+      let respostaTexto = null;
+      let usadoModelo = null;
+
+      for (const modelName of candidateModels) {
+        try {
+          console.log(`Tentando modelo: ${modelName}`);
+          const modelo = genAI.getGenerativeModel({ model: modelName });
+          const resposta = await modelo.generateContent(prompt);
+
+          // resposta.response pode ser função ou objeto — convertemos com segurança
+          const texto = await (async () => {
+            if (!resposta) return null;
+            // alguns SDKs usam resposta.response.text() (async) ou resposta.response?.text()
+            if (resposta?.response?.text) {
+              // se response.text é uma função que retorna string
+              return await resposta.response.text();
+            }
+            // fallback: se resposta.content existe
+            if (typeof resposta === "string") return resposta;
+            if (resposta?.outputText) return resposta.outputText;
+            return null;
+          })();
+
+          if (texto && texto.trim()) {
+            respostaTexto = texto.trim();
+            usadoModelo = modelName;
+            console.log(`Sucesso com modelo: ${modelName}`);
+            break;
+          } else {
+            console.log(`Modelo ${modelName} respondeu vazio. Continuando...`);
+          }
+        } catch (eModel) {
+          lastError = eModel;
+          // Se for 404 model not found, log e continua para o próximo
+          console.warn(`Modelo ${modelName} falhou:`, eModel?.message || eModel);
+          // continue para o próximo modelo
+        }
+      }
+
+      if (!respostaTexto) {
+        console.error("Nenhum modelo retornou resposta válida. Último erro:", lastError);
+        alert("A IA não conseguiu gerar a pergunta (ver console). Tente listar modelos ou checar permissões da chave.");
         return;
       }
 
-      setPergunta(data.pergunta);
+      console.log("📌 RESPOSTA DO GEMINI (modelo usado:", usadoModelo, "):", respostaTexto);
+      setPergunta(respostaTexto);
     } catch (erro) {
-      console.error("Erro ao buscar IA:", erro);
-      alert("Erro ao gerar pergunta com a IA.");
+      console.error("❌ ERRO GEMINI (fora do loop):", erro);
+      alert("Erro ao gerar pergunta com IA (veja console).");
     } finally {
       setGerando(false);
     }
@@ -75,7 +122,7 @@ function CriarPergunta() {
     const reader = new FileReader();
     reader.onload = () => {
       setPreview(reader.result);
-      inputEscondidoRef.current.value = reader.result;
+      if (inputEscondidoRef.current) inputEscondidoRef.current.value = reader.result;
     };
     reader.readAsDataURL(file);
   };
@@ -195,9 +242,14 @@ function CriarPergunta() {
           <div className={styles.column}>
             <button
               className={`${styles["salvar-mudancas"]} doodle-border`}
-              onClick={salvarQuestao}
+              onClick={() =>
+                console.log("Sem backend → payload:", {
+                  pergunta,
+                  alternativas,
+                })
+              }
             >
-              Salvar Pergunta
+              Salvar Pergunta (console)
             </button>
 
             <button className={`${styles["cancelar-quizz"]} doodle-border`}>
