@@ -268,6 +268,7 @@ Elemento 4 (Adicionar Pergunta)
   align-items: center;
 
   margin-left: 3rem;
+  margin-bottom: 3rem;
   height: 100%;
   width: 75%;
   scrollbar-width: auto;
@@ -308,45 +309,4 @@ Elemento 4 (Adicionar Pergunta)
   transform: scale(1.1);
 }
 
-/*========================== 
-Elemento Extra (Nivel de Dificuldade)
-============================*/
 
-.nivel-dificuldade {
-  margin-left: 3rem;
-  width: 100%;
-}
-.botao-dificuldade {
-  border-radius: 15px;
-  border: solid 3px;
-  font-size: large;
-  padding: 0.4rem;
-  width: 15vw;
-  margin-right: 1rem;
-
-  cursor: pointer;
-}
-
-.botao-dificuldade:hover {
-  transform: scale(1.1);
-}
-
-.m-facil {
-  background-color: var(--cor-verde-300);
-}
-
-.facil {
-  background-color: var(--cor-verde-200);
-}
-
-.normal {
-  background-color: var(--cor-amarela-200);
-}
-
-.dificil {
-  background-color: var(--cor-vermelho-200);
-}
-
-.e-dificil {
-  background-color: var(--cor-vermelho-300);
-}
