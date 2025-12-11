@@ -3,72 +3,13 @@ import React, { useState, useRef } from "react";
 import cyndaquill from "../../assets/images/Cyndaquill.png";
 import { FileUp, Image, MessageSquare } from "lucide-react";
 import Alternativas from "../../components/Alternativas";
-
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import ChatIA from "../../components/ChatIA/ChatIA"; // ⬅ IMPORT DO NOVO CHAT
 
 function CriarPergunta() {
   const [alternativas, setAlternativas] = useState({});
   const [pergunta, setPergunta] = useState("");
 
-  // ================================================================
-  // CHAT DA IA
-  // ================================================================
-  const [mostrarChat, setMostrarChat] = useState(false);
-  const [mensagemUsuario, setMensagemUsuario] = useState("");
-  const [mensagensChat, setMensagensChat] = useState([]);
-  const [carregandoIA, setCarregandoIA] = useState(false);
-
-  const enviarMensagemIA = async () => {
-    if (!mensagemUsuario.trim()) return;
-
-    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-    if (!apiKey) return alert("API KEY do Gemini ausente.");
-
-    const msgUser = { autor: "user", texto: mensagemUsuario };
-    setMensagensChat((prev) => [...prev, msgUser]);
-
-    const prompt = mensagemUsuario;
-    setMensagemUsuario("");
-    setCarregandoIA(true);
-
-    try {
-      console.log("🔍 DEBUG — API KEY CARREGADA?:", apiKey ? "SIM" : "NÃO");
-      console.log("Tentando modelo: gemini-2.5-flash");
-
-      const genAI = new GoogleGenerativeAI(apiKey);
-      const model = genAI.getGenerativeModel({
-        model: "gemini-2.5-flash",
-      });
-
-      const result = await model.generateContent(prompt);
-      const respostaTexto = result.response.text();
-
-      console.log("Sucesso com modelo: gemini-2.5-flash");
-      console.log("📌 RESPOSTA DO GEMINI:", respostaTexto);
-
-      const msgIA = { autor: "ia", texto: respostaTexto };
-
-      setMensagensChat((prev) => [...prev, msgIA]);
-    } catch (err) {
-      console.error("Erro ao buscar IA:", err);
-
-      const msgErro = {
-        autor: "ia",
-        texto: "❌ Erro ao responder. Veja o console.",
-      };
-
-      setMensagensChat((prev) => [...prev, msgErro]);
-    } finally {
-      setCarregandoIA(false);
-    }
-  };
-
-  const atualizarAlternativa = (alt) => {
-    setAlternativas((prev) => ({
-      ...prev,
-      [alt.id]: alt,
-    }));
-  };
+  const [abrirIA, setAbrirIA] = useState(false);
 
   // ================================================================
   // IMAGEM
@@ -96,6 +37,7 @@ function CriarPergunta() {
   // TEMPO
   // ================================================================
   const [escolherTempo, setEscolherTempo] = useState(30);
+
   const handleMudarTempo = () => {
     let novo = escolherTempo + 15;
     if (novo > 90) novo = 15;
@@ -103,8 +45,15 @@ function CriarPergunta() {
   };
 
   // ================================================================
-  // RENDER
+  // ALTERNATIVAS
   // ================================================================
+  const atualizarAlternativa = (alt) => {
+    setAlternativas((prev) => ({
+      ...prev,
+      [alt.id]: alt,
+    }));
+  };
+
   return (
     <div className={styles["tela-principal"]}>
       <div className={styles.container}>
@@ -112,49 +61,18 @@ function CriarPergunta() {
           <h1>Criando sua Pergunta</h1>
         </nav>
 
-        {/* -----------------------------------------------------------
-            JANELINHA DO CHAT IA
-        ----------------------------------------------------------- */}
+        {/* BOTÃO PARA ABRIR O CHAT */}
         <button
           className={styles.botaoAbrirChat}
-          onClick={() => setMostrarChat(!mostrarChat)}
+          onClick={() => setAbrirIA(true)}
         >
-          <MessageSquare size={18} /> Conversar com a IA
+          <MessageSquare size={18} /> Usar Inteligência Artificial
         </button>
 
-        {mostrarChat && (
-          <div className={styles.chatIA}>
-            <h3>Assistente de Criação de Perguntas</h3>
+        {/* CHAT EM CAIXA FLUTUANTE */}
+        {abrirIA && <ChatIA onClose={() => setAbrirIA(false)} />}
 
-            <div className={styles.chatArea}>
-              {mensagensChat.map((m, i) => (
-                <div
-                  key={i}
-                  className={
-                    m.autor === "user" ? styles.msgUser : styles.msgIA
-                  }
-                >
-                  <p>{m.texto}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className={styles.chatInput}>
-              <input
-                value={mensagemUsuario}
-                onChange={(e) => setMensagemUsuario(e.target.value)}
-                placeholder="Pergunte algo à IA..."
-              />
-              <button onClick={enviarMensagemIA} disabled={carregandoIA}>
-                {carregandoIA ? "..." : "Enviar"}
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* -----------------------------------------------------------
-            TELA PRINCIPAL
-        ----------------------------------------------------------- */}
+        {/* ÁREA PRINCIPAL */}
         <div className={styles["elmt-1-2-3"]}>
           {/* Imagem */}
           <div className={styles.column}>
@@ -186,7 +104,6 @@ function CriarPergunta() {
                 style={{ display: "none" }}
                 onChange={handleMudarImagem}
               />
-
               <input type="hidden" ref={inputEscondidoRef} />
             </div>
           </div>
