@@ -2,7 +2,7 @@ import { Plus } from "lucide-react";
 import home from "./Home.module.css";
 import styles from "./Quizzes.module.css";
 // Importar o hook de navegação
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from "react-router-dom";
 
 export default function Quizzes() {
   // Inicializar o hook
@@ -16,10 +16,9 @@ export default function Quizzes() {
   return (
     <div className={`${home["tela-principal"]} ${styles.telaPrincipal}`}>
       <div className={styles.container}>
-
         {/* COLUNA 1 — CRIAR QUIZ */}
         <section className={styles.criarQuiz}>
-          <h2 className={styles.titulo}>Criar Quiz</h2>
+          <h1 className={styles.titulo}>Criar Quiz</h1>
 
           <div className={styles.gridQuizzes}>
             <div className={`${styles.cardQuiz} doodle-border`}>Quiz 1</div>
@@ -34,16 +33,14 @@ export default function Quizzes() {
 
         {/* COLUNA 2 — SALAS CRIADAS (agora clicável) */}
         <section className={styles.salas}>
-          <h2 className={styles.titulo}>Salas Criadas</h2>
+          <h1 className={styles.titulo}>Salas Criadas</h1>
 
           <div className={styles.lista}>
             {[1, 2, 3, 4].map((i) => (
-              // Adicione o onClick handler para navegar
-              // Você pode querer adicionar 'cursor: pointer;' no CSS para usabilidade.
-              <div 
-                key={i} 
-                className={`${styles.cardSala} doodle-border`} 
-                onClick={() => handleCardClick(i)} // Chama a função de navegação
+              <div
+                key={i}
+                className={`${styles.cardSala} doodle-border`}
+                onClick={() => handleCardClick(i)}
               >
                 <div>
                   <p className={styles.salaTitulo}>Quiz Matemática</p>
@@ -57,7 +54,7 @@ export default function Quizzes() {
 
         {/* COLUNA 3 — ENTRAR COM CÓDIGO */}
         <section className={styles.codigo}>
-          <h2 className={styles.titulo}>Entrar com código</h2>
+          <h1 className={styles.titulo}>Entrar com código</h1>
 
           <input
             type="text"
@@ -65,9 +62,7 @@ export default function Quizzes() {
             className={`${styles.input} doodle-border`}
           />
 
-          <button className={`${styles.botao} doodle-border`}>
-            Entrar
-          </button>
+          <button className={`${styles.botao} doodle-border`}>Entrar</button>
 
           <img
             src="/img/squirtle.gif"
@@ -75,7 +70,6 @@ export default function Quizzes() {
             className={styles.squirtle}
           />
         </section>
-
       </div>
     </div>
   );
