@@ -2,11 +2,23 @@ import styles from "./CriarQuizz.module.css";
 import BotaoAdd from "../../components/BotaoAdicionarPerg";
 import {supabase} from "../../supabase"
 import { useState, useRef, useEffect , useContext } from "react";
-import { LockKeyhole, Settings, Eye, Plus } from "lucide-react";
+import { LockKeyhole, LockOpen, Eye, EyeOff, Settings, Plus } from "lucide-react";
+import { GeralContexto } from "../../context/GeralContext";
+
+
+const generateRandomPassword = (length = 12) => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
+  let password = '';
+  for (let i = 0; i < length; i++) {
+    password += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return password;
+};
 
 function CriarQuizz() {
   const [preview, setPreview] = useState(null);
   const inputRef = useRef(null);
+  const { setQuizzId } = useContext(GeralContexto);
 
  useEffect(() => {
   async function criarQuizzBanco(){
@@ -21,10 +33,55 @@ function CriarQuizz() {
     .single();
 
     if (error) {
-      console.error("Erro ao criar Quizz")
+      console.error("Erro ao criar Quizz:",error)
+      return
     }
+  setQuizzId(data.id); 
   }
- })
+
+  criarQuizzBanco();
+}, []);
+
+async function salvarAlternativas(perguntaId) {
+  const lista = Object.values(alternativas).map((alt) => ({
+    texto: alt.texto,
+    valor: alt.certa,
+    pergunta_id: perguntaId
+  }));
+
+  const { error } = await supabase.from("alternativas").insert(lista);
+
+  if (error) {
+    console.error("Erro ao salvar alternativas:", error);
+    alert("Erro ao salvar alternativas.");
+  }
+}
+
+//==========================================================
+
+const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const handleLockToggle = () => {
+    setIsDisabled(prev => !prev);
+  };
+
+  const handleVisibilityToggle = () => {
+    setIsPasswordVisible(prev => !prev);
+  };
+
+  const handleGeneratePassword = () => {
+    const newPassword = generateRandomPassword();
+    setPassword(newPassword);
+    setConfirmPassword('');
+    setIsDisabled(false);
+  };
+
+  const LockIcon = isDisabled ? LockKeyhole : LockOpen;
+  const EyeIcon = isPasswordVisible ? EyeOff : Eye;
+  //==============================================
 
   const handleFotoClick = () => inputRef.current.click();
 
@@ -95,28 +152,42 @@ function CriarQuizz() {
             <div className={styles.column}>
               <label>Senha:</label>
               <div className={styles.padrao1}>
-                <button className={styles["priv-trancada"]}>
+                <button 
+                className={styles["priv-trancada"]} 
+        onClick={handleLockToggle}
+        title={isDisabled ? "Desbloquear Edição" : "Bloquear Edição"}>
                   <LockKeyhole />
                 </button>
 
                 <input
-                  type="text"
-                  placeholder="Digitar Senha"
-                  className={`${styles["senha-quizz"]} doodle-border`}
-                />
+        type={isPasswordVisible ? "text" : "password"}
+        placeholder="Digitar Senha"
+        className={`${styles["senha-quizz"]} doodle-border`}
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        disabled={isDisabled}
+      />
 
                 <div className={styles.padrao2}>
                   <input
-                    type="text"
-                    placeholder="Confirmar Senha"
-                    className={`${styles["senha-confir"]} doodle-border`}
-                  />
+          type="password"
+          placeholder="Confirmar Senha"
+          className={`${styles["senha-confir"]} doodle-border`}
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          disabled={isDisabled}
+        />
 
-                  <button className={styles["vizualizar-senha"]}>
+                  <button className={styles["vizualizar-senha"]}
+           
+          onClick={handleVisibilityToggle}
+          title={isPasswordVisible ? "Ocultar Senha" : "Visualizar Senha"}>
                     <Eye />
                   </button>
 
-                  <button className={styles["gerar-senha"]}>
+                  <button className={styles["gerar-senha"]}
+          onClick={handleGeneratePassword}
+          title="Gerar Senha Aleatória">
                     <Settings />
                   </button>
                 </div>
@@ -199,41 +270,10 @@ function CriarQuizz() {
             </div>
           </div>
         </div>
-        <div className={styles["nivel-dificuldade"]}>
-          <div>
-            <div>
-              <h2>Nível de Dificuldade:</h2>
-              <br />
-              <button
-                className={`${styles["botao-dificuldade"]}  ${styles["m-facil"]}`}
-              >
-                Muito Fácil
-              </button>
-              <button
-                className={`${styles["botao-dificuldade"]}  ${styles["facil"]}`}
-              >
-                Fácil
-              </button>
-              <button
-                className={`${styles["botao-dificuldade"]}  ${styles["normal"]}`}
-              >
-                Normal
-              </button>
-              <button
-                className={`${styles["botao-dificuldade"]}  ${styles["dificil"]}`}
-              >
-                Difícil
-              </button>
-              <button
-                className={`${styles["botao-dificuldade"]}  ${styles["e-dificil"]}`}
-              >
-                Extremamente Difícil
-              </button>
+    
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+
   );
 }
 

@@ -143,6 +143,16 @@ Elemento 2 (Título, Privada ou Pública e Senha)
   justify-content: center;
   align-items: center;
 }
+.vizualizar-senha:hover{
+  transform: scale(1.3);
+}
+.gerar-senha:hover{
+  transform: scale(1.3);
+}
+.priv-trancada:hover{
+  transform: scale(1.3);
+
+}
 .gerar-senha {
   margin-left: 10px;
 

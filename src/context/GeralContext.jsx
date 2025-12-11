@@ -60,9 +60,6 @@ export function GeralProvider({ children }) {
       value={{
         pessoa,
         getUser,
-        novaAlternativa,
-        setNovaAlternativa,
-        novaPergunta,
         changeFtPerfil,
         quizzId, 
         setQuizzId,

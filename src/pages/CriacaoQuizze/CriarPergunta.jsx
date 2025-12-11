@@ -3,7 +3,10 @@ import React, { useState, useRef } from "react";
 import cyndaquill from "../../assets/images/Cyndaquill.png";
 import { FileUp, Image, MessageSquare } from "lucide-react";
 import Alternativas from "../../components/Alternativas";
-import ChatIA from "../../components/ChatIA/ChatIA"; // ⬅ IMPORT DO NOVO CHAT
+import ChatIA from "../../components/ChatIA/ChatIA";
+import {supabase} from "../../supabase"
+import { GeralContexto } from "../../context/GeralContext";
+import { useContext } from "react";
 
 function CriarPergunta() {
   const [alternativas, setAlternativas] = useState({});
@@ -53,6 +56,36 @@ function CriarPergunta() {
       [alt.id]: alt,
     }));
   };
+
+  const { quizzId } = useContext(GeralContexto);
+
+  async function salvarPergunta() {
+  if (!pergunta.trim()) return alert("Digite sua pergunta!");
+
+  const { data: perguntaCriada, error } = await supabase
+    .from("perguntas")
+    .insert({
+      texto_pergunta: pergunta,
+      tempo_limite: escolherTempo,
+      imagem: preview ?? null,
+      quizz_pergunta: quizzId,   // 👈 RELAÇÃO COM O QUIZZ
+    })
+    .select("id")
+    .single();
+
+  if (error) {
+    console.error(error);
+    alert("Erro ao salvar pergunta.");
+    return;
+  }
+
+  const perguntaId = perguntaCriada.id;
+
+  // Agora salva alternativas
+  await salvarAlternativas(perguntaId);
+
+  alert("Pergunta salva com sucesso!");
+}
 
   return (
     <div className={styles["tela-principal"]}>
@@ -149,14 +182,9 @@ function CriarPergunta() {
           </div>
 
           <div className={styles.column}>
-            <button
-              className={`${styles["salvar-mudancas"]} doodle-border`}
-              onClick={() =>
-                console.log("Salvar:", { pergunta, alternativas })
-              }
-            >
-              Salvar Pergunta (console)
-            </button>
+            <button className={styles["salvar-mudancas"]} onClick={salvarPergunta}>
+  Salvar Pergunta
+</button>
 
             <button className={`${styles["cancelar-quizz"]} doodle-border`}>
               Ir a Uma Nova Pergunta

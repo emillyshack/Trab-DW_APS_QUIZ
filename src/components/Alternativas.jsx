@@ -5,12 +5,15 @@ import { X, Check } from "lucide-react";
 function Alternativas({ id, onChange }) {
   const [ehCerta, setEhCerta] = useState(false);
 
-  useEffect(() => {
-    onChange({
-      id,
-      certa: ehCerta,
-    });
-  }, [ehCerta]);
+
+
+   useEffect(() => {
+  onChange({
+    id,
+    texto: "",
+    certa: ehCerta,
+  });
+}, [ehCerta]);
 
   return (
     <div>
@@ -24,7 +27,17 @@ function Alternativas({ id, onChange }) {
         </button>
 
         <div style={{ position: "relative", width: "100%" }}>
-          <input type="text" className={styles.resposta} />
+      <input
+  type="text"
+  className={styles.resposta}
+  onChange={(e) =>
+    onChange({
+      id,
+      texto: e.target.value,
+      certa: ehCerta,
+    })
+  }
+/>
         </div>
 
         <button className={styles["certa"]} onClick={() => setEhCerta(true)}>
