@@ -1,17 +1,5 @@
-import NavBar from "../components/NavBar";
-import styles from "./Home.module.css";
-
-function Quizzes() {
-  return (
-    <div className={`${styles["tela-principal"]}`}>
-      <h1>Página de Quizzes</h1>
-    </div>
-  );
-}
-
-export default Quizzes;
 import { Plus } from "lucide-react";
-import home from "./Home.module.css";     
+import home from "./Home.module.css";
 import styles from "./Quizzes.module.css";
 
 export default function Quizzes() {
@@ -39,7 +27,7 @@ export default function Quizzes() {
           <h2 className={styles.titulo}>Salas Criadas</h2>
 
           <div className={styles.lista}>
-            {[1,2,3,4].map((i) => (
+            {[1, 2, 3, 4].map((i) => (
               <div key={i} className={`${styles.cardSala} doodle-border`}>
                 <div>
                   <p className={styles.salaTitulo}>Quiz Matemática</p>
@@ -55,7 +43,7 @@ export default function Quizzes() {
         <section className={styles.codigo}>
           <h2 className={styles.titulo}>Entrar com código</h2>
 
-          <input 
+          <input
             type="text"
             placeholder="XXX-XXX-XXX"
             className={`${styles.input} doodle-border`}
@@ -65,7 +53,7 @@ export default function Quizzes() {
             Entrar
           </button>
 
-          <img 
+          <img
             src="/img/squirtle.gif"
             alt="Mascote"
             className={styles.squirtle}
