@@ -15,33 +15,41 @@ export default function ChatIA({ onClose }) {
 
     try {
       const response = await fetch(
-        "https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key=AIzaSyDIDlVXpmN0FM-ZLbls4Pbqi68QRx6G0xg",
+        "https://generativelanguage.googleapis.com/v1beta2/models/chat-bison-001:generateMessage?key=AIzaSyDkiLuOfPvMnvEE7G-y1EQVvFEnnP5e32s", // Substitua pela sua chave de API
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            messages: [
-              {
-                author: "user",
-                content: [
-                  {
-                    type: "text",
-                    text: input
-                  }
-                ]
-              }
-            ]
+            input: {
+              text: input, // O conteúdo da mensagem
+            },
+            model: "chat-bison-001", // Nome do modelo
+            parameters: {
+              temperature: 0.7, // Temperatura (opcional)
+              max_output_tokens: 150, // Limite de tokens
+            },
           }),
         }
       );
 
+      // Verificando se a requisição foi bem-sucedida
+      if (!response.ok) {
+        const errorDetails = await response.json(); // Captura mais detalhes do erro
+        console.error("Erro na requisição:", errorDetails);
+        setResposta(`❌ Erro: ${errorDetails.error.message}`);
+        setLoading(false);
+        return;
+      }
+
       const data = await response.json();
-      // A resposta do chat-bison-001 vem em data.message.content[0].text
-      const texto = data?.message?.content?.[0]?.text || "Sem resposta.";
+      console.log("Resposta completa da API:", data); // Verifique a resposta completa da API
+
+      // Acessando a resposta correta
+      const texto = data?.choices?.[0]?.message?.content || "Sem resposta.";
       setResposta(texto);
 
     } catch (err) {
-      console.error("Erro IA:", err);
+      console.error("Erro ao chamar a IA:", err);
       setResposta("❌ Erro ao gerar resposta.");
     }
 
