@@ -1,50 +1,44 @@
-import { useEffect, useState } from "react";
 import styles from "./Alternativas.module.css";
 import { X, Check } from "lucide-react";
 
-function Alternativas({ id, onChange }) {
-  const [ehCerta, setEhCerta] = useState(false);
+function Alternativas({ id, onChange, idPergunta, valor }) {
+  const { texto, certa } = valor;
 
-
-
-   useEffect(() => {
-  onChange({
-    id,
-    texto: "",
-    certa: ehCerta,
-  });
-}, [ehCerta]);
-
-  return (
-    <div>
-      <div
-        className={`${styles["botao-alt"]} 
-        ${ehCerta ? styles.correta : styles.incorreta} `}
-      >
-        <button className={styles["errada"]} onClick={() => setEhCerta(false)}>
-          {" "}
-          <X />
-        </button>
-
-        <div style={{ position: "relative", width: "100%" }}>
-      <input
-  type="text"
-  className={styles.resposta}
-  onChange={(e) =>
+  const handleChange = (novoTexto, novaCerta) => {
     onChange({
       id,
-      texto: e.target.value,
-      certa: ehCerta,
-    })
-  }
-/>
-        </div>
+      texto: novoTexto,
+      certa: novaCerta,
+      idPergunta,
+    });
+  };
 
-        <button className={styles["certa"]} onClick={() => setEhCerta(true)}>
-          {" "}
-          <Check />
-        </button>
-      </div>
+  return (
+    <div
+      className={`${styles["botao-alt"]} ${
+        certa ? styles.correta : styles.incorreta
+      }`}
+    >
+      <button
+        className={styles["errada"]}
+        onClick={() => handleChange(texto, false)}
+      >
+        <X />
+      </button>
+
+      <input
+        type="text"
+        className={styles.resposta}
+        value={texto}
+        onChange={(e) => handleChange(e.target.value, certa)}
+      />
+
+      <button
+        className={styles["certa"]}
+        onClick={() => handleChange(texto, true)}
+      >
+        <Check />
+      </button>
     </div>
   );
 }

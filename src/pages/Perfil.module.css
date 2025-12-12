@@ -96,7 +96,61 @@
   cursor: pointer;
 }
 
-/* Botões e opções */
+.usuario {
+  /* Este estilo será para a tag <span> que exibe o nome (modo leitura) */
+  /* Mantido do original: */
+  width: 18vw;
+  height: 5vh;
+  margin-right: 15px;
+  border: none;
+  align-items: center;
+  justify-content: center;
+  font-family: "Lilita One", sans-serif;
+  font-size: 35px;
+  cursor: pointer; /* Mudei para 'pointer' para indicar que é clicável */
+  display: flex;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.campo label {
+  color: var(--texto-200);
+  margin-bottom: 5px;
+  font-size: 15px;
+}
+
+.input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--cor-cinza-300);
+  background: var(--cor-cinza-100);
+  color: var(--texto-100);
+  font-size: x-large;
+  outline: none;
+  transition: 0.2s;
+}
+
+.input:focus {
+  border-color: var(--cor-primaria);
+  background: var(--cor-cinza-50);
+}
+.usuario-input {
+  font-family: "Lilita One", sans-serif;
+  font-size: 35px;
+  text-align: center;
+
+  border: 2px solid var(--cor-principal);
+  border-radius: 5px;
+  background-color: var(--cor-fundo-claro);
+  padding: 5px 10px;
+  width: 18vw;
+  height: 5vh;
+  margin-right: 15px;
+}
 
 .mudar-cor,
 .mudar-foto {
@@ -228,7 +282,7 @@
 .column {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
 }
 
 .editar-celula {
@@ -363,4 +417,24 @@
 
 .deslogar-titulo {
   margin-right: 1rem;
+}
+
+.save-all-button {
+  width: 70%;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.save-all-button:hover {
+  background-color: #45a049;
 }

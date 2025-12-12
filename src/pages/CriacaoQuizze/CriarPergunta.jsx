@@ -1,25 +1,42 @@
 import styles from "./CriarPergunta.module.css";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import cyndaquill from "../../assets/images/Cyndaquill.png";
 import { FileUp, Image, MessageSquare } from "lucide-react";
 import Alternativas from "../../components/Alternativas";
 import ChatIA from "../../components/ChatIA/ChatIA";
-import {supabase} from "../../supabase"
 import { GeralContexto } from "../../context/GeralContext";
-import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 function CriarPergunta() {
-  const [alternativas, setAlternativas] = useState({});
-  const [pergunta, setPergunta] = useState("");
+  const navigate = useNavigate();
+  const {
+    inputPerguntas,
+    setInputPerguntas,
+    inputAlternativas,
+    setInputAlternativas,
+  } = useContext(GeralContexto);
 
+  const [inputPergunta, setInputPergunta] = useState({
+    imagem: "",
+    pergunta: "",
+    tempo: 30,
+  });
+
+  const inicialAlternativas = [
+    { id: 1, texto: "", certa: false },
+    { id: 2, texto: "", certa: false },
+    { id: 3, texto: "", certa: false },
+    { id: 4, texto: "", certa: false },
+  ];
+
+  const [alternativas, setAlternativas] = useState(inicialAlternativas);
   const [abrirIA, setAbrirIA] = useState(false);
-
-  // ================================================================
-  // IMAGEM
-  // ================================================================
   const [preview, setPreview] = useState(null);
+
   const inputArquivoRef = useRef(null);
   const inputEscondidoRef = useRef(null);
+
+  const numeroPergunta = inputPerguntas.length + 1;
 
   const handleImagemSelecionada = () => inputArquivoRef.current.click();
 
@@ -30,62 +47,54 @@ function CriarPergunta() {
     const reader = new FileReader();
     reader.onload = () => {
       setPreview(reader.result);
-      if (inputEscondidoRef.current) inputEscondidoRef.current.value =
-        reader.result;
+      setInputPergunta((prev) => ({ ...prev, imagem: reader.result }));
+      if (inputEscondidoRef.current)
+        inputEscondidoRef.current.value = reader.result;
     };
     reader.readAsDataURL(file);
   };
 
-  // ================================================================
-  // TEMPO
-  // ================================================================
-  const [escolherTempo, setEscolherTempo] = useState(30);
-
   const handleMudarTempo = () => {
-    let novo = escolherTempo + 15;
+    let novo = inputPergunta.tempo + 15;
     if (novo > 90) novo = 15;
-    setEscolherTempo(novo);
+    setInputPergunta((prev) => ({ ...prev, tempo: novo }));
   };
 
-  // ================================================================
-  // ALTERNATIVAS
-  // ================================================================
   const atualizarAlternativa = (alt) => {
-    setAlternativas((prev) => ({
-      ...prev,
-      [alt.id]: alt,
-    }));
+    setAlternativas((prev) =>
+      prev.map((a) =>
+        a.id === alt.id ? { ...a, texto: alt.texto, certa: alt.certa } : a
+      )
+    );
   };
 
-  const { quizzId } = useContext(GeralContexto);
+  const salvarPergunta = () => {
+    if (alternativas.some((a) => !a.texto)) {
+      alert("Preencha as 4 alternativas antes de salvar.");
+      return;
+    }
 
-  async function salvarPergunta() {
-  if (!pergunta.trim()) return alert("Digite sua pergunta!");
+    const novaPergunta = {
+      imagem: inputPergunta.imagem,
+      pergunta: inputPergunta.pergunta,
+      tempo: inputPergunta.tempo,
+      ordemPergunta: numeroPergunta,
+    };
 
-  const { data: perguntaCriada, error } = await supabase
-    .from("perguntas")
-    .insert({
-      texto_pergunta: pergunta,
-      tempo_limite: escolherTempo,
-      imagem: preview ?? null,
-      quizz_pergunta: quizzId,   // 👈 RELAÇÃO COM O QUIZZ
-    })
-    .select("id")
-    .single();
+    setInputPerguntas((prev) => [...prev, novaPergunta]);
 
-  if (error) {
-    console.error(error);
-    alert("Erro ao salvar pergunta.");
-    return;
-  }
+    const novasAlternativas = alternativas.map((a) => ({
+      ...a,
+      ordemPergunta: numeroPergunta,
+    }));
+    setInputAlternativas((prev) => [...prev, ...novasAlternativas]);
 
-  const perguntaId = perguntaCriada.id;
+    setInputPergunta({ imagem: "", pergunta: "", tempo: 30 });
+    setAlternativas(inicialAlternativas);
+    setPreview(null);
 
-  // Agora salva alternativas
-  await salvarAlternativas(perguntaId);
-
-  alert("Pergunta salva com sucesso!");
-}
+    navigate("/Inicial/CriarQuizz");
+  };
 
   return (
     <div className={styles["tela-principal"]}>
@@ -94,7 +103,6 @@ function CriarPergunta() {
           <h1>Criando sua Pergunta</h1>
         </nav>
 
-        {/* BOTÃO PARA ABRIR O CHAT */}
         <button
           className={styles.botaoAbrirChat}
           onClick={() => setAbrirIA(true)}
@@ -102,12 +110,9 @@ function CriarPergunta() {
           <MessageSquare size={18} /> Usar Inteligência Artificial
         </button>
 
-        {/* CHAT EM CAIXA FLUTUANTE */}
         {abrirIA && <ChatIA onClose={() => setAbrirIA(false)} />}
 
-        {/* ÁREA PRINCIPAL */}
         <div className={styles["elmt-1-2-3"]}>
-          {/* Imagem */}
           <div className={styles.column}>
             <label>Imagem:</label>
             <div className={styles["selecionar-imagem"]}>
@@ -116,11 +121,9 @@ function CriarPergunta() {
                   <Image size={70} />
                 </div>
               )}
-
               {preview && (
                 <img src={preview} className={styles.preview} alt="preview" />
               )}
-
               <div className={styles["area-botoes-imagem"]}>
                 <div
                   className={styles["file-imagem"]}
@@ -129,7 +132,6 @@ function CriarPergunta() {
                   <FileUp />
                 </div>
               </div>
-
               <input
                 type="file"
                 ref={inputArquivoRef}
@@ -141,53 +143,57 @@ function CriarPergunta() {
             </div>
           </div>
 
-          {/* Tempo */}
           <div className={styles.padrao2}>
             <div className={styles["selecionar-tempo"]}>
               <label>Tempo:</label>
               <div className={styles.cronometro} onClick={handleMudarTempo}>
                 <span className={styles["tempo-selecionado"]}>
-                  {escolherTempo}s
+                  {inputPergunta.tempo}s
                 </span>
-                <input type="hidden" value={escolherTempo} />
+                <input type="hidden" value={inputPergunta.tempo} />
               </div>
             </div>
-
             <img src={cyndaquill} className={styles["cyndaquill-imagem"]} />
           </div>
 
-          {/* Pergunta */}
           <div className={styles.column}>
             <label>Pergunta:</label>
-
             <textarea
               placeholder="Digite sua pergunta manualmente"
               className={styles["pergunta"]}
-              value={pergunta}
-              onChange={(e) => setPergunta(e.target.value)}
-            ></textarea>
+              value={inputPergunta.pergunta}
+              onChange={(e) =>
+                setInputPergunta((prev) => ({
+                  ...prev,
+                  pergunta: e.target.value,
+                }))
+              }
+            />
           </div>
         </div>
 
-        {/* Alternativas */}
         <div className={styles["elmt-4-5"]}>
           <div className={styles.column}>
             <label>Alternativas:</label>
             <div className={styles["alternativas"]}>
-              <Alternativas id={1} onChange={atualizarAlternativa} />
-              <Alternativas id={2} onChange={atualizarAlternativa} />
-              <Alternativas id={3} onChange={atualizarAlternativa} />
-              <Alternativas id={4} onChange={atualizarAlternativa} />
+              {alternativas.map((alt) => (
+                <Alternativas
+                  key={alt.id}
+                  id={alt.id}
+                  idPergunta={numeroPergunta}
+                  valor={alt}
+                  onChange={atualizarAlternativa}
+                />
+              ))}
             </div>
           </div>
 
           <div className={styles.column}>
-            <button className={styles["salvar-mudancas"]} onClick={salvarPergunta}>
-  Salvar Pergunta
-</button>
-
-            <button className={`${styles["cancelar-quizz"]} doodle-border`}>
-              Ir a Uma Nova Pergunta
+            <button
+              className={`${styles["salvar-mudancas"]} doodle-border`}
+              onClick={salvarPergunta}
+            >
+              Salvar Pergunta
             </button>
           </div>
         </div>

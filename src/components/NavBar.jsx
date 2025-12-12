@@ -4,8 +4,6 @@ import logo from "../assets/images/Quizzy_logo.png";
 import ditto from "../assets/images/Ditto.png";
 
 function NavBar() {
-  console.log("Navbar recarregada");
-
   return (
     <nav className={`${styles.NavBar} doodle-border`}>
       <NavLink title="Quizzy" className={styles["logo-quizzy"]} to="/Inicial">
