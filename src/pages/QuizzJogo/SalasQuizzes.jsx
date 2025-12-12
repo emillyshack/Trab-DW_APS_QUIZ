@@ -1,47 +1,23 @@
 import styles from "./SalasQuizzes.module.css";
 import { User, ChevronLeft } from "lucide-react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function SalasQuizzes() {
-  const { id } = useParams();
-
-  const players = [
-    { name: "Nome 5:40", time: "5:40" },
-    { name: "Nome 4:20", time: "4:20" },
-    { name: "Nome 6:31", time: "6:31" },
-  ];
-
-  const fullPlayersList = ["Fulano xxx", "Fulano xxx", "Fulano xxx"];
-  const subjects = ["Física", "Matemática", "Geometria"];
 
   return (
-    <div className={`${homeStyles["telaPrincipal"]} ${styles.roomWrapper}`}>
+    <div className={styles.telaPrincipal}>
+      {/* Container principal com borda 'doodle' */}
       <div className={`${styles.container} doodle-border`}>
-        <header className={styles.header}>
-          {}
-          <div className={`${styles.logo} doodle-border`}>
-            ? Quizzy (Sala ID: {id})
-          </div>
-          <nav className={styles.nav}>
-            <button className={`${styles.navButton} ${styles.navInicio}`}>
-              Início
-            </button>
-            <button className={`${styles.navButton} ${styles.navQuizzes}`}>
-              Quizzes
-            </button>
-            <button className={`${styles.navButton} ${styles.navCriar}`}>
-              Criar Quiz
-            </button>
-          </nav>
-          <button className={`${styles.profileButton} ${styles.circleBorder}`}>
-            perfil
-          </button>
-        </header>
+        {/* Navegação e Logo - Topo */}
 
+        {/* Conteúdo principal da Sala do Quiz */}
         <main className={styles.mainContent}>
-          <div className={styles.titleArea}>
-            <div className={styles.creatorProfile}>
-              <div className={`${styles.creatorIcon} ${styles.circleBorder}`}>
+          {/* Seção do Título, Criador e Placar de Jogadores */}
+          <div className={styles.titleAndPlayers}>
+            {/* Informações do Criador */}
+            <div className={styles.creatorInfo}>
+              <div className={`${styles.creatorProfileIcon} ${styles.circleBorder}`}>
                 <User size={20} />
               </div>
               <p className={styles.creatorText}>
@@ -49,85 +25,110 @@ export default function SalasQuizzes() {
                 <br />
                 do quiz
               </p>
-              <h2 className={styles.creatorName}>Nome do criador</h2>
+              <h3 className={styles.creatorName}>Nome do criador</h3>
             </div>
-            <h1 className={styles.mainTitle}>Quiz Matemática</h1>
-          </div>
+            
+            {/* Título do Quiz */}
+            <h1 className={styles.mainTitle}>{quizDetails.titulo}</h1>
 
-          <div className={styles.quizArea}>
+            {/* Placar/Top Jogadores (Os 3 avatares maiores) */}
             <section className={styles.playersSection}>
               <div className={styles.playerAvatars}>
                 {players.map((player, index) => (
                   <div
                     key={index}
-                    className={`${styles.playerCard} ${styles.circleBorder}`}
+                    // Adicionei styles.avatarN para aplicar a cor do contorno e a imagem de avatar
+                    className={`${styles.playerCard} ${styles.circleBorder} ${player.avatarStyle}`} 
                   >
-                    <User size={30} />
-                    <p>{player.name}</p>
+                    <User size={30} /> {/* Ícone de fallback */}
+                    <div className={styles.playerNameTime}>
+                      <p className={styles.playerName}>{player.name}</p>
+                      <p className={styles.playerTime}>{player.time}</p>
+                    </div>
                   </div>
                 ))}
               </div>
-              <div className={styles.playerList}>
-                {fullPlayersList.map((player, index) => (
-                  <div
-                    key={index}
-                    className={`${styles.playerItem} doodle-border`}
-                  >
+
+              {/* Lista completa de jogadores/participantes (A parte verde escura) */}
+              <div className={`${styles.playerListContainer} ${styles.darkGreenBox} doodle-border`}>
+                <div className={styles.playerList}>
+                  {fullPlayersList.map((player, index) => (
                     <div
-                      className={`${styles.circleRadio} ${styles.circleBorder}`}
-                    ></div>
-                    <p>{player}</p>
-                  </div>
-                ))}
+                      key={index}
+                      className={styles.playerItem}
+                    >
+                      {/* O rádio-button estilizado do wireframe */}
+                      <div className={`${styles.circleRadio} ${styles.circleBorder}`}></div>
+                      <p>{player}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </section>
+          </div>
 
-            <section className={styles.detailsSection}>
-              <div className={`${styles.questionBox} doodle-border`}>
-                <img src="/img/placeholder.png" alt="Question placeholder" />
-              </div>
-
-              <div className={styles.quizDetails}>
-                <div className={`${styles.detailBox} doodle-border`}>
+          {/* Seção dos Detalhes, Imagem e Ações */}
+          <div className={styles.detailsAndActions}>
+            {/* Imagem principal do Quiz */}
+            <div className={`${styles.quizImageContainer} doodle-border`}>
+              <img src="/img/placeholder.png" alt="Question placeholder" />
+              {/* Imagem placeholder dentro do box, conforme o wireframe */}
+              <div className={styles.placeholderIcon}></div> 
+            </div>
+            
+            {/* Detalhes do Quiz (Qtd. Perguntas, Tempo, Matérias) */}
+            <div className={styles.quizDetails}>
+              <div className={styles.detailBoxGroup}>
+                {/* QTD. de perguntas */}
+                <div className={`${styles.detailBox} ${styles.detailBoxSmall} doodle-border`}>
                   <p>QTD. de perguntas:</p>
-                  <strong>12 perguntas</strong>
+                  <strong className={styles.detailValue}>12 perguntas</strong>
                 </div>
-                <div className={styles.subjectsBox}>
-                  <p>Matérias:</p>
-                  <div className={styles.subjectsList}>
-                    {subjects.map((subject, index) => (
-                      <span
-                        key={index}
-                        className={`${styles.subjectTag} doodle-border`}
-                      >
-                        {subject}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div className={`${styles.detailBox} doodle-border`}>
+
+                {/* Tempo máximo */}
+                <div className={`${styles.detailBox} ${styles.detailBoxSmall} doodle-border`}>
                   <p>Tempo máximo:</p>
-                  <strong>10 minutos</strong>
+                  <strong className={styles.detailValue}>10 minutos</strong>
                 </div>
               </div>
-            </section>
 
+              {/* Matérias/Tags */}
+              <div className={`${styles.subjectsBox} doodle-border`}>
+                <p>Matérias:</p>
+                <div className={styles.subjectsList}>
+                  {subjects.map((subject, index) => (
+                    <span
+                      key={index}
+                      className={`${styles.subjectTag} doodle-border`}
+                    >
+                      {subject}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Ações/Botões e Mascote */}
             <section className={styles.actionsSection}>
+              {/* Mascote (com o ícone do Wireframe) */}
               <img
                 src="/img/mascote.png"
                 alt="Mascote"
                 className={styles.mascotImg}
               />
 
+              {/* Botão Começar */}
               <button
                 className={`${styles.actionButton} ${styles.startButton} doodle-border`}
               >
                 Começar
               </button>
+              {/* Botão Escolher Outro Quiz */}
               <button
                 className={`${styles.actionButton} ${styles.chooseButton} doodle-border`}
+                onClick={handleVoltar}
               >
-                <ChevronLeft size={16} /> Escolher outro quiz
+                Escolher outro quiz
               </button>
             </section>
           </div>

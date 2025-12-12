@@ -5,6 +5,7 @@ import { GeralContexto } from "../context/GeralContext";
 import { useContext, useEffect, useState } from "react";
 import { supabase } from "../supabase.js";
 import { Link, useNavigate } from "react-router-dom";
+import squirtleMascote from "../assets/images/squirtle-removebg-preview.png";
 
 export default function Home() {
   const { usuario, setLoading } = useContext(LoginContexto);
@@ -109,23 +110,24 @@ export default function Home() {
           </div>
         </section>
         {/* COLUNA 3 — ENTRAR COM CÓDIGO */}
-        <section className={styles.codigo}>
-          <h1 className={styles.titulo}>Entrar com código</h1>
+       <section className={styles.codigo}>
+          <h1 className={styles.titulo}>Entrar com código</h1>
 
-          <input
-            type="text"
-            placeholder="XXX-XXX-XXX"
-            className={`${styles.input} doodle-border`}
-          />
+          <input
+            type="text"
+            placeholder="XXX-XXX-XXX"
+            className={`${styles.input} doodle-border`}
+          />
 
-          <button className={`${styles.botao} doodle-border`}>Entrar</button>
+          <button className={`${styles.botao} doodle-border`}>Entrar</button>
 
-          <img
-            src="/img/squirtle.gif"
-            alt="Mascote"
-            className={styles.squirtle}
-          />
-        </section>
+          <img
+            // ALTERADO: Agora usando o import dinâmico
+            src={squirtleMascote} 
+            alt="Mascote Squirtle"
+            className={styles.squirtle}
+          />
+        </section>
       </div>
     </div>
   );

@@ -6,16 +6,19 @@ import {
 } from "react-router-dom";
 import { useContext } from "react";
 
+// ------------------- IMPORTAÇÕES -------------------
 import Home from "./pages/Home";
 import Perfil from "./pages/Perfil";
 import Cadastro from "./pages/CriarConta/Cadastro";
 import Login from "./pages/CriarConta/Login";
 import CriarQuizz from "./pages/CriacaoQuizze/CriarQuizz";
-import Quizzes from "./pages/Quizzes";
+// REMOVIDO: import Quizzes from "./pages/Quizzes"; // Componente antigo/não usado
+
 import TelaPergunta from "./pages/QuizzJogo/TelaPergunta";
 import CriarPergunta from "./pages/CriacaoQuizze/CriarPergunta";
 import TelaRanking from "./pages/QuizzJogo/TelaRanking";
-import SalasQuizzes from "./pages/QuizzJogo/SalasQuizzes";
+import SalasQuizzes from "./pages/QuizzJogo/SalasQuizzes"; // Lobby (Recebe ID)
+import ListaQuizzes from './pages/QuizzJogo/ListaQuizzes'; // Lista de Quizzes Disponíveis
 
 import TelaAviso from "./components/TelaAviso";
 import TelaPreparar from "./components/TelaPreparar";
@@ -27,11 +30,13 @@ import { GeralProvider } from "./context/GeralContext";
 import LoadingLogin from "./components/LoadingLogin";
 import NotFound from "./components/NotFound";
 
+// ------------------- LAYOUTS -------------------
+
 function ComNavBar() {
   return (
     <>
-            <NavBar />
-            <Outlet />   {" "}
+      <NavBar />
+      <Outlet />
     </>
   );
 }
@@ -40,66 +45,76 @@ function SemNavBar() {
   return <Outlet />;
 }
 
+// ------------------- CONTEÚDO PRINCIPAL -------------------
+
 function ConteudoApp() {
   const { loading } = useContext(LoginContexto);
 
   return (
     <>
-            {loading ? <LoadingLogin /> : null}     {" "}
+      {loading ? <LoadingLogin /> : null}
       <Router>
-               {" "}
         <Routes>
-                    {/* Rotas com Navbar */}         {" "}
+          {/* ===================================================
+              ROTAS COM NAVBAR (PROTEGIDAS E APÓS LOGIN) 🔐
+              =================================================== */}
           <Route
             element={
               <PrivateRoute>
-                                <ComNavBar />             {" "}
+                <ComNavBar />
               </PrivateRoute>
             }
           >
-                       {" "}
+            {/* O path pai é "/Inicial" */}
             <Route path="/Inicial">
-                            <Route index element={<Home />} />
-                            <Route path="Perfil" element={<Perfil />} />
-                            <Route path="CriarQuizz" element={<CriarQuizz />} />
-                            <Route path="Quizzes" element={<Quizzes />} />
-                           {" "}
+              {/* /Inicial */}
+              <Route index element={<Home />} />
+              {/* /Inicial/Perfil */}
+              <Route path="Perfil" element={<Perfil />} />
+              {/* /Inicial/CriarQuizz */}
+              <Route path="CriarQuizz" element={<CriarQuizz />} />
+              {/* /Inicial/CriarPergunta */}
               <Route path="CriarPergunta" element={<CriarPergunta />} />
-                           {" "}
-              <Route path="SalasQuizzes/:id" element={<SalasQuizzes />} />     
-                   {" "}
+              
+              {/* NOVO: Lista de Quizzes Disponíveis (Acessada pelo menu) */}
+              <Route path="Quizzes" element={<ListaQuizzes />} />
+              
+              {/* Lobby: Recebe o ID do Quiz (Acessada de Home ou ListaQuizzes) */}
+              <Route path="SalasQuizzes/:id" element={<SalasQuizzes />} />
             </Route>
-                     {" "}
           </Route>
-                    {/* Rotas sem Navbar */}         {" "}
+
+          {/* ===================================================
+              ROTAS SEM NAVBAR (PÚBLICAS, COMO LOGIN) 🔓
+              =================================================== */}
           <Route element={<SemNavBar />}>
-                        <Route path="/" element={<Login />} />
-                        <Route path="/Cadastro" element={<Cadastro />} />
-                        <Route path="/Ranking" element={<TelaRanking />} />
-                        <Route path="/Aviso" element={<TelaAviso />} />
-                       {" "}
+            {/* / (Tela de Login) */}
+            <Route path="/" element={<Login />} />
+            {/* /Cadastro */}
+            <Route path="/Cadastro" element={<Cadastro />} />
+            {/* Rotas de Jogo (Geralmente sem navbar para foco) */}
+            <Route path="/Ranking" element={<TelaRanking />} />
+            <Route path="/Aviso" element={<TelaAviso />} />
             <Route path="/PrepararQuiz" element={<TelaPreparar />} />
-                        <Route path="/Perguntax" element={<TelaPergunta />} /> 
-                   {" "}
+            <Route path="/Perguntax" element={<TelaPergunta />} />
           </Route>
-                    {/* Erro 404 */}
-                    <Route path="*" element={<NotFound />} />       {" "}
+
+          {/* Erro 404 */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
-             {" "}
       </Router>
-         {" "}
     </>
   );
 }
 
+// ------------------- PROVIDERS (Contextos) -------------------
+
 export default function App() {
   return (
     <LoginProvider>
-           {" "}
       <GeralProvider>
-                <ConteudoApp />     {" "}
+        <ConteudoApp />
       </GeralProvider>
-         {" "}
     </LoginProvider>
   );
 }
