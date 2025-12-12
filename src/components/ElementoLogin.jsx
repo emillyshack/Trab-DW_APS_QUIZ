@@ -1,6 +1,7 @@
 import styles from "./ElementoLogin.module.css";
 import logo from "../assets/images/Quizzy_logo.png";
 import MiniSite from "./Minisite";
+import cyndaquill from "../../assets/images/Cyndaquill.png";
 
 function ElementoLogin() {
   return (
@@ -12,7 +13,7 @@ function ElementoLogin() {
         title="Quizzy"
       />
       <div className={styles.quizzes}>
-        <span className={styles.quizz}>Item 1</span>
+        <span className={styles.quizz}><img src={cyndaquill} alt="" /></span>
         <span className={styles.quizz}>Item 2</span>
         <span className={styles.quizz}>Item 3</span>
         <span className={styles.quizz}>Item 4</span>
