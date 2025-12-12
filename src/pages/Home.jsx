@@ -87,24 +87,22 @@ export default function Home() {
           </div>
         </section>
 
-        <section className={styles.codigo}>
-                    <h1 className={styles.titulo}>Entrar com código</h1>       
-           {" "}
-          <input
-            type="text"
-            placeholder="XXX-XXX-XXX"
-            className={`${styles.input} doodle-border`}
-          />
-                   {" "}
-          <button className={`${styles.botao} doodle-border`}>Entrar</button>   
-               {" "}
+        <div className={styles.sessao3}>
+          <section className={styles.codigo}>
+            <h1 className={styles.titulo}>Entrar com código</h1>
+            <input
+              type="text"
+              placeholder="XXX-XXX-XXX"
+              className={`${styles.input} doodle-border`}
+            />
+            <button className={`${styles.botao} doodle-border`}>Entrar</button>
+          </section>
           <img
             src={squirtleMascote}
             alt="Mascote Squirtle"
             className={styles.squirtle}
           />
-                 {" "}
-        </section>
+        </div>
       </div>
     </div>
   );

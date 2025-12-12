@@ -255,7 +255,7 @@ function Login() {
           className={`${styles["imagem-site"]}`}
         /> */}
 
-        <ElementoLogin />
+        <ElementoLogin verSenha={state.mostrarSenha} />
       </div>
     </div>
   );

@@ -31,7 +31,7 @@
   width: auto;
   z-index: 99;
 
-  background-color: var(--cor-amarela-100);
+  /* background-color: var(--cor-amarela-100); */
 
   position: absolute;
   bottom: -1px;
@@ -46,7 +46,7 @@
   width: auto;
   z-index: 99;
 
-  background-color: var(--cor-amarela-100);
+  /* background-color: var(--cor-amarela-100); */
 
   position: absolute;
   bottom: -1px;
