@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
 import { Plus } from "lucide-react";
 import styles from "./Home.module.css";
 import { LoginContexto } from "../context/LoginContext";
 import { GeralContexto } from "../context/GeralContext";
 import { useContext, useEffect } from "react";
 import { supabase } from "../supabase.js";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const { usuario, setLoading } = useContext(LoginContexto);

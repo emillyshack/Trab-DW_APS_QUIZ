@@ -18,6 +18,7 @@ import TelaRanking from "./pages/QuizzJogo/TelaRanking";
 import TelaAviso from "./components/TelaAviso";
 import TelaPreparar from "./components/TelaPreparar";
 import PrivateRoute from "./PrivateRoute";
+import Salas from "./pages/QuizzJogo/SalasQuizzes";
 
 import "../src/Global.css";
 import NavBar from "./components/NavBar";
@@ -62,6 +63,7 @@ function ConteudoApp() {
               <Route path="CriarQuizz" element={<CriarQuizz />} />
               <Route path="Quizzes" element={<Quizzes />} />
               <Route path="CriarPergunta" element={<CriarPergunta />} />
+              <Route path="SalasQuizzes" element={<Salas />} />
             </Route>
           </Route>
 
