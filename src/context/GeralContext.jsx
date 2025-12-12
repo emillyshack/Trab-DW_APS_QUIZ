@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useContext } from "react";
+import { createContext, useState } from "react";
 import { supabase } from "../supabase.js";
 
 export const GeralContexto = createContext();
@@ -17,6 +17,10 @@ export function GeralProvider({ children }) {
     setPessoa(data);
     return data;
   };
+
+  const [quizzId,setQuizzId] = useState(null)
+  const [perguntas, setPerguntas] = useState([])
+
 
   const changeFtPerfil = async (idUsuario, arquivo) => {
     try {
@@ -50,8 +54,6 @@ export function GeralProvider({ children }) {
   };
 
   // Criar um novo quizz ==================
-  const [novaAlternativa, setNovaAlternativa] = useState([{}]);
-  const [novaPergunta, setNovaPergunta] = useState([{}]);
 
   return (
     <GeralContexto.Provider
@@ -61,8 +63,11 @@ export function GeralProvider({ children }) {
         novaAlternativa,
         setNovaAlternativa,
         novaPergunta,
-        setNovaPergunta,
         changeFtPerfil,
+        quizzId, 
+        setQuizzId,
+        perguntas, 
+        setPerguntas
       }}
     >
       {children}

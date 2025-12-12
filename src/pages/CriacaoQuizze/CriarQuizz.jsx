@@ -1,14 +1,30 @@
 import styles from "./CriarQuizz.module.css";
 import BotaoAdd from "../../components/BotaoAdicionarPerg";
-import { useState, useRef, use, useContext } from "react";
-import { GeralContexto } from "../../context/GeralContext";
+import {supabase} from "../../supabase"
+import { useState, useRef, useEffect , useContext } from "react";
 import { LockKeyhole, Settings, Eye, Plus } from "lucide-react";
 
 function CriarQuizz() {
   const [preview, setPreview] = useState(null);
-  const { novaPergunta, novaAlternativa, setNovaPergunta, setNovaAlternativa } =
-    useContext(GeralContexto);
   const inputRef = useRef(null);
+
+ useEffect(() => {
+  async function criarQuizzBanco(){
+    const {data, error} = await supabase
+    .from("quizzes")
+    .insert({
+        titulo:"",
+        senha:"",
+        pessoa_id:"a47cbff9-7d30-4f0b-87b3-9f85aa6107fb"
+    })
+    .select("id")
+    .single();
+
+    if (error) {
+      console.error("Erro ao criar Quizz")
+    }
+  }
+ })
 
   const handleFotoClick = () => inputRef.current.click();
 
