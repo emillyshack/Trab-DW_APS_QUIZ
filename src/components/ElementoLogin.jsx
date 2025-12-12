@@ -1,16 +1,22 @@
 import styles from "./ElementoLogin.module.css";
 import logo from "../assets/images/Quizzy_logo.png";
+import MiniSite from "./Minisite";
 
 function ElementoLogin() {
   return (
-    <div className={`${styles["tela-principal"]} doodle-border`}>
-      <img src={logo} alt="Logo do Site" title="Quizzy" />
-      <div className={styles.quizzys}>
+    <div className={`${styles["tela-principal"]}`}>
+      <img
+        src={logo}
+        alt="Logo do Site"
+        className={styles.logo}
+        title="Quizzy"
+      />
+      <div className={styles.quizzes}>
         <span className={styles.quizz}>Item 1</span>
         <span className={styles.quizz}>Item 2</span>
         <span className={styles.quizz}>Item 3</span>
         <span className={styles.quizz}>Item 4</span>
-        <span className={styles.quizz}>Item 5</span>
+        <MiniSite url="http://localhost:5173/Inicial" />
       </div>
     </div>
   );
