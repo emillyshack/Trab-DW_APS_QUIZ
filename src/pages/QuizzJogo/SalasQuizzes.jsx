@@ -7,15 +7,13 @@ export default function SalasQuizzes() {
 
   return (
     <div className={styles.telaPrincipal}>
-      {/* Container principal com borda 'doodle' */}
-      <div className={`${styles.container} doodle-border`}>
-        {/* Navegação e Logo - Topo */}
 
-        {/* Conteúdo principal da Sala do Quiz */}
+      <div className={`${styles.container} doodle-border`}>
+
         <main className={styles.mainContent}>
-          {/* Seção do Título, Criador e Placar de Jogadores */}
+        
           <div className={styles.titleAndPlayers}>
-            {/* Informações do Criador */}
+  
             <div className={styles.creatorInfo}>
               <div className={`${styles.creatorProfileIcon} ${styles.circleBorder}`}>
                 <User size={20} />
@@ -27,20 +25,19 @@ export default function SalasQuizzes() {
               </p>
               <h3 className={styles.creatorName}>Nome do criador</h3>
             </div>
-            
-            {/* Título do Quiz */}
+
             <h1 className={styles.mainTitle}>{quizDetails.titulo}</h1>
 
-            {/* Placar/Top Jogadores (Os 3 avatares maiores) */}
+         
             <section className={styles.playersSection}>
               <div className={styles.playerAvatars}>
                 {players.map((player, index) => (
                   <div
                     key={index}
-                    // Adicionei styles.avatarN para aplicar a cor do contorno e a imagem de avatar
+                   
                     className={`${styles.playerCard} ${styles.circleBorder} ${player.avatarStyle}`} 
                   >
-                    <User size={30} /> {/* Ícone de fallback */}
+                    <User size={30} /> 
                     <div className={styles.playerNameTime}>
                       <p className={styles.playerName}>{player.name}</p>
                       <p className={styles.playerTime}>{player.time}</p>
@@ -49,7 +46,7 @@ export default function SalasQuizzes() {
                 ))}
               </div>
 
-              {/* Lista completa de jogadores/participantes (A parte verde escura) */}
+
               <div className={`${styles.playerListContainer} ${styles.darkGreenBox} doodle-border`}>
                 <div className={styles.playerList}>
                   {fullPlayersList.map((player, index) => (
@@ -57,7 +54,7 @@ export default function SalasQuizzes() {
                       key={index}
                       className={styles.playerItem}
                     >
-                      {/* O rádio-button estilizado do wireframe */}
+                    
                       <div className={`${styles.circleRadio} ${styles.circleBorder}`}></div>
                       <p>{player}</p>
                     </div>

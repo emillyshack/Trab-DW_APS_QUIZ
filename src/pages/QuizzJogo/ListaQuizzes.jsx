@@ -23,7 +23,6 @@ export default function ListaQuizzes() {
   }, []);
 
   const handleEntrarClick = (id) => {
-    // Navega para a tela de Lobby, passando o ID do quiz na URL.
     navigate(`/Inicial/SalasQuizzes/${id}`);
   };
 

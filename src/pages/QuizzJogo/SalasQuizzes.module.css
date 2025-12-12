@@ -10,13 +10,16 @@
 }
 .container {
   width: 95%;
-  height: 90vh;
-  min-height: 85vh;
-  background-color: var(--cor-branca-100); 
+  min-height: 100vh;
+ 
+  background-color: var(--cor-verde-100); 
   padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  border-radius: 15px;
+  border: 3.5px solid;
+  margin-top: var(--padding-navbar);
 }
 
 /* ===========================================
@@ -52,6 +55,9 @@
   gap: 0.5rem;
 }
 
+  .cardSala {
+    background-color: var(--cor-branca-100);
+  }
 
 .navQuizzes.selected {
     background-color: var(--cor-verde-300); 
@@ -490,6 +496,7 @@
   .playerAvatars {
     justify-content: space-around;
   }
+
   
   .playerCard {
       width: 80px;
