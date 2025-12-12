@@ -153,9 +153,8 @@
   flex-direction: column;
   align-items: center;
   gap: 0.8rem;
-
-  /* altura igual às outras colunas */
-  height: 210px;
+  max-height: 250px;
+  flex-grow: 1;
 }
 
 .input {
@@ -176,7 +175,7 @@
 }
 
 .squirtle {
-  margin-top: 0.8rem;
+  margin-top: auto;
   width: 80%;
   height: auto;
   object-fit: contain;

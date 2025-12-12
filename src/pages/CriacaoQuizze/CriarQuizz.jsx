@@ -1,87 +1,78 @@
 import styles from "./CriarQuizz.module.css";
 import BotaoAdd from "../../components/BotaoAdicionarPerg";
-import {supabase} from "../../supabase"
-import { useState, useRef, useEffect , useContext } from "react";
-import { LockKeyhole, LockOpen, Eye, EyeOff, Settings, Plus } from "lucide-react";
+import Pergunta from "../../components/Pergunta";
+import { supabase } from "../../supabase";
+import { useNavigate } from "react-router-dom";
+import { useState, useRef, useContext } from "react";
+import {
+  LockKeyhole,
+  LockOpen,
+  Eye,
+  EyeOff,
+  Settings,
+  Plus,
+} from "lucide-react";
+
 import { GeralContexto } from "../../context/GeralContext";
 
-
+// ===================================================================
+// Função auxiliar para gerar senha aleatória
+// ===================================================================
 const generateRandomPassword = (length = 12) => {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()';
-  let password = '';
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+  let password = "";
   for (let i = 0; i < length; i++) {
     password += chars.charAt(Math.floor(Math.random() * chars.length));
   }
   return password;
 };
 
+// ===================================================================
+// Componente principal
+// ===================================================================
 function CriarQuizz() {
+  const navigate = useNavigate();
+
+  const {
+    pessoa,
+    setQuizzId,
+    inputPerguntas,
+    inputQuizz,
+    setInputQuizz,
+    setInputPerguntas,
+    setInputAlternativas,
+  } = useContext(GeralContexto);
+
   const [preview, setPreview] = useState(null);
   const inputRef = useRef(null);
-  const { setQuizzId } = useContext(GeralContexto);
 
- useEffect(() => {
-  async function criarQuizzBanco(){
-    const {data, error} = await supabase
-    .from("quizzes")
-    .insert({
-        titulo:"",
-        senha:"",
-        pessoa_id:"a47cbff9-7d30-4f0b-87b3-9f85aa6107fb"
-    })
-    .select("id")
-    .single();
-
-    if (error) {
-      console.error("Erro ao criar Quizz:",error)
-      return
-    }
-  setQuizzId(data.id); 
-  }
-
-  criarQuizzBanco();
-}, []);
-
-async function salvarAlternativas(perguntaId) {
-  const lista = Object.values(alternativas).map((alt) => ({
-    texto: alt.texto,
-    valor: alt.certa,
-    pergunta_id: perguntaId
-  }));
-
-  const { error } = await supabase.from("alternativas").insert(lista);
-
-  if (error) {
-    console.error("Erro ao salvar alternativas:", error);
-    alert("Erro ao salvar alternativas.");
-  }
-}
-
-//==========================================================
-
-const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [isDisabled, setIsDisabled] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
+  const [selected, setSelected] = useState("");
+  const [tags, setTags] = useState([]);
+
+  const LockIcon = isDisabled ? LockKeyhole : LockOpen;
+  const EyeIcon = isPasswordVisible ? EyeOff : Eye;
+
   const handleLockToggle = () => {
-    setIsDisabled(prev => !prev);
+    setIsDisabled((prev) => !prev);
   };
 
   const handleVisibilityToggle = () => {
-    setIsPasswordVisible(prev => !prev);
+    setIsPasswordVisible((prev) => !prev);
   };
 
   const handleGeneratePassword = () => {
     const newPassword = generateRandomPassword();
-    setPassword(newPassword);
-    setConfirmPassword('');
+    setInputQuizz((prev) => ({
+      ...prev,
+      senha: newPassword,
+      confirmarSenha: newPassword,
+    }));
     setIsDisabled(false);
   };
-
-  const LockIcon = isDisabled ? LockKeyhole : LockOpen;
-  const EyeIcon = isPasswordVisible ? EyeOff : Eye;
-  //==============================================
 
   const handleFotoClick = () => inputRef.current.click();
 
@@ -93,18 +84,65 @@ const [password, setPassword] = useState('');
     }
   };
 
-  const [selected, setSelected] = useState("");
-  const [tags, setTags] = useState([]);
-
-  function addTags() {
+  const addTags = () => {
     if (!selected || tags.includes(selected)) return;
     setTags([...tags, selected]);
     setSelected("");
+  };
+
+  const removeTag = (tag) => {
+    setTags(tags.filter((t) => t !== tag));
+  };
+
+  // ===================================================================
+  // FUNÇÕES DE BANCO DE DADOS
+  // ===================================================================
+  async function criarQuizzBanco(titulo, senha) {
+    const { data, error } = await supabase
+      .from("quizzes")
+      .insert({
+        pessoa_id: pessoa?.id,
+        titulo: titulo,
+        senha: senha,
+      })
+      .select("id")
+      .single();
+
+    if (error) {
+      console.error("Erro ao criar Quizz:", error);
+      return;
+    }
+
+    setQuizzId(data.id);
+    return data;
   }
 
-  function removeTag(tag) {
-    setTags(tags.filter((t) => t !== tag));
-  }
+  const botaoCriarQuizz = async () => {
+    console.log(inputQuizz.titulo, inputQuizz.senha);
+    const quizz = await criarQuizzBanco(inputQuizz.titulo, inputQuizz.senha);
+    if (!quizz) {
+      alert("Erro ao criar quizz");
+    }
+  };
+
+  const botaoCancelar = () => {
+    // Resetar o formulário do quizz
+    setInputQuizz({
+      titulo: "",
+      senha: "",
+      confirmarSenha: "",
+      materias: "",
+    });
+
+    // Resetar perguntas e alternativas
+    setInputPerguntas([]);
+    setInputAlternativas([]);
+
+    // Resetar tags e preview da imagem
+    setTags([]);
+    setPreview(null);
+    navigate("/Inicial");
+  };
 
   return (
     <div className={styles["tela-principal"]}>
@@ -114,7 +152,7 @@ const [password, setPassword] = useState('');
         </nav>
 
         <div className={styles["elmt_1-2-3"]}>
-          {/* IMAGEM */}
+          {/* ============================= IMAGEM ============================= */}
           <div className={styles["elemento-1"]}>
             <div
               className={`${styles["imagem-quizz"]} ${styles.hbz}`}
@@ -130,6 +168,7 @@ const [password, setPassword] = useState('');
                 <span>+</span>
               )}
             </div>
+
             <input
               type="file"
               accept="image/*"
@@ -140,54 +179,75 @@ const [password, setPassword] = useState('');
             />
           </div>
 
-          {/* TÍTULO + SENHA */}
+          {/* ======================== TÍTULO + SENHA ======================== */}
           <div className={styles["elemento-2"]}>
             <label>Título:</label>
             <input
               type="text"
               placeholder="Este é o Título do seu Quizz"
               className={`${styles["nome-quizz"]} doodle-border`}
+              value={inputQuizz.titulo}
+              onChange={(e) =>
+                setInputQuizz((prev) => ({ ...prev, titulo: e.target.value }))
+              }
             />
 
             <div className={styles.column}>
               <label>Senha:</label>
+
               <div className={styles.padrao1}>
-                <button 
-                className={styles["priv-trancada"]} 
-        onClick={handleLockToggle}
-        title={isDisabled ? "Desbloquear Edição" : "Bloquear Edição"}>
-                  <LockKeyhole />
+                <button
+                  className={styles["priv-trancada"]}
+                  onClick={handleLockToggle}
+                  title={isDisabled ? "Desbloquear Edição" : "Bloquear Edição"}
+                >
+                  <LockIcon />
                 </button>
 
                 <input
-        type={isPasswordVisible ? "text" : "password"}
-        placeholder="Digitar Senha"
-        className={`${styles["senha-quizz"]} doodle-border`}
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        disabled={isDisabled}
-      />
+                  type={isPasswordVisible ? "text" : "password"}
+                  placeholder="Digitar Senha"
+                  className={`${styles["senha-quizz"]} doodle-border`}
+                  value={inputQuizz.senha}
+                  onChange={(e) =>
+                    setInputQuizz((prev) => ({
+                      ...prev,
+                      senha: e.target.value,
+                    }))
+                  }
+                  disabled={isDisabled}
+                />
 
                 <div className={styles.padrao2}>
                   <input
-          type="password"
-          placeholder="Confirmar Senha"
-          className={`${styles["senha-confir"]} doodle-border`}
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          disabled={isDisabled}
-        />
+                    type="password"
+                    placeholder="Confirmar Senha"
+                    className={`${styles["senha-confir"]} doodle-border`}
+                    value={inputQuizz.confirmarSenha}
+                    onChange={(e) =>
+                      setInputQuizz((prev) => ({
+                        ...prev,
+                        confirmarSenha: e.target.value,
+                      }))
+                    }
+                    disabled={isDisabled}
+                  />
 
-                  <button className={styles["vizualizar-senha"]}
-           
-          onClick={handleVisibilityToggle}
-          title={isPasswordVisible ? "Ocultar Senha" : "Visualizar Senha"}>
-                    <Eye />
+                  <button
+                    className={styles["vizualizar-senha"]}
+                    onClick={handleVisibilityToggle}
+                    title={
+                      isPasswordVisible ? "Ocultar Senha" : "Visualizar Senha"
+                    }
+                  >
+                    <EyeIcon />
                   </button>
 
-                  <button className={styles["gerar-senha"]}
-          onClick={handleGeneratePassword}
-          title="Gerar Senha Aleatória">
+                  <button
+                    className={styles["gerar-senha"]}
+                    onClick={handleGeneratePassword}
+                    title="Gerar Senha Aleatória"
+                  >
                     <Settings />
                   </button>
                 </div>
@@ -195,7 +255,7 @@ const [password, setPassword] = useState('');
             </div>
           </div>
 
-          {/* MATÉRIAS */}
+          {/* ============================= MATÉRIAS ============================= */}
           <div className={styles["elemento-3"]}>
             <div className={styles.column}>
               <h1>Matérias</h1>
@@ -205,8 +265,13 @@ const [password, setPassword] = useState('');
                   <div className={styles.adicionar}>
                     <select
                       className={styles["select-materias"]}
-                      value={selected}
-                      onChange={(e) => setSelected(e.target.value)}
+                      value={inputQuizz.materias}
+                      onChange={(e) =>
+                        setInputQuizz((prev) => ({
+                          ...prev,
+                          materias: e.target.value,
+                        }))
+                      }
                     >
                       <option value="">Selecione</option>
                       <option value="Portugues">Português</option>
@@ -249,31 +314,42 @@ const [password, setPassword] = useState('');
           </div>
         </div>
 
-        {/* PERGUNTAS */}
-
+        {/* ============================= PERGUNTAS ============================= */}
         <nav className={styles["titulo-perguntas"]}>
           <h2>Adicionar Perguntas:</h2>
         </nav>
+
         <div className={styles["secao-perguntas"]}>
           <div className={styles["elmt_4-5"]}>
             <div className={styles["elemento-4"]}>
+              {inputPerguntas.map((p, index) => (
+                <Pergunta key={index} pergunta={p.pergunta} />
+              ))}
+
               <BotaoAdd />
             </div>
+
             <div className={styles.column}>
-              <button className={`${styles["salvar-mudancas"]} doodle-border`}>
+              <button
+                onClick={botaoCriarQuizz}
+                className={`${styles["salvar-mudancas"]} doodle-border`}
+              >
                 Criar Quizz
               </button>
+
               <br />
-              <button className={`${styles["cancelar-quizz"]} doodle-border`}>
+
+              <button
+                onClick={botaoCancelar}
+                className={`${styles["cancelar-quizz"]} doodle-border`}
+              >
                 Cancelar
               </button>
             </div>
           </div>
         </div>
-    
-            </div>
-          </div>
-
+      </div>
+    </div>
   );
 }
 

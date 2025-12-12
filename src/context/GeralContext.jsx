@@ -4,8 +4,19 @@ import { supabase } from "../supabase.js";
 export const GeralContexto = createContext();
 
 export function GeralProvider({ children }) {
-  // Verificar usuário ====================
+  const [inputQuizz, setInputQuizz] = useState({
+    senha: "",
+    confirmarSenha: "",
+    titulo: "",
+    materias: "",
+  });
+
+  const [inputPerguntas, setInputPerguntas] = useState([]);
+  const [inputAlternativas, setInputAlternativas] = useState([]);
   const [pessoa, setPessoa] = useState(null);
+  const [quizzId, setQuizzId] = useState(null);
+  const [perguntas, setPerguntas] = useState([]);
+
   const getUser = async (id) => {
     const { data, error } = await supabase
       .from("pessoas")
@@ -18,14 +29,10 @@ export function GeralProvider({ children }) {
     return data;
   };
 
-  const [quizzId,setQuizzId] = useState(null)
-  const [perguntas, setPerguntas] = useState([])
-
-
   const changeFtPerfil = async (idUsuario, arquivo) => {
     try {
       const nomeArquivo = `${idUsuario}-${Date.now()}-${arquivo.name}`;
-      const { data: uploadData, error: uploadError } = await supabase.storage
+      const { error: uploadError } = await supabase.storage
         .from("imagens")
         .upload(`fotos_perfil/${nomeArquivo}`, arquivo, { upsert: true });
 
@@ -45,15 +52,72 @@ export function GeralProvider({ children }) {
       if (error) throw error;
 
       console.log("Foto de perfil atualizada com sucesso!", data);
-
-      return urlPublica; // retorna a URL da imagem para exibir no front
+      return urlPublica;
     } catch (erro) {
       console.error("Erro ao alterar foto de perfil:", erro);
       return null;
     }
   };
 
-  // Criar um novo quizz ==================
+  // Função para criar quizz, perguntas e alternativas
+  const criarQuizzCompleto = async () => {
+    try {
+      // 1️⃣ Criar o quizz
+      const { data: quizzData, error: quizzError } = await supabase
+        .from("quizzes")
+        .insert({
+          pessoa_id: pessoa?.id,
+          titulo: inputQuizz.titulo,
+          senha: inputQuizz.senha,
+        })
+        .select("id, codigo")
+        .single();
+
+      if (quizzError) throw quizzError;
+      setQuizzId(quizzData.id);
+      const novoQuizzCodigo = quizzData.codigo;
+
+      // 2️⃣ Criar perguntas
+      const perguntasParaInserir = inputPerguntas.map((p) => ({
+        texto_pergunta: p.pergunta,
+        tempo_limite: p.tempo,
+        pessoa_id: pessoa?.id,
+        quizz_pergunta: novoQuizzCodigo,
+        ordem_pergunta: p.ordemPergunta,
+      }));
+
+      const { data: perguntasData, error: perguntasError } = await supabase
+        .from("perguntas")
+        .insert(perguntasParaInserir)
+        .select("id, ordem_pergunta");
+
+      if (perguntasError) throw perguntasError;
+
+      // 3️⃣ Criar alternativas
+      const alternativasParaInserir = inputAlternativas.map((a) => {
+        const perguntaCorrespondente = perguntasData.find(
+          (p) => p.ordem_pergunta === a.ordemPergunta
+        );
+        return {
+          pergunta_id: perguntaCorrespondente.id,
+          texto: a.texto,
+          valor: a.certa,
+        };
+      });
+
+      const { error: alternativasError } = await supabase
+        .from("alternativas")
+        .insert(alternativasParaInserir);
+
+      if (alternativasError) throw alternativasError;
+
+      console.log("Quizz, perguntas e alternativas criados com sucesso!");
+      return true;
+    } catch (erro) {
+      console.error("Erro ao criar quizz completo:", erro);
+      return false;
+    }
+  };
 
   return (
     <GeralContexto.Provider
@@ -61,10 +125,17 @@ export function GeralProvider({ children }) {
         pessoa,
         getUser,
         changeFtPerfil,
-        quizzId, 
+        quizzId,
         setQuizzId,
-        perguntas, 
-        setPerguntas
+        perguntas,
+        setPerguntas,
+        inputQuizz,
+        setInputQuizz,
+        inputPerguntas,
+        setInputPerguntas,
+        inputAlternativas,
+        setInputAlternativas,
+        criarQuizzCompleto,
       }}
     >
       {children}

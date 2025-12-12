@@ -16,7 +16,7 @@ function ElementoLogin() {
         <span className={styles.quizz}>Item 2</span>
         <span className={styles.quizz}>Item 3</span>
         <span className={styles.quizz}>Item 4</span>
-        <MiniSite url="http://localhost:5173/Inicial" />
+        {/* <MiniSite url="http://localhost:5173/Inicial" /> */}
       </div>
     </div>
   );
