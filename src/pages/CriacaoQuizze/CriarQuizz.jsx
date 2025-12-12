@@ -4,6 +4,7 @@ import Pergunta from "../../components/Pergunta";
 import { supabase } from "../../supabase";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useContext } from "react";
+import { Link } from "react-router-dom";
 import {
   LockKeyhole,
   LockOpen,
@@ -50,7 +51,7 @@ function CriarQuizz() {
   const [isDisabled, setIsDisabled] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  const [selected, setSelected] = useState("");
+  // removido selected — agora só existe inputQuizz.materias
   const [tags, setTags] = useState([]);
 
   const LockIcon = isDisabled ? LockKeyhole : LockOpen;
@@ -84,10 +85,19 @@ function CriarQuizz() {
     }
   };
 
+  // ===============================
+  // addTags agora usa inputQuizz.materias
+  // ===============================
   const addTags = () => {
-    if (!selected || tags.includes(selected)) return;
-    setTags([...tags, selected]);
-    setSelected("");
+    if (!inputQuizz.materias || tags.includes(inputQuizz.materias)) return;
+
+    setTags([...tags, inputQuizz.materias]);
+
+    // limpa o select
+    setInputQuizz((prev) => ({
+      ...prev,
+      materias: "",
+    }));
   };
 
   const removeTag = (tag) => {
@@ -330,12 +340,14 @@ function CriarQuizz() {
             </div>
 
             <div className={styles.column}>
-              <button
-                onClick={botaoCriarQuizz}
-                className={`${styles["salvar-mudancas"]} doodle-border`}
-              >
-                Criar Quizz
-              </button>
+              <Link to="/Inicial">
+                <button
+                  onClick={botaoCriarQuizz}
+                  className={`${styles["salvar-mudancas"]} doodle-border`}
+                >
+                  Criar Quizz
+                </button>
+              </Link>
 
               <br />
 

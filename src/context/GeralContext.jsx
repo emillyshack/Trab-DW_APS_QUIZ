@@ -1,9 +1,12 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { supabase } from "../supabase.js";
 
 export const GeralContexto = createContext();
 
 export function GeralProvider({ children }) {
+  const [quizzes, setQuizzes] = useState([{}]);
+  const [quizzPessoa, setQuizzPessoa] = useState([{}]);
+
   const [inputQuizz, setInputQuizz] = useState({
     senha: "",
     confirmarSenha: "",
@@ -26,6 +29,16 @@ export function GeralProvider({ children }) {
 
     if (error) console.error(error);
     setPessoa(data);
+
+    const getQuizzPessoa = async (idPessoa) => {
+      const { data, error } = await supabase
+        .from("quizzes")
+        .select("*")
+        .eq("pessoa_id", idPessoa);
+      if (error) throw error;
+      setQuizzPessoa(data);
+    };
+    getQuizzPessoa(pessoa.id);
     return data;
   };
 
@@ -59,10 +72,14 @@ export function GeralProvider({ children }) {
     }
   };
 
-  // Função para criar quizz, perguntas e alternativas
+  const getQuizz = async () => {
+    const { data, error } = await supabase.from("quizzes").select("*");
+    if (error) throw error;
+    setQuizzes(data);
+  };
+
   const criarQuizzCompleto = async () => {
     try {
-      // 1️⃣ Criar o quizz
       const { data: quizzData, error: quizzError } = await supabase
         .from("quizzes")
         .insert({
@@ -119,6 +136,13 @@ export function GeralProvider({ children }) {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      await getQuizz();
+    };
+    fetchData();
+  }, []);
+
   return (
     <GeralContexto.Provider
       value={{
@@ -136,6 +160,8 @@ export function GeralProvider({ children }) {
         inputAlternativas,
         setInputAlternativas,
         criarQuizzCompleto,
+        quizzes,
+        quizzPessoa,
       }}
     >
       {children}

@@ -196,7 +196,8 @@ Elemento 3 ( Pergunta )
   border: 2px solid;
   border-radius: 15px;
   width: 100%;
-  max-height: 10vh;
+  max-height: 35vh;
+  height: 35vh;
 
   font-size: larger;
   padding-top: 1.5rem;
@@ -334,7 +335,7 @@ Elemento 3 ( Pergunta ) — MELHORADO
   padding: 1.2rem;
   gap: 1rem;
 
-  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
 }
 
 .preview-pergunta {
@@ -349,7 +350,6 @@ Elemento 3 ( Pergunta ) — MELHORADO
 
 .pergunta {
   width: 100%;
-  height: 12vh;
 
   resize: none;
   padding: 1rem;
@@ -364,7 +364,7 @@ Elemento 3 ( Pergunta ) — MELHORADO
 
 .pergunta:focus {
   border-color: var(--cor-azul-400);
-  box-shadow: 0 0 8px rgba(100,100,255,0.3);
+  box-shadow: 0 0 8px rgba(100, 100, 255, 0.3);
 }
 
 .input-ia {
@@ -387,5 +387,30 @@ Elemento 3 ( Pergunta ) — MELHORADO
 }
 
 .input-ia button:hover {
+  transform: scale(1.05);
+}
+
+.botaoAbrirChat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--cor-azul-300);
+  padding: 0.3rem 0.8rem; /* 🔹 menor */
+  border-radius: 10px;
+  font-size: 0.95rem; /* 🔹 botão menor */
+  cursor: pointer;
+
+  border: 4px solid var(--cor-preta-900);
+
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+
+  margin-top: 12px; /* 🔹 mais espaçado */
+  margin-bottom: 12px;
+}
+
+.botaoAbrirChat:hover {
   transform: scale(1.05);
 }

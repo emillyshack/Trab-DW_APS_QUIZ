@@ -6,24 +6,22 @@ import { useContext, useEffect, useState } from "react";
 import { supabase } from "../supabase.js";
 import { Link, useNavigate } from "react-router-dom";
 import squirtleMascote from "../assets/images/squirtle-removebg-preview.png";
+import Quizz from "../components/Quizz.jsx";
 
 export default function Home() {
   const { usuario, setLoading } = useContext(LoginContexto);
-  const { getUser, pessoa } = useContext(GeralContexto);
+  const { getUser, pessoa, quizzPessoa } = useContext(GeralContexto);
   const navigate = useNavigate();
 
   const [salas, setSalas] = useState([]);
 
-  
   const handleCardClick = (roomId) => {
     navigate(`/Inicial/SalasQuizzes/${roomId}`);
   };
 
-  
   async function fetchSalas(userId) {
     if (!userId) return;
 
-    
     const mockSalas = [
       { id: 101, titulo: "Quiz Matemática I", dono: "Fulano" },
       { id: 102, titulo: "Quiz Português Básico", dono: "Fulano" },
@@ -31,11 +29,8 @@ export default function Home() {
       { id: 104, titulo: "Quiz Ciência de Dados", dono: "Fulano" },
     ];
     setSalas(mockSalas);
-
-    
   }
 
-  
   useEffect(() => {
     async function fetchUserAndSalas() {
       const session = await supabase.auth.getSession();
@@ -53,12 +48,13 @@ export default function Home() {
   return (
     <div className={`${styles["tela-principal"]} ${styles.telaPrincipal}`}>
       <div className={styles.container}>
-   
         <section className={styles.criarQuiz}>
           <h1 className={styles.titulo}>Criar Quiz</h1>
-
           <div className={styles.gridQuizzes}>
-    
+            {quizzPessoa.map((q, index) => (
+              <Quizz key={index} titulo={q.titulo} />
+            ))}
+
             <Link
               to="/Inicial/CriarQuizz"
               className={`${styles.cardAdd} doodle-border`}
@@ -72,43 +68,43 @@ export default function Home() {
           <h1 className={styles.titulo}>Salas Criadas</h1>
 
           <div className={styles.lista}>
-           
-            {salas.map((sala) => (
-              <div
-                key={sala.id}
-                className={`${styles.cardSala} doodle-border`}
-               
-                onClick={() => handleCardClick(sala.id)}
-              >
-                <div>
-                  <p className={styles.salaTitulo}>{sala.titulo}</p>
-                  <p className={styles.salaDono}>{sala.dono}</p>
+            <Link to={"/Perguntax"}>
+              {salas.map((sala) => (
+                <div
+                  key={sala.id}
+                  className={`${styles.cardSala} doodle-border`}
+                  onClick={() => handleCardClick(sala.id)}
+                >
+                  <div>
+                    <p className={styles.salaTitulo}>{sala.titulo}</p>
+                    <p className={styles.salaDono}>{sala.dono}</p>
+                  </div>
+                  <span className={styles.online}>Online</span>
                 </div>
-                <span className={styles.online}>Online</span>
-              </div>
-            ))}
-            {salas.length === 0 && <p>Nenhum quiz criado ainda.</p>}
+              ))}
+              {salas.length === 0 && <p>Nenhum quiz criado ainda.</p>}
+            </Link>
           </div>
         </section>
-     
-       <section className={styles.codigo}>
-          <h1 className={styles.titulo}>Entrar com código</h1>
 
-          <input
-            type="text"
-            placeholder="XXX-XXX-XXX"
-            className={`${styles.input} doodle-border`}
-          />
-
-          <button className={`${styles.botao} doodle-border`}>Entrar</button>
-
-          <img
-           
-            src={squirtleMascote} 
-            alt="Mascote Squirtle"
-            className={styles.squirtle}
-          />
-        </section>
+        <section className={styles.codigo}>
+                    <h1 className={styles.titulo}>Entrar com código</h1>       
+           {" "}
+          <input
+            type="text"
+            placeholder="XXX-XXX-XXX"
+            className={`${styles.input} doodle-border`}
+          />
+                   {" "}
+          <button className={`${styles.botao} doodle-border`}>Entrar</button>   
+               {" "}
+          <img
+            src={squirtleMascote}
+            alt="Mascote Squirtle"
+            className={styles.squirtle}
+          />
+                 {" "}
+        </section>
       </div>
     </div>
   );

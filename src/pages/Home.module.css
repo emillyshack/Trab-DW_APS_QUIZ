@@ -1,5 +1,5 @@
-body{
-    background-color: var(--cor-fundo1);
+body {
+  background-color: var(--cor-fundo1);
 }
 .tela-principal {
   width: 100vw;
@@ -84,6 +84,10 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.cardAdd:hover {
+  transform: scale(1.07);
 }
 
 /* ===========================

@@ -143,15 +143,14 @@ Elemento 2 (Título, Privada ou Pública e Senha)
   justify-content: center;
   align-items: center;
 }
-.vizualizar-senha:hover{
+.vizualizar-senha:hover {
   transform: scale(1.3);
 }
-.gerar-senha:hover{
+.gerar-senha:hover {
   transform: scale(1.3);
 }
-.priv-trancada:hover{
+.priv-trancada:hover {
   transform: scale(1.3);
-
 }
 .gerar-senha {
   margin-left: 10px;
@@ -285,6 +284,7 @@ Elemento 4 (Adicionar Pergunta)
 
   background-color: var(--cor-verde-200);
   padding: 0.5rem;
+  margin: 0.5rem;
   border-radius: 10px;
   font-size: xx-large;
   cursor: pointer;
@@ -304,9 +304,8 @@ Elemento 4 (Adicionar Pergunta)
   border-radius: 10px;
   font-size: xx-large;
   cursor: pointer;
+  margin: 0.5rem;
 }
 .cancelar-quizz:hover {
   transform: scale(1.1);
 }
-
-

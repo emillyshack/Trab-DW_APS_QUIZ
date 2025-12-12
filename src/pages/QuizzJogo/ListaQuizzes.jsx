@@ -1,19 +1,34 @@
 import styles from "./SalasQuizzes.module.css";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "../../supabase.js"; 
+import { supabase } from "../../supabase.js";
+import { Link } from "react-router-dom";
 
 // A função do componente ListaQuizzes deve envolver todo o código de lógica e o return.
 export default function ListaQuizzes() {
-  
   const navigate = useNavigate();
   const [quizzesDisponiveis, setQuizzesDisponiveis] = useState([]);
-  
+
   async function fetchQuizzesDisponiveis() {
     const mockQuizzes = [
-      { id: 201, titulo: "Matemática Avançada", criador: "Professor João", tema: "Exatas" },
-      { id: 202, titulo: "Literatura Brasileira", criador: "Ana Júlia", tema: "Humanas" },
-      { id: 203, titulo: "Química Orgânica", criador: "Dr. Silva", tema: "Ciências" },
+      {
+        id: 201,
+        titulo: "Matemática Avançada",
+        criador: "Professor João",
+        tema: "Exatas",
+      },
+      {
+        id: 202,
+        titulo: "Literatura Brasileira",
+        criador: "Ana Júlia",
+        tema: "Humanas",
+      },
+      {
+        id: 203,
+        titulo: "Química Orgânica",
+        criador: "Dr. Silva",
+        tema: "Ciências",
+      },
     ];
     setQuizzesDisponiveis(mockQuizzes);
   }
@@ -23,7 +38,7 @@ export default function ListaQuizzes() {
   }, []);
 
   const handleEntrarClick = (id) => {
-    navigate(`/Inicial/SalasQuizzes/${id}`);
+    navigate(`/Perguntax`);
   };
 
   // O bloco return do componente
@@ -33,12 +48,12 @@ export default function ListaQuizzes() {
         <h1 className={styles.tituloPagina}>Quizzes Disponíveis</h1>
 
         <div className={styles.buscaBox}>
-          <input 
-            type="text" 
-            placeholder="Buscar por título ou tema..." 
+          <input
+            type="text"
+            placeholder="Buscar por título ou tema..."
             className={`${styles.inputBusca} doodle-border`}
           />
-        </div> 
+        </div>
 
         <div className={styles.listaSalas}>
           {quizzesDisponiveis.map((quiz) => (
@@ -49,12 +64,14 @@ export default function ListaQuizzes() {
                 <p className={styles.salaTema}>Tema: {quiz.tema}</p>
               </div>
               <div className={styles.acoes}>
-                <button 
-                  className={`${styles.botaoEntrar} doodle-border`}
-                  onClick={() => handleEntrarClick(quiz.id)}
-                >
-                  Entrar
-                </button>
+                <Link to="/Perguntax">
+                  <button
+                    className={`${styles.botaoEntrar} doodle-border`}
+                    onClick={() => handleEntrarClick(quiz.id)}
+                  >
+                    Entrar
+                  </button>
+                </Link>
               </div>
             </div>
           ))}

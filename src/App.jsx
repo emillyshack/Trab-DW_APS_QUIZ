@@ -18,7 +18,7 @@ import TelaPergunta from "./pages/QuizzJogo/TelaPergunta";
 import CriarPergunta from "./pages/CriacaoQuizze/CriarPergunta";
 import TelaRanking from "./pages/QuizzJogo/TelaRanking";
 import SalasQuizzes from "./pages/QuizzJogo/SalasQuizzes"; // Lobby (Recebe ID)
-import ListaQuizzes from './pages/QuizzJogo/ListaQuizzes'; // Lista de Quizzes Disponíveis
+import ListaQuizzes from "./pages/QuizzJogo/ListaQuizzes"; // Lista de Quizzes Disponíveis
 
 import TelaAviso from "./components/TelaAviso";
 import TelaPreparar from "./components/TelaPreparar";
@@ -65,21 +65,12 @@ function ConteudoApp() {
               </PrivateRoute>
             }
           >
-            {/* O path pai é "/Inicial" */}
             <Route path="/Inicial">
-              {/* /Inicial */}
               <Route index element={<Home />} />
-              {/* /Inicial/Perfil */}
               <Route path="Perfil" element={<Perfil />} />
-              {/* /Inicial/CriarQuizz */}
               <Route path="CriarQuizz" element={<CriarQuizz />} />
-              {/* /Inicial/CriarPergunta */}
               <Route path="CriarPergunta" element={<CriarPergunta />} />
-              
-              {/* NOVO: Lista de Quizzes Disponíveis (Acessada pelo menu) */}
               <Route path="Quizzes" element={<ListaQuizzes />} />
-              
-              {/* Lobby: Recebe o ID do Quiz (Acessada de Home ou ListaQuizzes) */}
               <Route path="SalasQuizzes/:id" element={<SalasQuizzes />} />
             </Route>
           </Route>
@@ -88,18 +79,13 @@ function ConteudoApp() {
               ROTAS SEM NAVBAR (PÚBLICAS, COMO LOGIN) 🔓
               =================================================== */}
           <Route element={<SemNavBar />}>
-            {/* / (Tela de Login) */}
             <Route path="/" element={<Login />} />
-            {/* /Cadastro */}
             <Route path="/Cadastro" element={<Cadastro />} />
-            {/* Rotas de Jogo (Geralmente sem navbar para foco) */}
             <Route path="/Ranking" element={<TelaRanking />} />
             <Route path="/Aviso" element={<TelaAviso />} />
             <Route path="/PrepararQuiz" element={<TelaPreparar />} />
             <Route path="/Perguntax" element={<TelaPergunta />} />
           </Route>
-
-          {/* Erro 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

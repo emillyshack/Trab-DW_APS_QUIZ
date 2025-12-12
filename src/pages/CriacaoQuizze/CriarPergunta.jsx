@@ -103,16 +103,11 @@ function CriarPergunta() {
           <h1>Criando sua Pergunta</h1>
         </nav>
 
-        <button
-          className={styles.botaoAbrirChat}
-          onClick={() => setAbrirIA(true)}
-        >
-          <MessageSquare size={18} /> Usar Inteligência Artificial
-        </button>
-
         {abrirIA && <ChatIA onClose={() => setAbrirIA(false)} />}
 
+        {/* GRID PRINCIPAL */}
         <div className={styles["elmt-1-2-3"]}>
+          {/* IMAGEM */}
           <div className={styles.column}>
             <label>Imagem:</label>
             <div className={styles["selecionar-imagem"]}>
@@ -124,6 +119,7 @@ function CriarPergunta() {
               {preview && (
                 <img src={preview} className={styles.preview} alt="preview" />
               )}
+
               <div className={styles["area-botoes-imagem"]}>
                 <div
                   className={styles["file-imagem"]}
@@ -132,6 +128,7 @@ function CriarPergunta() {
                   <FileUp />
                 </div>
               </div>
+
               <input
                 type="file"
                 ref={inputArquivoRef}
@@ -139,10 +136,12 @@ function CriarPergunta() {
                 style={{ display: "none" }}
                 onChange={handleMudarImagem}
               />
+
               <input type="hidden" ref={inputEscondidoRef} />
             </div>
           </div>
 
+          {/* TEMPO */}
           <div className={styles.padrao2}>
             <div className={styles["selecionar-tempo"]}>
               <label>Tempo:</label>
@@ -153,9 +152,11 @@ function CriarPergunta() {
                 <input type="hidden" value={inputPergunta.tempo} />
               </div>
             </div>
+
             <img src={cyndaquill} className={styles["cyndaquill-imagem"]} />
           </div>
 
+          {/* PERGUNTA */}
           <div className={styles.column}>
             <label>Pergunta:</label>
             <textarea
@@ -169,12 +170,22 @@ function CriarPergunta() {
                 }))
               }
             />
+
+            {/* ➤ AGORA O BOTÃO FICA AQUI! */}
+            <button
+              className={`${styles.botaoAbrirChat} doodle-border`}
+              onClick={() => setAbrirIA(true)}
+            >
+              <MessageSquare size={18} /> Usar Inteligência Artificial
+            </button>
           </div>
         </div>
 
+        {/* ALTERNATIVAS + SALVAR */}
         <div className={styles["elmt-4-5"]}>
           <div className={styles.column}>
             <label>Alternativas:</label>
+
             <div className={styles["alternativas"]}>
               {alternativas.map((alt) => (
                 <Alternativas

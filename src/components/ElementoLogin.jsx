@@ -1,9 +1,11 @@
 import styles from "./ElementoLogin.module.css";
 import logo from "../assets/images/Quizzy_logo.png";
-import MiniSite from "./Minisite";
-import cyndaquill from "../../assets/images/Cyndaquill.png";
+import { useContext } from "react";
+import { GeralContexto } from "../context/GeralContext";
+import Pergunta from "../components/Pergunta";
 
 function ElementoLogin() {
+  const { quizzes } = useContext(GeralContexto);
   return (
     <div className={`${styles["tela-principal"]}`}>
       <img
@@ -13,11 +15,9 @@ function ElementoLogin() {
         title="Quizzy"
       />
       <div className={styles.quizzes}>
-        <span className={styles.quizz}><img src={cyndaquill} alt="" /></span>
-        <span className={styles.quizz}>Item 2</span>
-        <span className={styles.quizz}>Item 3</span>
-        <span className={styles.quizz}>Item 4</span>
-        {/* <MiniSite url="http://localhost:5173/Inicial" /> */}
+        {quizzes.map((p, index) => (
+          <Pergunta key={index} pergunta={p.titulo} />
+        ))}
       </div>
     </div>
   );
