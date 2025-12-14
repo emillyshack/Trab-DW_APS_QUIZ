@@ -157,17 +157,14 @@ function CriarQuizz() {
   return (
     <div className={styles["tela-principal"]}>
       <div className={styles.container}>
-        <nav className={styles["titulo-criar"]}>
+        <span className={styles["titulo-criar"]}>
           <h1>Criar Quiz!</h1>
-        </nav>
+        </span>
 
         <div className={styles["elmt_1-2-3"]}>
           {/* ============================= IMAGEM ============================= */}
           <div className={styles["elemento-1"]}>
-            <div
-              className={`${styles["imagem-quizz"]} ${styles.hbz}`}
-              onClick={handleFotoClick}
-            >
+            <div className={`${styles.hbz}`} onClick={handleFotoClick}>
               {preview ? (
                 <img
                   src={preview}
@@ -329,35 +326,33 @@ function CriarQuizz() {
           <h2>Adicionar Perguntas:</h2>
         </nav>
 
-        <div className={styles["secao-perguntas"]}>
-          <div className={styles["elmt_4-5"]}>
-            <div className={styles["elemento-4"]}>
-              {inputPerguntas.map((p, index) => (
-                <Pergunta key={index} pergunta={p.pergunta} />
-              ))}
+        <div className={styles["elmt_4-5"]}>
+          <div className={styles["elemento-4"]}>
+            {inputPerguntas.map((p, index) => (
+              <Pergunta key={index} pergunta={p.pergunta} />
+            ))}
 
-              <BotaoAdd />
-            </div>
+            <BotaoAdd />
+          </div>
 
-            <div className={styles.column}>
-              <Link to="/Inicial">
-                <button
-                  onClick={botaoCriarQuizz}
-                  className={`${styles["salvar-mudancas"]} doodle-border`}
-                >
-                  Criar Quizz
-                </button>
-              </Link>
-
-              <br />
-
+          <div className={styles.column}>
+            <Link to="/Inicial">
               <button
-                onClick={botaoCancelar}
-                className={`${styles["cancelar-quizz"]} doodle-border`}
+                onClick={botaoCriarQuizz}
+                className={`${styles["salvar-mudancas"]} doodle-border`}
               >
-                Cancelar
+                Criar Quizz
               </button>
-            </div>
+            </Link>
+
+            <br />
+
+            <button
+              onClick={botaoCancelar}
+              className={`${styles["cancelar-quizz"]} doodle-border`}
+            >
+              Cancelar
+            </button>
           </div>
         </div>
       </div>

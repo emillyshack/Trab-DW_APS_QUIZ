@@ -20,26 +20,10 @@ export function GeralProvider({ children }) {
   const [quizzId, setQuizzId] = useState(null);
   const [perguntas, setPerguntas] = useState([]);
 
-  const getUser = async (id) => {
-    const { data, error } = await supabase
-      .from("pessoas")
-      .select("*")
-      .eq("id_usuario", id)
-      .single();
-
-    if (error) console.error(error);
-    setPessoa(data);
-
-    const getQuizzPessoa = async (idPessoa) => {
-      const { data, error } = await supabase
-        .from("quizzes")
-        .select("*")
-        .eq("pessoa_id", idPessoa);
-      if (error) throw error;
-      setQuizzPessoa(data);
-    };
-    getQuizzPessoa(pessoa.id);
-    return data;
+  const getQuizz = async () => {
+    const { data, error } = await supabase.from("quizzes").select("*");
+    if (error) throw error;
+    setQuizzes(data);
   };
 
   const changeFtPerfil = async (idUsuario, arquivo) => {
@@ -72,18 +56,12 @@ export function GeralProvider({ children }) {
     }
   };
 
-  const getQuizz = async () => {
-    const { data, error } = await supabase.from("quizzes").select("*");
-    if (error) throw error;
-    setQuizzes(data);
-  };
-
-  const criarQuizzCompleto = async () => {
+  const criarQuizzCompleto = async (idPessoa) => {
     try {
       const { data: quizzData, error: quizzError } = await supabase
         .from("quizzes")
         .insert({
-          pessoa_id: pessoa?.id,
+          pessoa_id: idPessoa,
           titulo: inputQuizz.titulo,
           senha: inputQuizz.senha,
         })
@@ -95,17 +73,17 @@ export function GeralProvider({ children }) {
       const novoQuizzCodigo = quizzData.codigo;
 
       // 2️⃣ Criar perguntas
-      const perguntasParaInserir = inputPerguntas.map((p) => ({
-        texto_pergunta: p.pergunta,
-        tempo_limite: p.tempo,
-        pessoa_id: pessoa?.id,
-        quizz_pergunta: novoQuizzCodigo,
-        ordem_pergunta: p.ordemPergunta,
-      }));
+      // const perguntasParaInserir = inputPerguntas.map((p) => ({
+      //   texto_pergunta: p.pergunta,
+      //   tempo_limite: p.tempo,
+      //   pessoa_id: pessoa?.id,
+      //   quizz_pergunta: novoQuizzCodigo,
+      //   ordem_pergunta: p.ordemPergunta,
+      // }));
 
       const { data: perguntasData, error: perguntasError } = await supabase
         .from("perguntas")
-        .insert(perguntasParaInserir)
+        .insert(inputPerguntas)
         .select("id, ordem_pergunta");
 
       if (perguntasError) throw perguntasError;
@@ -124,7 +102,7 @@ export function GeralProvider({ children }) {
 
       const { error: alternativasError } = await supabase
         .from("alternativas")
-        .insert(alternativasParaInserir);
+        .insert(inputAlternativas);
 
       if (alternativasError) throw alternativasError;
 
@@ -146,7 +124,6 @@ export function GeralProvider({ children }) {
   return (
     <GeralContexto.Provider
       value={{
-        pessoa,
         getUser,
         changeFtPerfil,
         quizzId,

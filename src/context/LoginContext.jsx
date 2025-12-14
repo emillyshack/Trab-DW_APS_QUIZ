@@ -5,6 +5,7 @@ export const LoginContexto = createContext();
 
 export function LoginProvider({ children }) {
   const [usuario, setUsuario] = useState(null);
+  const [pessoa, setPessoa] = useState({});
   const [loading, setLoading] = useState(true);
 
   async function carregarSessao() {
@@ -42,6 +43,28 @@ export function LoginProvider({ children }) {
       setLoading(false);
       return data;
     }
+  };
+
+  const getUser = async (id) => {
+    const { data, error } = await supabase
+      .from("pessoas")
+      .select("*")
+      .eq("id_usuario", id)
+      .single();
+
+    if (error) console.error(error);
+    setPessoa(data);
+
+    const getQuizzPessoa = async (idPessoa) => {
+      const { data, error } = await supabase
+        .from("quizzes")
+        .select("*")
+        .eq("pessoa_id", idPessoa);
+      if (error) throw error;
+      setQuizzPessoa(data);
+    };
+    getQuizzPessoa(pessoa.id);
+    return data;
   };
 
   const cadastrar = async (nome, usuario, email, password) => {

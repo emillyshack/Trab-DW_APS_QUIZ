@@ -2,8 +2,12 @@ import { NavLink } from "react-router-dom";
 import styles from "./NavBar.module.css";
 import logo from "../assets/images/Quizzy_logo.png";
 import ditto from "../assets/images/Ditto.png";
+import { useContext } from "react";
+import { LoginContexto } from "../context/LoginContext";
+import { GeralContexto } from "../context/GeralContext";
 
 function NavBar() {
+  const { pessoa } = useContext(GeralContexto);
   return (
     <nav className={`${styles.NavBar} doodle-border`}>
       <NavLink title="Quizzy" className={styles["logo-quizzy"]} to="/Inicial">
@@ -54,7 +58,11 @@ function NavBar() {
         to="/Inicial/Perfil"
       >
         <div className={styles["foto-perfil"]}>
-          <img className={styles["ditto"]} src={ditto} alt="" />
+          <img
+            className={styles["ditto"]}
+            src={pessoa?.foto_perfil ? pessoa?.foto_perfil : ditto}
+            alt=""
+          />
         </div>
       </NavLink>
     </nav>

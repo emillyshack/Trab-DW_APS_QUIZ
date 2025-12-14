@@ -79,8 +79,8 @@
   align-items: center;
 
   border: solid 3px var(--cor-preta-900);
-  background-color: var(--cor-roxo-300);
   border-radius: 100%;
+  cursor: pointer;
 
   transition: 0.3s;
 }

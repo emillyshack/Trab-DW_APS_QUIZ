@@ -33,12 +33,9 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchUserAndSalas() {
-      const session = await supabase.auth.getSession();
-      const userId = session?.data?.session?.user?.id;
-
+      const userId = await pessoa.id;
       if (userId) {
         console.log("Usuário logado ID:", userId);
-        getUser(userId);
         fetchSalas(userId);
       }
     }
@@ -49,7 +46,7 @@ export default function Home() {
     <div className={`${styles["tela-principal"]} ${styles.telaPrincipal}`}>
       <div className={styles.container}>
         <section className={styles.criarQuiz}>
-          <h1 className={styles.titulo}>Criar Quiz</h1>
+          <h1 className={styles.titulo}>Seus Quizzes</h1>
           <div className={styles.gridQuizzes}>
             {quizzPessoa.map((q, index) => (
               <Quizz key={index} titulo={q.titulo} />
@@ -58,6 +55,7 @@ export default function Home() {
             <Link
               to="/Inicial/CriarQuizz"
               className={`${styles.cardAdd} doodle-border`}
+              title="Criar Quiz"
             >
               <Plus size={40} />
             </Link>
@@ -65,7 +63,7 @@ export default function Home() {
         </section>
 
         <section className={styles.salas}>
-          <h1 className={styles.titulo}>Salas Criadas</h1>
+          <h1 className={styles.titulo}>Todos os Quizzes:</h1>
 
           <div className={styles.lista}>
             <Link to={"/Perguntax"}>
