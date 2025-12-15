@@ -5,8 +5,8 @@ import { GeralContexto } from "../context/GeralContext";
 import { LoginContexto } from "../context/LoginContext";
 
 function Perfil() {
-  const { pessoa, changeFtPerfil, setPessoa } = useContext(GeralContexto);
-  const { usuario, deslogar } = useContext(LoginContexto);
+  const { changeFtPerfil } = useContext(GeralContexto);
+  const { usuario, deslogar, pessoa } = useContext(LoginContexto);
 
   const [hasChanges, setHasChanges] = useState(false);
 

@@ -56,6 +56,15 @@ export function GeralProvider({ children }) {
     }
   };
 
+  const getQuizzPessoa = async (idPessoa) => {
+    const { data, error } = await supabase
+      .from("quizzes")
+      .select("*")
+      .eq("pessoa_id", idPessoa);
+    if (error) throw error;
+    setQuizzPessoa(data);
+  };
+
   const criarQuizzCompleto = async (idPessoa) => {
     try {
       const { data: quizzData, error: quizzError } = await supabase
@@ -121,10 +130,12 @@ export function GeralProvider({ children }) {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    console.log(inputPerguntas);
+  }, [inputPerguntas]);
   return (
     <GeralContexto.Provider
       value={{
-        getUser,
         changeFtPerfil,
         quizzId,
         setQuizzId,

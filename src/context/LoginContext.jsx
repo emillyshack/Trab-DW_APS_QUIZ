@@ -13,6 +13,7 @@ export function LoginProvider({ children }) {
       data: { session },
     } = await supabase.auth.getSession();
     setUsuario(session?.user ?? null);
+    await getUser(session?.user.id);
     setLoading(false);
   }
 
@@ -40,6 +41,7 @@ export function LoginProvider({ children }) {
       setLoading(false);
       throw error;
     } else {
+      await getUser(data.id);
       setLoading(false);
       return data;
     }
@@ -54,16 +56,6 @@ export function LoginProvider({ children }) {
 
     if (error) console.error(error);
     setPessoa(data);
-
-    const getQuizzPessoa = async (idPessoa) => {
-      const { data, error } = await supabase
-        .from("quizzes")
-        .select("*")
-        .eq("pessoa_id", idPessoa);
-      if (error) throw error;
-      setQuizzPessoa(data);
-    };
-    getQuizzPessoa(pessoa.id);
     return data;
   };
 
@@ -111,6 +103,8 @@ export function LoginProvider({ children }) {
         loading,
         setLoading,
         logar,
+        getUser,
+        pessoa,
         cadastrar,
         deslogar,
         carregarSessao,

@@ -43,6 +43,7 @@ function CriarQuizz() {
     setInputQuizz,
     setInputPerguntas,
     setInputAlternativas,
+    criarQuizzCompleto,
   } = useContext(GeralContexto);
 
   const [preview, setPreview] = useState(null);
@@ -107,29 +108,10 @@ function CriarQuizz() {
   // ===================================================================
   // FUNÇÕES DE BANCO DE DADOS
   // ===================================================================
-  async function criarQuizzBanco(titulo, senha) {
-    const { data, error } = await supabase
-      .from("quizzes")
-      .insert({
-        pessoa_id: pessoa?.id,
-        titulo: titulo,
-        senha: senha,
-      })
-      .select("id")
-      .single();
-
-    if (error) {
-      console.error("Erro ao criar Quizz:", error);
-      return;
-    }
-
-    setQuizzId(data.id);
-    return data;
-  }
 
   const botaoCriarQuizz = async () => {
     console.log(inputQuizz.titulo, inputQuizz.senha);
-    const quizz = await criarQuizzBanco(inputQuizz.titulo, inputQuizz.senha);
+    const quizz = await criarQuizzCompleto();
     if (!quizz) {
       alert("Erro ao criar quizz");
     }

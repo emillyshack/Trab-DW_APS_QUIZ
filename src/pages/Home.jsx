@@ -9,8 +9,8 @@ import squirtleMascote from "../assets/images/squirtle-removebg-preview.png";
 import Quizz from "../components/Quizz.jsx";
 
 export default function Home() {
-  const { usuario, setLoading } = useContext(LoginContexto);
-  const { getUser, pessoa, quizzPessoa } = useContext(GeralContexto);
+  const { usuario, setLoading, pessoa } = useContext(LoginContexto);
+  const { quizzPessoa } = useContext(GeralContexto);
   const navigate = useNavigate();
 
   const [salas, setSalas] = useState([]);
@@ -33,7 +33,7 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchUserAndSalas() {
-      const userId = await pessoa.id;
+      const userId = await usuario.id;
       if (userId) {
         console.log("Usuário logado ID:", userId);
         fetchSalas(userId);

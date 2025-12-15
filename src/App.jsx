@@ -12,7 +12,6 @@ import Perfil from "./pages/Perfil";
 import Cadastro from "./pages/CriarConta/Cadastro";
 import Login from "./pages/CriarConta/Login";
 import CriarQuizz from "./pages/CriacaoQuizze/CriarQuizz";
-// REMOVIDO: import Quizzes from "./pages/Quizzes"; // Componente antigo/não usado
 
 import TelaPergunta from "./pages/QuizzJogo/TelaPergunta";
 import CriarPergunta from "./pages/CriacaoQuizze/CriarPergunta";
@@ -55,9 +54,6 @@ function ConteudoApp() {
       {loading ? <LoadingLogin /> : null}
       <Router>
         <Routes>
-          {/* ===================================================
-              ROTAS COM NAVBAR (PROTEGIDAS E APÓS LOGIN) 🔐
-              =================================================== */}
           <Route
             element={
               <PrivateRoute>
@@ -75,9 +71,6 @@ function ConteudoApp() {
             </Route>
           </Route>
 
-          {/* ===================================================
-              ROTAS SEM NAVBAR (PÚBLICAS, COMO LOGIN) 🔓
-              =================================================== */}
           <Route element={<SemNavBar />}>
             <Route path="/" element={<Login />} />
             <Route path="/Cadastro" element={<Cadastro />} />
