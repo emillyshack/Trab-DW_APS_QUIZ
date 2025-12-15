@@ -33,7 +33,7 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchUserAndSalas() {
-      const userId = await usuario.id;
+      const userId = await pessoa.id;
       if (userId) {
         console.log("Usuário logado ID:", userId);
         fetchSalas(userId);

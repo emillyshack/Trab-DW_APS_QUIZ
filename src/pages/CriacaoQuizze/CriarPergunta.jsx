@@ -6,30 +6,28 @@ import Alternativas from "../../components/Alternativas";
 import ChatIA from "../../components/ChatIA/ChatIA";
 import { GeralContexto } from "../../context/GeralContext";
 import { useNavigate } from "react-router-dom";
+import { LoginContexto } from "../../context/LoginContext";
 
 function CriarPergunta() {
   const navigate = useNavigate();
-  const {
-    inputPerguntas,
-    setInputPerguntas,
-    inputAlternativas,
-    setInputAlternativas,
-  } = useContext(GeralContexto);
+  const { inputPerguntas, setInputPerguntas, setInputAlternativas } =
+    useContext(GeralContexto);
+
+  const { pessoa, loading, setLoading } = useContext(LoginContexto);
 
   const [inputPergunta, setInputPergunta] = useState({
     imagem: "",
     pergunta: "",
     tempo: 30,
+    alternativas: [
+      { id: 1, texto: "", valor: false },
+      { id: 2, texto: "", valor: false },
+      { id: 3, texto: "", valor: false },
+      { id: 4, texto: "", valor: false },
+    ],
   });
 
-  const inicialAlternativas = [
-    { id: 1, texto: "", certa: false },
-    { id: 2, texto: "", certa: false },
-    { id: 3, texto: "", certa: false },
-    { id: 4, texto: "", certa: false },
-  ];
-
-  const [alternativas, setAlternativas] = useState(inicialAlternativas);
+  const [alternativas, setAlternativas] = useState(inputPergunta.alternativas);
   const [abrirIA, setAbrirIA] = useState(false);
   const [preview, setPreview] = useState(null);
 
@@ -69,16 +67,20 @@ function CriarPergunta() {
   };
 
   const salvarPergunta = () => {
+    setLoading(true);
     if (alternativas.some((a) => !a.texto)) {
       alert("Preencha as 4 alternativas antes de salvar.");
+      setLoading(false);
       return;
     }
 
     const novaPergunta = {
       imagem: inputPergunta.imagem,
-      pergunta: inputPergunta.pergunta,
-      tempo: inputPergunta.tempo,
-      ordemPergunta: numeroPergunta,
+      texto_pergunta: inputPergunta.pergunta,
+      tempo_limite: inputPergunta.tempo,
+      ordem_pergunta: numeroPergunta,
+      pessoa_id: pessoa.id,
+      alternativas: alternativas,
     };
 
     setInputPerguntas((prev) => [...prev, novaPergunta]);
@@ -90,9 +92,15 @@ function CriarPergunta() {
     setInputAlternativas((prev) => [...prev, ...novasAlternativas]);
 
     setInputPergunta({ imagem: "", pergunta: "", tempo: 30 });
-    setAlternativas(inicialAlternativas);
+    setAlternativas([
+      { id: 1, texto: "", valor: false },
+      { id: 2, texto: "", valor: false },
+      { id: 3, texto: "", valor: false },
+      { id: 4, texto: "", valor: false },
+    ]);
     setPreview(null);
 
+    setLoading(false);
     navigate("/Inicial/CriarQuizz");
   };
 

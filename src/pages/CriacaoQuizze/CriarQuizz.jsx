@@ -1,7 +1,6 @@
 import styles from "./CriarQuizz.module.css";
 import BotaoAdd from "../../components/BotaoAdicionarPerg";
 import Pergunta from "../../components/Pergunta";
-import { supabase } from "../../supabase";
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useContext } from "react";
 import { Link } from "react-router-dom";
@@ -15,6 +14,7 @@ import {
 } from "lucide-react";
 
 import { GeralContexto } from "../../context/GeralContext";
+import { LoginContexto } from "../../context/LoginContext";
 
 // ===================================================================
 // Função auxiliar para gerar senha aleatória
@@ -36,8 +36,6 @@ function CriarQuizz() {
   const navigate = useNavigate();
 
   const {
-    pessoa,
-    setQuizzId,
     inputPerguntas,
     inputQuizz,
     setInputQuizz,
@@ -45,6 +43,7 @@ function CriarQuizz() {
     setInputAlternativas,
     criarQuizzCompleto,
   } = useContext(GeralContexto);
+  const { pessoa, loading, setLoading } = useContext(LoginContexto);
 
   const [preview, setPreview] = useState(null);
   const inputRef = useRef(null);
@@ -111,7 +110,7 @@ function CriarQuizz() {
 
   const botaoCriarQuizz = async () => {
     console.log(inputQuizz.titulo, inputQuizz.senha);
-    const quizz = await criarQuizzCompleto();
+    const quizz = await criarQuizzCompleto(pessoa.id);
     if (!quizz) {
       alert("Erro ao criar quizz");
     }

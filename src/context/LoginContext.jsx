@@ -12,19 +12,29 @@ export function LoginProvider({ children }) {
     const {
       data: { session },
     } = await supabase.auth.getSession();
-    setUsuario(session?.user ?? null);
-    await getUser(session?.user.id);
+
+    if (session?.user) {
+      setUsuario(session.user);
+      await getUser(session.user.id);
+    } else {
+      setUsuario(null);
+    }
+
     setLoading(false);
   }
 
   useEffect(() => {
-    setLoading(true);
     carregarSessao();
 
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
-        setUsuario(session?.user ?? null);
-        setLoading(false);
+        if (session?.user) {
+          setUsuario(session.user);
+          getUser(session.user.id);
+        } else {
+          setUsuario(null);
+          setPessoa({});
+        }
       }
     );
 
@@ -41,20 +51,24 @@ export function LoginProvider({ children }) {
       setLoading(false);
       throw error;
     } else {
-      await getUser(data.id);
+      await getUser(data.user.id);
       setLoading(false);
       return data;
     }
   };
 
   const getUser = async (id) => {
+    if (!id) return null;
     const { data, error } = await supabase
       .from("pessoas")
       .select("*")
       .eq("id_usuario", id)
       .single();
 
-    if (error) console.error(error);
+    if (error) {
+      console.error(error);
+      return null;
+    }
     setPessoa(data);
     return data;
   };
