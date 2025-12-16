@@ -15,11 +15,14 @@ export default function ChatIA({ onClose }) {
     setResposta("Gerando resposta...");
 
     try {
-      const response = await fetch("http://localhost:3001/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ mensagem: pergunta }),
-      });
+      const response = await fetch(
+        "https://trab-dw-aps-quiz.onrender.com/api/chat",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ mensagem: pergunta }),
+        }
+      );
 
       if (!response.ok) {
         const error = await response.json().catch(() => null);
