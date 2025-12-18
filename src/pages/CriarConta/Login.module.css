@@ -12,6 +12,7 @@
 }
 
 .logo-site {
+  margin-top: .5rem;
   height: calc(100vh - (85vh + 1rem));
   width: auto;
 }

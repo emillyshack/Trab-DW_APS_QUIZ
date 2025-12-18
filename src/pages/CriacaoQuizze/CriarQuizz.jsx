@@ -132,7 +132,7 @@ function CriarQuizz() {
     // Resetar tags e preview da imagem
     setTags([]);
     setPreview(null);
-    navigate("/Inicial");
+    navigate("/inicial");
   };
 
   return (

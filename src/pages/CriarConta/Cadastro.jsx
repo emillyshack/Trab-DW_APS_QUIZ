@@ -3,6 +3,7 @@ import pessoaCadastro from "../../assets/images/pessoa-cadastro2.png";
 import pessoaOlhoFechado from "../../assets/images/pessoa-olho-fechado.png";
 import passbolaAberta from "../../assets/images/passbola-aberta.png";
 import passbolaFechada from "../../assets/images/passbola-fechada.png";
+import { ArrowLeft } from "lucide-react";
 import styles from "./Cadastro.module.css";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -38,6 +39,7 @@ function Cadastro() {
     validoSenha: false,
     validoSenhaConfirmar: false,
   });
+  
 
   useEffect(() => {
     verificarEscritaEmail(state.inputEmail);
@@ -189,6 +191,18 @@ function Cadastro() {
           className={styles["logo-site"]}
           title="Quizzy"
         />
+      </div>
+      <div className={styles.voltar}>
+        <h2>Voltar à tela de Login</h2>
+        <div
+          className={`${styles["botao-voltar"]} circle-border`}
+          onClick={() => navigate("/")}
+          title="Clique para voltar"
+        >
+          <div className={styles["div-seta"]}>
+            <ArrowLeft className={styles.arrow} />
+          </div>
+        </div>
       </div>
       <div className={styles["container"]}>
         <h1>Criar Conta</h1>

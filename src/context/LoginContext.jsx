@@ -7,21 +7,7 @@ export function LoginProvider({ children }) {
   const [usuario, setUsuario] = useState(null);
   const [pessoa, setPessoa] = useState({});
   const [loading, setLoading] = useState(true);
-
-  async function carregarSessao() {
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-
-    if (session?.user) {
-      setUsuario(session.user);
-      await getUser(session.user.id);
-    } else {
-      setUsuario(null);
-    }
-
-    setLoading(false);
-  }
+  const [quizzPessoa, setQuizzPessoa] = useState([{}]);
 
   useEffect(() => {
     carregarSessao();
@@ -41,6 +27,52 @@ export function LoginProvider({ children }) {
     return () => authListener.subscription.unsubscribe();
   }, []);
 
+  async function carregarSessao() {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (session?.user) {
+      setUsuario(session.user);
+      await getUser(session.user.id);
+    } else {
+      setUsuario(null);
+    }
+
+    setLoading(false);
+  }
+
+  const getUser = async (id) => {
+    if (!id) return null;
+    const { data, error } = await supabase
+      .from("pessoas")
+      .select("*")
+      .eq("id_usuario", id)
+      .single();
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+    setPessoa(data);
+    await getQuizzPessoa(data.id);
+    return data;
+  };
+
+  const getQuizzPessoa = async (idPessoa) => {
+    const { data, error } = await supabase
+      .from("quizzes")
+      .select("*")
+      .eq("pessoa_id", idPessoa);
+
+    if (error) {
+      console.error(error);
+      throw error;
+    }
+    setQuizzPessoa(data);
+    return data;
+  };
+
   const logar = async (email, password) => {
     setLoading(true);
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -55,22 +87,6 @@ export function LoginProvider({ children }) {
       setLoading(false);
       return data;
     }
-  };
-
-  const getUser = async (id) => {
-    if (!id) return null;
-    const { data, error } = await supabase
-      .from("pessoas")
-      .select("*")
-      .eq("id_usuario", id)
-      .single();
-
-    if (error) {
-      console.error(error);
-      return null;
-    }
-    setPessoa(data);
-    return data;
   };
 
   const cadastrar = async (nome, usuario, email, password) => {
@@ -122,6 +138,7 @@ export function LoginProvider({ children }) {
         cadastrar,
         deslogar,
         carregarSessao,
+        quizzPessoa,
       }}
     >
       {children}

@@ -197,6 +197,7 @@ function Login() {
           <button
             onClick={handleLogin}
             className={`${styles["botao-entrar"]} doodle-border`}
+            title="Entrar"
           >
             Entrar
           </button>

@@ -61,21 +61,22 @@ function ConteudoApp() {
               </PrivateRoute>
             }
           >
-            <Route path="/Inicial">
+            <Route path="/inicial">
               <Route index element={<Home />} />
-              <Route path="Perfil" element={<Perfil />} />
-              <Route path="CriarQuizz" element={<CriarQuizz />} />
+              <Route path="perfil" element={<Perfil />} />
+              <Route path="quizz/novo" element={<CriarQuizz />} />
+              <Route path="quizz/:id/editar" element={<CriarQuizz />} />
               <Route path="CriarPergunta" element={<CriarPergunta />} />
-              <Route path="Quizzes" element={<ListaQuizzes />} />
+              <Route path="quizzes" element={<ListaQuizzes />} />
               <Route path="SalasQuizzes/:id" element={<SalasQuizzes />} />
             </Route>
           </Route>
 
           <Route element={<SemNavBar />}>
             <Route path="/" element={<Login />} />
-            <Route path="/Cadastro" element={<Cadastro />} />
-            <Route path="/Ranking" element={<TelaRanking />} />
-            <Route path="/Aviso" element={<TelaAviso />} />
+            <Route path="/cadastro" element={<Cadastro />} />
+            <Route path="/ranking" element={<TelaRanking />} />
+            <Route path="/aviso" element={<TelaAviso />} />
             <Route path="/PrepararQuiz" element={<TelaPreparar />} />
             <Route path="/Perguntax" element={<TelaPergunta />} />
           </Route>

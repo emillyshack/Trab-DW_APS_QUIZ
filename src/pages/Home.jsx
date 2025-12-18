@@ -9,8 +9,7 @@ import squirtleMascote from "../assets/images/squirtle-removebg-preview.png";
 import Quizz from "../components/Quizz.jsx";
 
 export default function Home() {
-  const { usuario, setLoading, pessoa } = useContext(LoginContexto);
-  const { quizzPessoa } = useContext(GeralContexto);
+  const { pessoa, quizzPessoa } = useContext(LoginContexto);
   const navigate = useNavigate();
 
   const [salas, setSalas] = useState([]);
@@ -53,7 +52,7 @@ export default function Home() {
             ))}
 
             <Link
-              to="/Inicial/CriarQuizz"
+              to="/Inicial/quizz/novo"
               className={`${styles.cardAdd} doodle-border`}
               title="Criar Quiz"
             >

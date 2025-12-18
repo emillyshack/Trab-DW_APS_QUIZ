@@ -13,12 +13,12 @@ function ElementoLogin({ verSenha }) {
       {verSenha ? (
         <img
           src={pessoaFechada}
-          alt="Logo do Site"
+          alt="Pessoa tapando o rosto"
           className={styles.pessoa}
-          title="Quizzy"
+          title="Não estou vendo nada"
         />
       ) : (
-        <img src={pessoa} alt="Pessoa joinha" className={styles.pessoa} />
+        <img src={pessoa} alt="Pessoa dando joinha" title="Tudo pronto para o login?" className={styles.pessoa} />
       )}
       <div className={styles.quizz}>
         <img

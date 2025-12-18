@@ -101,7 +101,7 @@ function CriarPergunta() {
     setPreview(null);
 
     setLoading(false);
-    navigate("/Inicial/CriarQuizz");
+    navigate("/inicial/quizz/novo");
   };
 
   return (
