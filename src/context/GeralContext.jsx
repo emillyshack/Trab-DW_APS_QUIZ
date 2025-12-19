@@ -6,12 +6,8 @@ export const GeralContexto = createContext();
 export function GeralProvider({ children }) {
   const [quizzes, setQuizzes] = useState([{}]);
 
-  const [inputQuizz, setInputQuizz] = useState({
-    senha: "",
-    confirmarSenha: "",
-    titulo: "",
-    materias: "",
-  });
+  const [inputQuizz, setInputQuizz] = useState({});
+  const [materiasQuizz, setMateriasQuizz] = useState();
 
   const [inputPerguntas, setInputPerguntas] = useState([]);
   const [inputAlternativas, setInputAlternativas] = useState([]);
@@ -72,7 +68,47 @@ export function GeralProvider({ children }) {
   };
 
   const criarEditarQuizz = async (codigo) => {
-    if (codigo === "novo") return null;
+    if (codigo === "novo") {
+      setInputQuizz({
+        senha: "",
+        confirmarSenha: "",
+        titulo: "",
+        materias: [],
+      });
+      setMateriasQuizz([]);
+    }
+
+    const { data: quizzData, error: quizzError } = await supabase
+      .from("quizzes")
+      .select("*")
+      .eq("codigo", codigo)
+      .single();
+    if (quizzError) throw quizzError;
+
+    const { data: materiasData, error: materiasError } = await supabase
+      .from("quizzes_materias")
+      .select(
+        `
+    id_quizzes,
+    materias (
+      id,
+      nome_materia
+    )
+  `
+      )
+      .eq("id_quizzes", quizzData.id);
+    if (materiasError) throw materiasError;
+
+    setMateriasQuizz(
+      materiasData.map((item) => item.materias?.nome_materia).filter(Boolean)
+    );
+
+    setInputQuizz({
+      senha: quizzData.senha,
+      confirmarSenha: quizzData.senha,
+      titulo: quizzData.titulo,
+      materias: materiasQuizz,
+    });
   };
 
   const addImagem = async (idPessoa, idPergunta, idQuizz, pasta, arquivo) => {
